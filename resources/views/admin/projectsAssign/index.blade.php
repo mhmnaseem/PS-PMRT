@@ -102,7 +102,7 @@
                                         <td>{!! statusColor($project->status) !!}</td>
                                         <td>{{$project->start_date->format(config('constants.time.format'))}}</td>
                                         <td>{{$project->due_date->format(config('constants.time.format'))}}</td>
-                                        <td>{{(!is_Null($project->complete_date))?$project->complete_date->toDateString():"Not Completed"}}</td>
+                                        <td>{{(!is_Null($project->complete_date))?$project->complete_date->format(config('constants.time.format')):"Not Completed"}}</td>
                                         <td>{{$project->partner->name}}</td>
 
 

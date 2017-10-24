@@ -89,6 +89,7 @@
                     <li class=""><a href="{{route('admin-project-assign.index')}}"><i class="fa fa-circle-o"></i> All Projects</a></li>
                     <li class=""><a href="{{route('admin-project-assign.create')}}"><i class="fa fa-plus"></i> New Project</a></li>
 
+
                 </ul>
             </li>
 

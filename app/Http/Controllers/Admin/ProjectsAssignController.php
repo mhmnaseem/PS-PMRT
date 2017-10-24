@@ -59,7 +59,7 @@ class ProjectsAssignController extends Controller
         $project->title=$request['title'];
         $project->description=$request['description'];
         $project->slug=md5(uniqid());
-        $project->status="Assigned";
+        $project->status="Open";
         $project->start_date=$request['start_date'];
         $project->due_date=$request['due_date'];
         $project->partner_id=$request['partner'];

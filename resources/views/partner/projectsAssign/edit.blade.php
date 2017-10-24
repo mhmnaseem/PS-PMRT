@@ -1,4 +1,4 @@
-@extends('admin.layout.master')
+@extends('partner.layout.master')
 
 @section ('header')
 
@@ -123,21 +123,21 @@
 
                             </div>
 
-                            <div class="form-group{{ $errors->has('partner') ? ' has-error' : '' }}">
-                                <label for="name" class="col-md-4 control-label">Partner</label>
+                            <div class="form-group{{ $errors->has('project_manager') ? ' has-error' : '' }}">
+                                <label for="project_manager" class="col-md-4 control-label">Project Manager</label>
 
                                 <div class="col-md-6">
 
-                                    <select class="form-control" name="partner" autofocus>
-
-                                        @foreach($partners as $partner)
-                                            <option value="{{ $partner->id }}"{{($project->partner->id==$partner->id)?"selected":''}}>{{ $partner->name }}</option>
+                                    <select class="form-control" name="project_manager" autofocus>
+                                        <option value=""></option>
+                                        @foreach($pms as $pm)
+                                            <option value="{{ $pm->id }}"{{($project->user_id==$pm->id)?"selected":''}}>{{ $pm->name }}</option>
                                         @endforeach
                                     </select>
 
-                                    @if ($errors->has('partner'))
+                                    @if ($errors->has('project_manager'))
                                         <span class="help-block">
-                                        <strong>{{ $errors->first('partner') }}</strong>
+                                        <strong>{{ $errors->first('project_manager') }}</strong>
                                     </span>
                                     @endif
                                 </div>
@@ -145,7 +145,7 @@
 
                             <div class="box-footer">
                                 <button type="submit" class="btn btn-primary">Submit</button>
-                                <a class="btn btn-warning" href="{{route('admin-project-assign.index')}}"> Back </a>
+                                <a class="btn btn-warning" href="{{route('partner-project-assign.index')}}"> Back </a>
                             </div>
                         </form>
                     </div>

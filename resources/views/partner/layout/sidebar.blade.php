@@ -46,6 +46,19 @@
                 </ul>
             </li>
 
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-tasks"></i> <span>Projects</span>
+                    <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class=""><a href="{{route('partner-project-assign.index')}}"><i class="fa fa-circle-o"></i> All Projects</a></li>
+                    {{--<li class=""><a href="{{route('partner-project-assign.create')}}"><i class="fa fa-plus"></i> New Project</a></li>--}}
+
+                </ul>
+            </li>
 
             <li class="treeview">
 

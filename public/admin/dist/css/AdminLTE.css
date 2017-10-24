@@ -2462,7 +2462,7 @@ a:focus {
 /* NAV TABS */
 .nav-tabs-custom {
   margin-bottom: 20px;
-  background: #fff;
+  background: #5f5b5b;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   border-radius: 3px;
 }
@@ -2481,7 +2481,7 @@ a:focus {
   color: #777;
 }
 .nav-tabs-custom > .nav-tabs > li > a {
-  color: #444;
+  color: #fff;
   border-radius: 0;
 }
 .nav-tabs-custom > .nav-tabs > li > a.text-muted {

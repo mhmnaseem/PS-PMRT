@@ -25,4 +25,8 @@ class Project extends Model
     {
         $this->attributes['start_date'] = Carbon::createFromFormat(config('constants.time.format'), $value);
     }
+    public function scopeFindBySlug($query, $slug)
+    {
+        $query->where('slug', '=', $slug);
+    }
 }

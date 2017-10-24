@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Partner;
 
 use App\Model\Common\Project;
 use App\Model\Partner\Partner;
+use App\Model\User\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -26,7 +27,9 @@ class ProjectsAssignController extends Controller
      */
     public function index()
     {
-        $projects=Project::latest('id')->get();
+
+        $partner=Partner::findorfail(auth()->user()->id);
+        $projects=$partner->projects()->latest('id')->get();
         return view('partner.projectsAssign.index',compact('projects'));
     }
 
@@ -37,8 +40,8 @@ class ProjectsAssignController extends Controller
      */
     public function create()
     {
-        $partners=Partner::all();
-        return view('partner.projectsAssign.create',compact('partners'));
+//        $pms=User::all();
+//        return view('partner.projectsAssign.create',compact('pms'));
     }
 
     /**
@@ -49,25 +52,25 @@ class ProjectsAssignController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'title' => 'required|string|max:200',
-            'description' => 'required',
-            'start_date' => 'required|date|before_or_equal:due_date',
-            'due_date' => 'required|date',
-        ]);
-
-        $project=new Project();
-        $project->title=$request['title'];
-        $project->description=$request['description'];
-        $project->slug=md5(uniqid());
-        $project->status="Assigned";
-        $project->start_date=$request['start_date'];
-        $project->due_date=$request['due_date'];
-        $project->partner_id=$request['partner'];
-        $project->save();
-
-
-        return redirect()->route('admin-project-assign.index');
+//        $this->validate($request,[
+//            'title' => 'required|string|max:200',
+//            'description' => 'required',
+//            'start_date' => 'required|date|before_or_equal:due_date',
+//            'due_date' => 'required|date',
+//        ]);
+//
+//        $project=new Project();
+//        $project->title=$request['title'];
+//        $project->description=$request['description'];
+//        $project->slug=md5(uniqid());
+//        $project->status="Assigned";
+//        $project->start_date=$request['start_date'];
+//        $project->due_date=$request['due_date'];
+//        $project->partner_id=$request['partner'];
+//        $project->save();
+//
+//
+//        return redirect()->route('admin-project-assign.index');
     }
 
     /**
@@ -87,11 +90,11 @@ class ProjectsAssignController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
-        $partners=Partner::all();
-        $project=Project::findorfail($id);
-        return view('partner.projectsAssign.edit',compact('project','partners'));
+        $pms=User::all();
+        $project=Project::findBySlug($slug)->firstorfail();
+        return view('partner.projectsAssign.edit',compact('project','pms'));
     }
 
     /**
@@ -101,7 +104,7 @@ class ProjectsAssignController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
         $this->validate($request,[
             'title' => 'required|string|max:200',
@@ -110,7 +113,7 @@ class ProjectsAssignController extends Controller
             'due_date' => 'required|date',
         ]);
 
-        $project=Project::findorfail($id);
+        $project=Project::findBySlug($slug)->firstorfail();
         $project->title=$request['title'];
         $project->description=$request['description'];
         $project->start_date=$request['start_date'];
@@ -129,7 +132,7 @@ class ProjectsAssignController extends Controller
      */
     public function destroy($id)
     {
-       Project::findorfail($id)->delete();
-        return redirect()->back();
+//       Project::findorfail($id)->delete();
+//        return redirect()->back();
     }
 }

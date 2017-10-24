@@ -1,4 +1,4 @@
-@extends('admin.layout.master')
+@extends('partner.layout.master')
 
 @section ('header')
 

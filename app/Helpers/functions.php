@@ -18,10 +18,10 @@ function statusColor($status)
 
     switch ($status){
 
-        case "Assigned":
+        case "Open":
             return '<span class="label label-default">'.$status.'</span>';
         break;
-        case "Open":
+        case "Assigned":
             return '<span class="label label-primary">'.$status.'</span>';
             break;
         case "Inprogress":
