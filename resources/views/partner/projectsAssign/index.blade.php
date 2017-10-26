@@ -50,11 +50,11 @@
                 <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#pending" data-toggle="tab">
-                                <i class="fa fa-hourglass-half" aria-hidden="true"></i> Un Assigned
+                                <i class="fa fa-hourglass-half" aria-hidden="true"></i> PM Unassigned
                                 <span class="badge">{{$total['totalPending']}}</span></a>
                         </li>
                         <li><a href="#assigned" data-toggle="tab">
-                                <i class="fa fa-random" aria-hidden="true"></i> Assigned <span
+                                <i class="fa fa-random" aria-hidden="true"></i> PM Assigned <span
                                         class="badge">{{$total['totalAssigned']}}</span></a>
                         </li>
                         <li><a href="#completed" data-toggle="tab">
@@ -233,7 +233,7 @@
 
                             @if ($allProjects->isNotEmpty())
 
-                                <table id="example4" class="table table-bordered table-striped">
+                                <table id="example5" class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
                                         <th>Option</th>
@@ -392,6 +392,15 @@
                 'autoWidth': false,
                 "order": [[0, "desc"]]
             });
+            $('#example5').DataTable({
+                'paging': true,
+                'lengthChange': false,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': false,
+                "order": [[0, "desc"]]
+            });
         });
 
 
@@ -443,17 +452,6 @@
 
         });
 
-        $(function () {
-            var hash = window.location.hash;
-            hash && $('ul.nav a[href="' + hash + '"]').tab('show');
-
-            $('.nav-tabs a').click(function (e) {
-                $(this).tab('show');
-                var scrollmem = $('body').scrollTop();
-                window.location.hash = this.hash;
-                $('html,body').scrollTop(scrollmem);
-            });
-        });
 
 
 

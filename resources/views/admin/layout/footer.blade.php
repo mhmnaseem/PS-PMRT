@@ -1,9 +1,9 @@
 <!-- /.content-wrapper -->
 <footer class="main-footer">
     <div class="pull-right hidden-xs">
-        <b>Version</b> 2.4.0
+        <b>Version</b> 1.0
     </div>
-    <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
+    <strong>Copyright &copy; <?php echo date("Y");?> <a href="http://www.donwebsolutions.com/">Don Web Solutions</a>.</strong> All rights
     reserved.
 </footer>
 
@@ -47,13 +47,21 @@
 {{--<!-- AdminLTE for demo purposes -->--}}
 {{--<script src="{{asset('admin/dist/js/demo.js')}}"></script>--}}
 
-
-
 @section('footer')
 @show
-
 <script>
     $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip();
+    });
+    $(function () {
+        var hash = window.location.hash;
+        hash && $('ul.nav a[href="' + hash + '"]').tab('show');
+
+        $('.nav-tabs a').click(function (e) {
+            $(this).tab('show');
+            var scrollmem = $('body').scrollTop();
+            window.location.hash = this.hash;
+            $('html,body').scrollTop(scrollmem);
+        });
     });
 </script>

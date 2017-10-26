@@ -36,7 +36,8 @@
             <div class="box">
                 <div class="box-header with-border">
                     <h3 class="box-title">All Projects</h3>
-                    <a class="col-md-offset-5 btn btn-success" href="{{route('admin-project-assign.create')}}"> Add New </a>
+                    <a class="col-md-offset-5 btn btn-success" href="{{route('admin-project-assign.create')}}"> Add
+                        New </a>
 
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
@@ -45,76 +46,331 @@
 
                     </div>
                 </div>
-                <div class="box-body">
-
-                    <div class="box">
-                        <div class="box-header">
-                            <h3 class="box-title"></h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            <table id="example2" class="table table-bordered table-striped">
-                                <thead>
-                                <tr>
-                                    <th>Option</th>
-                                    <th>Title</th>
-                                    <th>Status</th>
-                                    <th>Start date</th>
-                                    <th>Due date</th>
-                                    <th>Completed date</th>
-                                    <th>Partner</th>
 
 
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($projects as $project)
+                <!-- Custom Tabs -->
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#pending" data-toggle="tab">
+                                <i class="fa fa-hourglass-half" aria-hidden="true"></i> PM Unassigned
+                                <span class="badge">{{$total['totalPending']}}</span></a>
+                        </li>
+                        <li><a href="#assigned" data-toggle="tab">
+                                <i class="fa fa-random" aria-hidden="true"></i> PM Assigned <span
+                                        class="badge">{{$total['totalAssigned']}}</span></a>
+                        </li>
+                        <li><a href="#completed" data-toggle="tab">
+                                <i class="fa fa-handshake-o" aria-hidden="true"></i>
+                                Completed <span class="badge">{{$total['totalCompleted']}}</span></a></li>
+                        <li><a href="#all" data-toggle="tab">
+                                <i class="fa fa-archive" aria-hidden="true"></i>
+                                All Projects <span class="badge">{{$total['allProjects']}}</span></a></li>
+
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="pending">
+
+                            @if ($pendingProjects->isNotEmpty())
+
+                                <table id="example2" class="table table-bordered table-striped">
+                                    <thead>
                                     <tr>
-                                        <td>
-                                            <div class="btn-group">
-                                                {{--<a data-toggle="tooltip" data-placement="top" title="View" class="btn btn-xs btn-default"--}}
-                                                   {{--href="{{route('admin-project-assign.show',$project->id)}}"><i--}}
-                                                            {{--class="fa fa-fw fa-arrow-circle-right"></i></a>--}}
-                                                <a data-toggle="tooltip" data-placement="top" title="Edit" class="btn btn-xs btn-warning"
-                                                   href="{{route('admin-project-assign.edit',$project->id)}}"><i
-                                                            class="fa fa-fw fa-edit"></i></a>
-                                                <form id="form-delete-{{$project->id}}" method="post"
-                                                      action="{{route('admin-project-assign.destroy',$project->id)}}"
-                                                      style="display: none;">
-                                                    {{csrf_field()}}
-                                                    {{method_field('DELETE')}}
+                                        <th>Option</th>
+                                        <th>Title</th>
+                                        <th>Status</th>
+                                        <th>Start date</th>
+                                        <th>Due date</th>
+                                        <th>Partner</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($pendingProjects as $pendingProject)
+                                        <tr>
+                                            <td>
+                                                <div class="btn-group">
+                                                    {{--<a data-toggle="tooltip" data-placement="top" title="View" class="btn btn-xs btn-default"--}}
+                                                    {{--href="{{route('admin-project-assign.show',$project->id)}}"><i--}}
+                                                    {{--class="fa fa-fw fa-arrow-circle-right"></i></a>--}}
+                                                    <a data-toggle="tooltip" data-placement="top" title="Edit"
+                                                       class="btn btn-xs btn-warning"
+                                                       href="{{route('admin-project-assign.edit',$pendingProject->id)}}"><i
+                                                                class="fa fa-fw fa-edit"></i></a>
+                                                    <form id="form-delete-{{$pendingProject->id}}" method="post"
+                                                          action="{{route('admin-project-assign.destroy',$pendingProject->id)}}"
+                                                          style="display: none;">
+                                                        {{csrf_field()}}
+                                                        {{method_field('DELETE')}}
 
-                                                </form>
+                                                    </form>
 
-                                                <a data-toggle="tooltip" data-placement="top" title="Delete" class="btn btn-xs btn-danger" href="#" onclick="
+                                                    <a data-toggle="tooltip" data-placement="top" title="Delete"
+                                                       class="btn btn-xs btn-danger" href="#" onclick="
 
-                                                        if(confirm('Are you sure want to Delete?')) {
-                                                        event.preventDefault();
-                                                        document.getElementById('form-delete-{{$project->id}}').submit();
-                                                        }else{
-                                                        event.preventDefault();
-                                                        }
+                                                            if(confirm('Are you sure want to Delete?')) {
+                                                            event.preventDefault();
+                                                            document.getElementById('form-delete-{{$pendingProject->id}}').submit();
+                                                            }else{
+                                                            event.preventDefault();
+                                                            }
 
-                                                        "><i class="fa fa-fw fa-trash"></i></a>
-                                            </div>
-                                        </td>
-                                        <td>{{$project->title}}</td>
-                                        <td>{!! statusColor($project->status) !!}</td>
-                                        <td>{{$project->start_date->format(config('constants.time.format'))}}</td>
-                                        <td>{{$project->due_date->format(config('constants.time.format'))}}</td>
-                                        <td>{{(!is_Null($project->complete_date))?$project->complete_date->format(config('constants.time.format')):"Not Completed"}}</td>
-                                        <td>{{$project->partner->name}}</td>
+                                                            "><i class="fa fa-fw fa-trash"></i></a>
+                                                </div>
+                                            </td>
+                                            <td>{{$pendingProject->title}}</td>
+                                            <td>{!! statusColor($pendingProject->status) !!}</td>
+                                            <td>{{$pendingProject->start_date->format(config('constants.time.format'))}}</td>
+                                            <td>{{$pendingProject->due_date->format(config('constants.time.format'))}}</td>
+                                            <td>{{$pendingProject->partner->name}}</td>
+                                        </tr>
+
+                                    @endforeach
+                                </table>
+                            @else
+
+                                <div class="callout callout-info">
+                                    <h4> No Pending Projects !</h4>
+
+                                    <p>Please Check Back Later..!</p>
+                                </div>
+
+                            @endif
+
+
+                        </div>
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="assigned">
+
+                            @if ($assignedProjects->isNotEmpty())
+
+
+                                <table id="example3" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Option</th>
+                                        <th>Title</th>
+                                        <th>Status</th>
+                                        <th>Start date</th>
+                                        <th>Due date</th>
+                                        <th>Partner</th>
+                                        <th>Assigned PM</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($assignedProjects as $assignedProject)
+                                        <tr>
+                                            <td>
+                                                <div class="btn-group">
+                                                    {{--<a data-toggle="tooltip" data-placement="top" title="View" class="btn btn-xs btn-default"--}}
+                                                    {{--href="{{route('admin-project-assign.show',$project->id)}}"><i--}}
+                                                    {{--class="fa fa-fw fa-arrow-circle-right"></i></a>--}}
+                                                    <a data-toggle="tooltip" data-placement="top" title="Edit"
+                                                       class="btn btn-xs btn-warning"
+                                                       href="{{route('admin-project-assign.edit',$assignedProject->id)}}"><i
+                                                                class="fa fa-fw fa-edit"></i></a>
+                                                    <form id="form-delete-{{$assignedProject->id}}" method="post"
+                                                          action="{{route('admin-project-assign.destroy',$assignedProject->id)}}"
+                                                          style="display: none;">
+                                                        {{csrf_field()}}
+                                                        {{method_field('DELETE')}}
+
+                                                    </form>
+
+                                                    <a data-toggle="tooltip" data-placement="top" title="Delete"
+                                                       class="btn btn-xs btn-danger" href="#" onclick="
+
+                                                            if(confirm('Are you sure want to Delete?')) {
+                                                            event.preventDefault();
+                                                            document.getElementById('form-delete-{{$assignedProject->id}}').submit();
+                                                            }else{
+                                                            event.preventDefault();
+                                                            }
+
+                                                            "><i class="fa fa-fw fa-trash"></i></a>
+                                                </div>
+                                            </td>
+                                            <td>{{$assignedProject->title}}</td>
+                                            <td>{!! statusColor($assignedProject->status) !!}</td>
+                                            <td>{{$assignedProject->start_date->format(config('constants.time.format'))}}</td>
+                                            <td>{{$assignedProject->due_date->format(config('constants.time.format'))}}</td>
+                                            <td>{{$assignedProject->partner->name}}</td>
+                                            <td>{{$assignedProject->pm->name}}</td>
+
+
+                                        </tr>
+                                    @endforeach
+                                </table>
+
+                            @else
+
+                                <div class="callout callout-info">
+                                    <h4>No Project Assigned to your Account !</h4>
+
+                                    <p>Please Check Back Later..!</p>
+                                </div>
+
+                            @endif
+                        </div>
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="completed">
+
+                            @if ($completedProjects->isNotEmpty())
+
+                                <table id="example4" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Option</th>
+                                        <th>Title</th>
+                                        <th>Status</th>
+                                        <th>Start date</th>
+                                        <th>Due date</th>
+                                        <th>Partner</th>
+                                        <th>Assigned PM</th>
 
 
                                     </tr>
-                                @endforeach
-                            </table>
-                        </div>
-                        <!-- /.box-body -->
-                    </div>
-                    <!-- /.box -->
+                                    </thead>
+                                    <tbody>
+                                    @foreach($completedProjects as $completedProject)
+                                        <tr>
+                                            <td>
+                                                <div class="btn-group">
+                                                    {{--<a data-toggle="tooltip" data-placement="top" title="View" class="btn btn-xs btn-default"--}}
+                                                    {{--href="{{route('admin-project-assign.show',$project->id)}}"><i--}}
+                                                    {{--class="fa fa-fw fa-arrow-circle-right"></i></a>--}}
+                                                    <a data-toggle="tooltip" data-placement="top" title="Edit"
+                                                       class="btn btn-xs btn-warning"
+                                                       href="{{route('admin-project-assign.edit',$completedProject->id)}}"><i
+                                                                class="fa fa-fw fa-edit"></i></a>
+                                                    <form id="form-delete-{{$completedProject->id}}" method="post"
+                                                          action="{{route('admin-project-assign.destroy',$completedProject->id)}}"
+                                                          style="display: none;">
+                                                        {{csrf_field()}}
+                                                        {{method_field('DELETE')}}
 
+                                                    </form>
+
+                                                    <a data-toggle="tooltip" data-placement="top" title="Delete"
+                                                       class="btn btn-xs btn-danger" href="#" onclick="
+
+                                                            if(confirm('Are you sure want to Delete?')) {
+                                                            event.preventDefault();
+                                                            document.getElementById('form-delete-{{$completedProject->id}}').submit();
+                                                            }else{
+                                                            event.preventDefault();
+                                                            }
+
+                                                            "><i class="fa fa-fw fa-trash"></i></a>
+                                                </div>
+                                            </td>
+                                            <td>{{$completedProject->title}}</td>
+                                            <td>{!! statusColor($completedProject->status) !!}</td>
+                                            <td>{{$completedProject->start_date->format(config('constants.time.format'))}}</td>
+                                            <td>{{$completedProject->due_date->format(config('constants.time.format'))}}</td>
+                                            <td>{{$completedProject->partner->name}}</td>
+                                            <td>{{$completedProject->pm->name}}</td>
+
+
+                                        </tr>
+                                    @endforeach
+                                </table>
+                            @else
+
+                                <div class="callout callout-info">
+                                    <h4> No Completed Projects !</h4>
+
+                                    <p>Please Check Back Later..!</p>
+                                </div>
+
+                            @endif
+                        </div>
+                        <!-- /.tab-pane -->
+
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="all">
+
+                            @if ($allProjects->isNotEmpty())
+
+                                <table id="example5" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Option</th>
+                                        <th>Title</th>
+                                        <th>Status</th>
+                                        <th>Start date</th>
+                                        <th>Due date</th>
+                                        <th>Partner</th>
+                                        <th>Assigned PM</th>
+
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($allProjects as $allProject)
+                                        <tr>
+                                            <td>
+                                                <div class="btn-group">
+                                                    {{--<a data-toggle="tooltip" data-placement="top" title="View" class="btn btn-xs btn-default"--}}
+                                                    {{--href="{{route('admin-project-assign.show',$project->id)}}"><i--}}
+                                                    {{--class="fa fa-fw fa-arrow-circle-right"></i></a>--}}
+                                                    <a data-toggle="tooltip" data-placement="top" title="Edit"
+                                                       class="btn btn-xs btn-warning"
+                                                       href="{{route('admin-project-assign.edit',$allProject->id)}}"><i
+                                                                class="fa fa-fw fa-edit"></i></a>
+                                                    <form id="form-delete-{{$allProject->id}}" method="post"
+                                                          action="{{route('admin-project-assign.destroy',$allProject->id)}}"
+                                                          style="display: none;">
+                                                        {{csrf_field()}}
+                                                        {{method_field('DELETE')}}
+
+                                                    </form>
+
+                                                    <a data-toggle="tooltip" data-placement="top" title="Delete"
+                                                       class="btn btn-xs btn-danger" href="#" onclick="
+
+                                                            if(confirm('Are you sure want to Delete?')) {
+                                                            event.preventDefault();
+                                                            document.getElementById('form-delete-{{$allProject->id}}').submit();
+                                                            }else{
+                                                            event.preventDefault();
+                                                            }
+
+                                                            "><i class="fa fa-fw fa-trash"></i></a>
+                                                </div>
+                                            </td>
+                                            <td>{{$allProject->title}}</td>
+                                            <td>{!! statusColor($allProject->status) !!}</td>
+                                            <td>{{$allProject->start_date->format(config('constants.time.format'))}}</td>
+                                            <td>{{$allProject->due_date->format(config('constants.time.format'))}}</td>
+                                            <td>{{$allProject->partner->name}}</td>
+                                            <td>
+                                                @if(!empty($allProject->user_id))
+                                                    {{$allProject->pm->name}}
+                                                @else
+                                                    No PM Assigned
+                                                @endif</td>
+
+
+                                        </tr>
+                                    @endforeach
+                                </table>
+                            @else
+
+                                <div class="callout callout-info">
+                                    <h4> No Projects !</h4>
+
+                                    <p>Please Check Back Later..!</p>
+                                </div>
+
+                            @endif
+                        </div>
+                        <!-- /.tab-pane -->
+
+                    </div>
+                    <!-- /.tab-content -->
                 </div>
+                <!-- nav-tabs-custom -->
+
+
                 <!-- /.box-body -->
                 <div class="box-footer">
 
@@ -144,9 +400,36 @@
                 'searching': true,
                 'ordering': true,
                 'info': true,
-                'autoWidth': false
-                "order": [[ 0, "desc" ]]
-            })
+                'autoWidth': false,
+                "order": [[0, "desc"]]
+            });
+            $('#example3').DataTable({
+                'paging': true,
+                'lengthChange': false,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': false,
+                "order": [[0, "desc"]]
+            });
+            $('#example4').DataTable({
+                'paging': true,
+                'lengthChange': false,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': false,
+                "order": [[0, "desc"]]
+            });
+            $('#example5').DataTable({
+                'paging': true,
+                'lengthChange': false,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': false,
+                "order": [[0, "desc"]]
+            });
         })
     </script>
 

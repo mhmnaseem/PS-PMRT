@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Model\Admin\Admin;
+use App\Model\Common\Project;
+use App\Model\Partner\Partner;
+use App\Model\User\User;
+use ConsoleTVs\Charts\Facades\Charts;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +26,58 @@ class AdminHomeController extends Controller
 
     public function index()
     {
-        return view('admin.home');
+
+
+
+
+        //pending projects Projects
+        $pendingProjects =Project::where('user_id', '=', null)
+            ->where('status', '=', 'open')
+            ->count();
+
+        //Total Projects
+        $TotalProjects =Project::all()->count();
+
+        //Total Projects
+        $TotalPartners = Partner::all()->count();
+
+        //Completed Projects
+        $completedProjects = Project::where('user_id', '!=', null)
+            ->where('status', '=', 'Completed')
+            ->count();
+
+        //all in one array
+        $total = [
+            'totalPending' => $pendingProjects,
+            'totalCompleted' => $completedProjects,
+            'totalProjects' => $TotalProjects,
+            'totalPartners' => $TotalPartners
+
+        ];
+
+
+//        $chart = Charts::database($partner->projects()->get(), 'bar', 'highcharts')
+//            ->title('Projects By Month')
+//            ->elementLabel("Total")
+//            ->dimensions(1000, 500)
+//            ->responsive(false)
+//            ->groupByMonth();
+
+
+        //chart
+        $chart =  Charts::multiDatabase('line', 'material')
+            ->title('Projects By Month')
+            ->dataset('Total Projects', Project::all())
+            ->dataset('Pending Projects', Project::where('user_id', '=', null)
+                ->where('status', '=', 'open')->get())
+            ->dataset('Completed Projects', Project::where('user_id', '!=', null)
+                ->where('status', '=', 'Completed')->get())
+            ->groupByMonth();
+
+
+
+
+        return view('admin.home', compact('total','chart'));
     }
 
     public function profileEdit()

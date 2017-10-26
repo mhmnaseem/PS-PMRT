@@ -25,8 +25,42 @@ class ProjectsAssignController extends Controller
      */
     public function index()
     {
-        $projects=Project::latest('id')->get();
-        return view('admin.projectsAssign.index',compact('projects'));
+        //$projects=Project::latest('id')->get();
+
+
+
+        //pending projects
+        $pendingProjects = Project::where('user_id', '=', null)
+            ->where('status', '=', 'open')
+            ->latest('id')->get();
+
+        //assigned Projects
+        $assignedProjects = Project::where('user_id', '!=', null)
+            ->latest('id')->get();
+
+        //Completed Projects
+        $completedProjects =  Project::where('user_id', '!=', null)
+            ->where('status', '=', 'Completed')
+            ->latest('id')->get();
+
+        //all Projects
+        $allProjects = Project::latest('id')->get();
+
+        //count results
+        $total = [
+            'totalPending' => count($pendingProjects),
+            'totalAssigned' => count($assignedProjects),
+            'totalCompleted' => count($completedProjects),
+            'allProjects' => count($allProjects)
+
+        ];
+
+
+
+
+
+
+        return view('admin.projectsAssign.index',compact('pendingProjects', 'assignedProjects', 'completedProjects', 'allProjects', 'total'));
     }
 
     /**

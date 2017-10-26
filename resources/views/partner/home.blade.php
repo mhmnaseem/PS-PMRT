@@ -1,6 +1,12 @@
 @extends('partner.layout.master')
 
 
+@section ('header')
+
+    {!! Charts::styles() !!}
+
+@endsection
+
 @section ('main-content')
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -82,10 +88,16 @@
             </div>
             <!-- /.row -->
 
-           <br>
-            <br>
+             <div class="row">
+                 <div class="col-sm-12">
+                     <div class="app">
 
-            <h3 class="tab-primary text-center"> Welcome to Pro Services Project Management Reporting Tool</h3>
+                         {!! $chart->html() !!}
+
+                     </div>
+                 </div>
+
+            {{--<h3 class="tab-primary text-center"> Welcome to Pro Services Project Management Reporting Tool</h3>--}}
 
 
 
@@ -95,4 +107,10 @@
     </div>
 
 
+@endsection
+
+@section('footer')
+
+    {!! Charts::scripts() !!}
+    {!! $chart->script() !!}
 @endsection

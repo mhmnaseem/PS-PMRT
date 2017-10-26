@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Partner;
 
+use App\Model\Common\Project;
 use App\Model\Partner\Partner;
+use App\Model\User\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Charts;
 
 class PartnerHomeController extends Controller
 {
@@ -25,16 +28,17 @@ class PartnerHomeController extends Controller
 
         $partner = Partner::findorfail(auth()->user()->id);
 
+
         //pending projects Projects
-        $pendingProjects = $partner->projects()
+        $pendingProjects =$partner->projects()
             ->where('user_id', '=', null)
             ->where('status', '=', 'open')
             ->count();
 
         //Total Projects
-        $TotalProjects = $partner->projects()->count();
+        $TotalProjects =$partner->projects()->count();
 
-        //Total Projects
+        //Total PMS
         $TotalPms = $partner->pms()->count();
 
         //Completed Projects
@@ -52,7 +56,26 @@ class PartnerHomeController extends Controller
 
         ];
 
-        return view('partner.home', compact('total'));
+
+//        $chart = Charts::database($partner->projects()->get(), 'bar', 'highcharts')
+//            ->title('Projects By Month')
+//            ->elementLabel("Total")
+//            ->dimensions(1000, 500)
+//            ->responsive(false)
+//            ->groupByMonth();
+
+
+        //chart
+        $chart =  Charts::multiDatabase('line', 'material')
+            ->title('Projects By Month')
+            ->dataset('Total Projects', $partner->projects()->get())
+            ->dataset('Pending Projects', $partner->projects()->where('user_id', '=', null)
+                ->where('status', '=', 'open')->get())
+            ->dataset('Completed Projects', $partner->projects()->where('user_id', '!=', null)
+                ->where('status', '=', 'Completed')->get())
+            ->groupByMonth();
+
+        return view('partner.home', compact('total','chart'));
     }
 
     public function profileEdit()
