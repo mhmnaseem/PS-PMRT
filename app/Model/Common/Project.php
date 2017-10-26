@@ -10,11 +10,11 @@ class Project extends Model
     protected $dates = array('due_date','start_date','complete_date');
 
     public function partner(){
-        return $this->belongsTo('App\Model\Partner\Partner');
+        return $this->belongsTo('App\Model\Partner\Partner', 'partner_id');
     }
 
     public function pm(){
-        return $this->belongsTo('App\Model\User\User');
+        return $this->belongsTo('App\Model\User\User', 'user_id');
     }
 
     public function setDueDateAttribute($value)

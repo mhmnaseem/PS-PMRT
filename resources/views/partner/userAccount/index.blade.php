@@ -52,6 +52,9 @@
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
+
+                            @if ($pms->isNotEmpty())
+
                             <table id="example2" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
@@ -98,6 +101,16 @@
                                     </tr>
                                 @endforeach
                             </table>
+
+                            @else
+
+                                <div class="callout callout-info">
+                                    <h4> No Project Managers !</h4>
+
+                                    <p>Please Create One..!</p>
+                                </div>
+
+                            @endif
                         </div>
                         <!-- /.box-body -->
                     </div>

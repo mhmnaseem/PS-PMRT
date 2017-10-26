@@ -29,7 +29,7 @@ class User extends Authenticatable
 
     public function partner()
     {
-        return $this->belongsTo('App\Model\Partner\Partner');
+        return $this->belongsTo('App\Model\Partner\Partner','partner_id');
     }
 
     public function scopeFindBySlug($query, $slug)
@@ -37,7 +37,7 @@ class User extends Authenticatable
         $query->where('slug', '=', $slug);
     }
     public function projects(){
-        return $this->hasMany('App\Model\Common\Project');
+        return $this->hasMany('App\Model\Common\Project','user_id');
     }
 
 }

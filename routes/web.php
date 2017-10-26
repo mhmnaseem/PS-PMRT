@@ -35,8 +35,9 @@ Route::group(['namespace'=>'Partner'],function (){
 
     Route::get('partner/home','PartnerHomeController@index')->name('partner.home');
     Route::resource('partner/pm','UserController');
-    Route::resource('partner/partner-project-assign','ProjectsAssignController');
 
+    Route::resource('partner/partner-project-assign','ProjectsAssignController');
+    Route::post('partner/pm-project-assign','ProjectsAssignController@assign')->name('pm-project-assign.assign');
     //partner Profile
     Route::get('partner/profile', 'PartnerHomeController@profileEdit')->name('partner.profile');
     Route::post('partner/profile', 'PartnerHomeController@profileUpdate');

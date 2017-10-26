@@ -40,7 +40,7 @@
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
-                        <form class="form-horizontal" role="form" method="post" action="{{route('admin-project-assign.update',$project->id)}}">
+                        <form class="form-horizontal" role="form" method="post" action="{{route('partner-project-assign.update',$project->slug)}}">
                             {{csrf_field()}}
                             {{method_field('PUT')}}
                             <div class="box-body">
@@ -189,3 +189,4 @@
     </script>
 
 @endsection
+
