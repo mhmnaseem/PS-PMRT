@@ -1,6 +1,8 @@
 <?php
 
 
+use Carbon\Carbon;
+
 function progressColor($progress)
 {
     if ($progress <= 20)
@@ -36,6 +38,16 @@ function statusColor($status)
         default:
             return '<span class="label label-info">'.$status.'</span>';
    }
+
+}
+
+function dueDays($date){
+
+    $now = Carbon::now();
+    $result=$date->diffInDays($now);
+
+    return '<span class="label label-danger">Overdue by '.$result.' Days</span>';
+
 
 }
 

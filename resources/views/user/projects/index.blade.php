@@ -1,4 +1,4 @@
-@extends('partner.layout.master')
+@extends('user.layout.master')
 
 @section ('header')
 
@@ -50,16 +50,16 @@
                 <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#pending" data-toggle="tab">
-                                <i class="fa fa-hourglass-half" aria-hidden="true"></i> PM Unassigned
+                                <i class="fa fa-hourglass-half" aria-hidden="true"></i> Pending Projects
                                 <span class="badge">{{$total['totalPending']}}</span></a>
                         </li>
-                        <li><a href="#assigned" data-toggle="tab">
-                                <i class="fa fa-random" aria-hidden="true"></i> PM Assigned <span
-                                        class="badge">{{$total['totalAssigned']}}</span></a>
+                        <li><a href="#overdue" data-toggle="tab">
+                                <i class="fa fa fa-fire text-red" aria-hidden="true"></i> Overdue Projects <span
+                                        class="badge bg-red">{{$total['totalOverdue']}}</span></a>
                         </li>
                         <li><a href="#completed" data-toggle="tab">
                                 <i class="fa fa-handshake-o" aria-hidden="true"></i>
-                                Completed <span class="badge">{{$total['totalCompleted']}}</span></a></li>
+                                Completed Projects<span class="badge">{{$total['totalCompleted']}}</span></a></li>
                         <li><a href="#all" data-toggle="tab">
                                 <i class="fa fa-archive" aria-hidden="true"></i>
                                 All Projects <span class="badge">{{$total['allProjects']}}</span></a></li>
@@ -78,7 +78,7 @@
                                         <th>Status</th>
                                         <th>Start date</th>
                                         <th>Due date</th>
-                                        <th>Assign To PM</th>
+
 
 
                                     </tr>
@@ -100,11 +100,7 @@
                                             <td>{!! statusColor($pendingProject->status) !!}</td>
                                             <td>{{$pendingProject->start_date->format(config('constants.time.format'))}}</td>
                                             <td>{{$pendingProject->due_date->format(config('constants.time.format'))}}</td>
-                                            <td>
-                                                <button value="{{$pendingProject->slug}}"
-                                                        class="btn btn-xs btn-success open_modal">
-                                                    <i class="fa fa-fw fa-link"></i></button>
-                                            </td>
+
                                         </tr>
 
                                     @endforeach
@@ -122,9 +118,9 @@
 
                         </div>
                         <!-- /.tab-pane -->
-                        <div class="tab-pane" id="assigned">
+                        <div class="tab-pane" id="overdue">
 
-                            @if ($assignedProjects->isNotEmpty())
+                            @if ($overdueProjects->isNotEmpty())
 
 
                                 <table id="example3" class="table table-bordered table-striped">
@@ -135,29 +131,29 @@
                                         <th>Status</th>
                                         <th>Start date</th>
                                         <th>Due date</th>
-                                        <th>Assigned PM</th>
+
 
 
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($assignedProjects as $assignedProject)
+                                    @foreach($overdueProjects as $overdueProject)
                                         <tr>
                                             <td>
                                                 <div class="btn-group">
 
                                                     <a data-toggle="tooltip" data-placement="top" title="Edit"
                                                        class="btn btn-xs btn-warning"
-                                                       href="{{route('partner-project-assign.edit',$assignedProject->slug)}}"><i
+                                                       href="{{route('partner-project-assign.edit',$overdueProject->slug)}}"><i
                                                                 class="fa fa-fw fa-edit"></i></a>
 
                                                 </div>
                                             </td>
-                                            <td>{{$assignedProject->title}}</td>
-                                            <td>{!! statusColor($assignedProject->status) !!}</td>
-                                            <td>{{$assignedProject->start_date->format(config('constants.time.format'))}}</td>
-                                            <td>{{$assignedProject->due_date->format(config('constants.time.format'))}}</td>
-                                            <td>{{$assignedProject->pm->name}}</td>
+                                            <td>{{$overdueProject->title}}</td>
+                                            <td>{!! statusColor($overdueProject->status) !!}</td>
+                                            <td>{{$overdueProject->start_date->format(config('constants.time.format'))}}</td>
+                                            <td>{!! '<small>'.$overdueProject->due_date->format(config('constants.time.format')).'</small> '. dueDays($overdueProject->due_date)  !!}</td>
+
 
 
                                         </tr>
@@ -167,7 +163,7 @@
                             @else
 
                                 <div class="callout callout-info">
-                                    <h4>No Project Assigned to your Account !</h4>
+                                    <h4>No Overdue Projects !</h4>
 
                                     <p>Please Check Back Later..!</p>
                                 </div>
@@ -187,7 +183,7 @@
                                         <th>Status</th>
                                         <th>Start date</th>
                                         <th>Due date</th>
-                                        <th>Assigned PM</th>
+
 
 
                                     </tr>
@@ -209,7 +205,7 @@
                                             <td>{!! statusColor($completedProject->status) !!}</td>
                                             <td>{{$completedProject->start_date->format(config('constants.time.format'))}}</td>
                                             <td>{{$completedProject->due_date->format(config('constants.time.format'))}}</td>
-                                            <td>{{$completedProject->pm->name}}</td>
+
 
 
                                         </tr>
@@ -240,7 +236,6 @@
                                         <th>Status</th>
                                         <th>Start date</th>
                                         <th>Due date</th>
-                                        <th>Assigned PM</th>
 
 
                                     </tr>
@@ -262,14 +257,7 @@
                                             <td>{!! statusColor($allProject->status) !!}</td>
                                             <td>{{$allProject->start_date->format(config('constants.time.format'))}}</td>
                                             <td>{{$allProject->due_date->format(config('constants.time.format'))}}</td>
-                                            <td>
-                                                @if(!empty($allProject->user_id))
-                                                    {{$allProject->pm->name}}
-                                                @else
 
-                                                    <button value="{{$allProject->slug}}"
-                                                            class="btn btn-xs btn-success open_modal">
-                                                        <i class="fa fa-fw fa-link"></i></button>  @endif</td>
 
 
                                         </tr>
@@ -292,53 +280,6 @@
                 </div>
                 <!-- nav-tabs-custom -->
 
-
-                <div class="modal fade" id="myModal">
-                    <div class="modal-dialog modal-sm">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal"
-                                        aria-label="Close">
-                                    <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">Assign Project Manager</h4>
-                            </div>
-                            <div class="modal-body">
-                                <form id="assign-form" role="form" method="post"
-                                      action="{{route('pm-project-assign.assign')}}">
-
-                                    <input type="hidden" id="slug" name="slug">
-
-                                    <div class="form-group">
-                                        <label for="project_manager" class="control-label">Project
-                                            Manager</label>
-
-                                        <select name="pm" id="pm" class="form-control"
-                                                name="project_manager" autofocus>
-                                            @foreach($pms as $pm)
-                                                <option value="{{ $pm->id }}">{{ $pm->name }}</option>
-                                            @endforeach
-                                        </select>
-
-                                    </div>
-
-                                    <button id="btn-assign" type="submit" class="btn btn-success">
-                                        Assign PM
-                                    </button>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default pull-left"
-                                        data-dismiss="modal">Close
-                                </button>
-
-                            </div>
-
-                        </div>
-                        <!-- /.modal-content -->
-                    </div>
-                    <!-- /.modal-dialog -->
-                </div>
-                <!-- /.modal -->
 
 
                 <!-- /.box-body -->
@@ -401,57 +342,6 @@
                 "order": [[0, "desc"]]
             });
         });
-
-
-        //Assign PM
-        $(document).ready(function () {
-            $(document).on('click', '.open_modal', function () {
-
-                $('#myModal').modal('show');
-                $('#slug').val($(this).val());
-
-            });
-
-
-            $("#btn-assign").click(function (e) {
-
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                    }
-                })
-                e.preventDefault();
-                var formData = {
-                    pm: $('#pm').val(),
-                    slug: $('#slug').val()
-                }
-                var url = $('#assign-form').attr('action');
-
-                //console.log(formData);
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    data: formData,
-                    dataType: 'json',
-                    success: function (data) {
-                        // console.log(data);
-
-                        if (data == "true") { //if user added a new record
-                            $('#myModal').modal('hide')
-                            location.reload();
-                        }
-
-                    },
-                    error: function (data) {
-                        console.log('Error:', data);
-                    }
-                });
-            });
-
-
-        });
-
-
 
 
     </script>

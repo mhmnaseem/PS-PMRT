@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Model\User\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,33 +16,34 @@ class ProjectController extends Controller
      */
     public function index()
     {
+
         $user = User::findorfail(auth()->user()->id);
 
-        //pending projects
-        $pendingProjects = $user->projects()
-            ->where('user_id', '=', null)
-            ->where('status', '=', 'open')
-            ->latest('id')->get();
+        //pending projects Projects
+        $pendingProjects =$user->projects()
+            ->where('status', '=', 'Open')
+            ->get();
 
-        //assigned Projects
-        $assignedProjects = $user->projects()
-            ->where('user_id', '!=', null)
-            ->latest('id')->get();
+        //Total improgress
+        $overdueProjects = $user->projects()
+            ->where('status', '!=', 'Complete')
+            ->where('due_date', '<', Carbon::now())
+            ->get();
 
         //Completed Projects
         $completedProjects = $user->projects()
-            ->where('user_id', '!=', null)
             ->where('status', '=', 'Completed')
-            ->latest('id')->get();
+            ->get();
 
-        //all Projects
-        $allProjects = $user->projects()
-            ->latest('id')->get();
+        //All Projects
+        $allProjects =$user->projects()->get();
 
-        //count results
+
+
+        //count results and put in array
         $total = [
             'totalPending' => count($pendingProjects),
-            'totalAssigned' => count($assignedProjects),
+            'totalOverdue' => count($overdueProjects),
             'totalCompleted' => count($completedProjects),
             'allProjects' => count($allProjects)
 
@@ -48,7 +51,7 @@ class ProjectController extends Controller
 
 
 
-        return view('user.projects.index', compact('pendingProjects', 'assignedProjects', 'completedProjects', 'allProjects', 'total'));
+        return view('user.projects.index', compact('pendingProjects', 'overdueProjects', 'completedProjects', 'allProjects', 'total'));
     }
 
     /**
