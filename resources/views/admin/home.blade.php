@@ -96,7 +96,7 @@
 
                     </div>
                 </div>
-
+            </div>
             {{--<h3 class="tab-primary text-center"> Welcome to Pro Services Project Management Reporting Tool</h3>--}}
 
 

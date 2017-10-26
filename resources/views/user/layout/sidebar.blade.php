@@ -33,18 +33,17 @@
 
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-user-circle-o"></i> <span>PM'S</span>
+                    <i class="fa fa-tasks"></i> <span>Projects</span>
                     <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class=""><a href="{{route('pm.index')}}"><i class="fa fa-circle-o"></i> All PM'S</a></li>
-                    <li class=""><a href="{{route('pm.create')}}"><i class="fa fa-plus"></i> New PM</a></li>
+                    <li class=""><a href="{{route('projects.index')}}"><i class="fa fa-circle-o"></i> All Projects</a></li>
+                    {{--<li class=""><a href="{{route('partner-project-assign.create')}}"><i class="fa fa-plus"></i> New Project</a></li>--}}
 
                 </ul>
             </li>
-
 
             <li class="treeview">
 

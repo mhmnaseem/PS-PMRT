@@ -60,6 +60,10 @@ Route::group(['namespace'=>'User'],function (){
     Route::get('pm/profile', 'HomeController@profileEdit')->name('pm.profile');
     Route::post('pm/profile', 'HomeController@profileUpdate');
 
+    //projects
+
+    Route::resource('pm/projects', 'ProjectController');
+
     Route::get('/home', 'HomeController@index')->name('home');
 
 });

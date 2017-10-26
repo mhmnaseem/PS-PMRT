@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Model\User\User;
+use ConsoleTVs\Charts\Facades\Charts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,7 +26,52 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('user.home');
+
+        $user = User::findorfail(auth()->user()->id);
+
+
+        //pending projects Projects
+        $pendingProjects =$user->projects()
+            ->where('status', '=', 'open')
+            ->count();
+
+        //Total improgress
+        $TotalInprogress = $user->projects()
+            ->where('status', '=', 'Inprogress')
+            ->count();
+
+        //Completed Projects
+        $completedProjects = $user->projects()
+            ->where('status', '=', 'Completed')
+            ->count();
+
+        //Total Projects
+        $TotalProjects =$user->projects()->count();
+
+
+        //all in one array
+        $total = [
+            'totalPending' => $pendingProjects,
+            'totalInprogress' => $TotalInprogress,
+            'totalCompleted' => $completedProjects,
+            'totalProjects' => $TotalProjects
+        ];
+
+
+        //chart
+        $chart =  Charts::multiDatabase('line', 'material')
+            ->title('Projects By Month')
+            ->dataset('Total Projects', $user->projects()->get())
+            ->dataset('Pending Projects', $user->projects()
+                ->where('status', '=', 'open')->get())
+            ->dataset('Inprogress Projects',$user->projects()
+                ->where('status', '=', 'Inprogress')->get())
+            ->dataset('Completed Projects', $user->projects()
+                ->where('status', '=', 'Completed')->get())
+            ->groupByMonth();
+
+
+        return view('user.home',compact('total','chart'));
     }
 
     public function profileEdit()
