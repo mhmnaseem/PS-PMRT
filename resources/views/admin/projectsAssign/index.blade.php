@@ -76,7 +76,7 @@
 
                             @if ($pendingProjects->isNotEmpty())
 
-                                <table id="example2" class="table table-bordered table-striped">
+                                <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
                                         <th>Option</th>
@@ -147,7 +147,7 @@
                             @if ($assignedProjects->isNotEmpty())
 
 
-                                <table id="example3" class="table table-bordered table-striped">
+                                <table id="example2" class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
                                         <th>Option</th>
@@ -227,6 +227,8 @@
                                         <th>Status</th>
                                         <th>Start date</th>
                                         <th>Due date</th>
+                                        <th>Partner</th>
+                                        <th>Assigned PM</th>
 
 
 
@@ -249,7 +251,13 @@
                                             <td>{!! statusColor($overdueProject->status) !!}</td>
                                             <td>{{$overdueProject->start_date->format(config('constants.time.format'))}}</td>
                                             <td>{!! '<small>'.$overdueProject->due_date->format(config('constants.time.format')).'</small> '. dueDays($overdueProject->due_date)  !!}</td>
-
+                                            <td>{{$overdueProject->partner->name}}</td>
+                                            <td>
+                                                @if(!empty($overdueProject->user_id))
+                                                    {{$overdueProject->pm->name}}
+                                                @else
+                                                    No PM Assigned
+                                                @endif</td>
 
 
                                         </tr>
@@ -451,7 +459,7 @@
 
     <script>
         $(function () {
-            $('#example2').DataTable({
+            $('#example1,#example2,#example3,#example4,#example5').DataTable({
                 'paging': true,
                 'lengthChange': false,
                 'searching': true,
@@ -460,33 +468,7 @@
                 'autoWidth': false,
                 "order": [[0, "desc"]]
             });
-            $('#example3').DataTable({
-                'paging': true,
-                'lengthChange': false,
-                'searching': true,
-                'ordering': true,
-                'info': true,
-                'autoWidth': false,
-                "order": [[0, "desc"]]
-            });
-            $('#example4').DataTable({
-                'paging': true,
-                'lengthChange': false,
-                'searching': true,
-                'ordering': true,
-                'info': true,
-                'autoWidth': false,
-                "order": [[0, "desc"]]
-            });
-            $('#example5').DataTable({
-                'paging': true,
-                'lengthChange': false,
-                'searching': true,
-                'ordering': true,
-                'info': true,
-                'autoWidth': false,
-                "order": [[0, "desc"]]
-            });
+
         })
     </script>
 

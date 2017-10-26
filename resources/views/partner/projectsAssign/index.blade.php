@@ -57,6 +57,10 @@
                                 <i class="fa fa-random" aria-hidden="true"></i> PM Assigned <span
                                         class="badge">{{$total['totalAssigned']}}</span></a>
                         </li>
+                        <li><a href="#overdue" data-toggle="tab">
+                                <i class="fa fa fa-fire text-red" aria-hidden="true"></i> Overdue Projects <span
+                                        class="badge bg-red">{{$total['totalOverdue']}}</span></a>
+                        </li>
                         <li><a href="#completed" data-toggle="tab">
                                 <i class="fa fa-handshake-o" aria-hidden="true"></i>
                                 Completed <span class="badge">{{$total['totalCompleted']}}</span></a></li>
@@ -70,7 +74,7 @@
 
                             @if ($pendingProjects->isNotEmpty())
 
-                                <table id="example2" class="table table-bordered table-striped">
+                                <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
                                         <th>Option</th>
@@ -127,7 +131,7 @@
                             @if ($assignedProjects->isNotEmpty())
 
 
-                                <table id="example3" class="table table-bordered table-striped">
+                                <table id="example2" class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
                                         <th>Option</th>
@@ -167,13 +171,78 @@
                             @else
 
                                 <div class="callout callout-info">
-                                    <h4>No Project Assigned to your Account !</h4>
+                                    <h4>No Project Assigned to PM !</h4>
 
                                     <p>Please Check Back Later..!</p>
                                 </div>
 
                             @endif
                         </div>
+
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="overdue">
+
+                            @if ($overdueProjects->isNotEmpty())
+
+
+                                <table id="example3" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Option</th>
+                                        <th>Title</th>
+                                        <th>Status</th>
+                                        <th>Start date</th>
+                                        <th>Due date</th>
+                                        <th>Assigned PM</th>
+
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($overdueProjects as $overdueProject)
+                                        <tr>
+                                            <td>
+                                                <div class="btn-group">
+
+                                                    <a data-toggle="tooltip" data-placement="top" title="Edit"
+                                                       class="btn btn-xs btn-warning"
+                                                       href="{{route('partner-project-assign.edit',$overdueProject->slug)}}"><i
+                                                                class="fa fa-fw fa-edit"></i></a>
+
+                                                </div>
+                                            </td>
+                                            <td>{{$overdueProject->title}}</td>
+                                            <td>{!! statusColor($overdueProject->status) !!}</td>
+                                            <td>{{$overdueProject->start_date->format(config('constants.time.format'))}}</td>
+                                            <td>{!! '<small>'.$overdueProject->due_date->format(config('constants.time.format')).'</small> '. dueDays($overdueProject->due_date)  !!}</td>
+                                            <td>
+                                                @if(!empty($overdueProject->user_id))
+                                                    {{$overdueProject->pm->name}}
+                                                @else
+
+                                                    <button value="{{$overdueProject->slug}}"
+                                                            class="btn btn-xs btn-success open_modal">
+                                                        <i class="fa fa-fw fa-link"></i></button>
+                                                @endif
+                                            </td>
+
+
+                                        </tr>
+                                    @endforeach
+                                </table>
+
+                            @else
+
+                                <div class="callout callout-info">
+                                    <h4>No Overdue Projects !</h4>
+
+                                    <p>Please Check Back Later..!</p>
+                                </div>
+
+                            @endif
+                        </div>
+
+
                         <!-- /.tab-pane -->
                         <div class="tab-pane" id="completed">
 
@@ -209,7 +278,16 @@
                                             <td>{!! statusColor($completedProject->status) !!}</td>
                                             <td>{{$completedProject->start_date->format(config('constants.time.format'))}}</td>
                                             <td>{{$completedProject->due_date->format(config('constants.time.format'))}}</td>
-                                            <td>{{$completedProject->pm->name}}</td>
+                                            <td>
+                                                @if(!empty($completedProject->user_id))
+                                                    {{$completedProject->pm->name}}
+                                                @else
+
+                                                    <button value="{{$completedProject->slug}}"
+                                                            class="btn btn-xs btn-success open_modal">
+                                                        <i class="fa fa-fw fa-link"></i></button>
+                                                @endif
+                                            </td>
 
 
                                         </tr>
@@ -266,10 +344,11 @@
                                                 @if(!empty($allProject->user_id))
                                                     {{$allProject->pm->name}}
                                                 @else
-
                                                     <button value="{{$allProject->slug}}"
                                                             class="btn btn-xs btn-success open_modal">
-                                                        <i class="fa fa-fw fa-link"></i></button>  @endif</td>
+                                                        <i class="fa fa-fw fa-link"></i></button>
+                                                @endif
+                                            </td>
 
 
                                         </tr>
@@ -364,34 +443,7 @@
 
     <script>
         $(function () {
-            $('#example2').DataTable({
-                'paging': true,
-                'lengthChange': false,
-                'searching': true,
-                'ordering': true,
-                'info': true,
-                'autoWidth': false,
-                "order": [[0, "desc"]]
-            });
-            $('#example3').DataTable({
-                'paging': true,
-                'lengthChange': false,
-                'searching': true,
-                'ordering': true,
-                'info': true,
-                'autoWidth': false,
-                "order": [[0, "desc"]]
-            });
-            $('#example4').DataTable({
-                'paging': true,
-                'lengthChange': false,
-                'searching': true,
-                'ordering': true,
-                'info': true,
-                'autoWidth': false,
-                "order": [[0, "desc"]]
-            });
-            $('#example5').DataTable({
+            $('#example1,#example2,#example3,#example4,#example5').DataTable({
                 'paging': true,
                 'lengthChange': false,
                 'searching': true,
@@ -450,8 +502,6 @@
 
 
         });
-
-
 
 
     </script>

@@ -48,11 +48,11 @@ class ProjectController extends Controller
 
         //count results and put in array
         $total = [
+            'totalStars' => count($starProjects),
             'totalPending' => count($pendingProjects),
             'totalOverdue' => count($overdueProjects),
             'totalCompleted' => count($completedProjects),
             'allProjects' => count($allProjects)
-
         ];
 
 

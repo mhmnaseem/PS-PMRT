@@ -142,8 +142,8 @@ class ProjectsAssignController extends Controller
         $this->validate($request,[
             'title' => 'required|string|max:200',
             'description' => 'required',
-            'start_date' => 'required|date|after:yesterday',
-            'due_date' => 'required|date|after:start_date',
+            'start_date' => 'required|date|before_or_equal:due_date',
+            'due_date' => 'required|date',
         ]);
 
         $project=Project::findorfail($id);

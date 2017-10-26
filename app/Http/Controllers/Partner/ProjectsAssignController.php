@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Partner;
 use App\Model\Common\Project;
 use App\Model\Partner\Partner;
 use App\Model\User\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -41,6 +42,14 @@ class ProjectsAssignController extends Controller
             ->where('user_id', '!=', null)
             ->latest('id')->get();
 
+
+        // Overdue Projects
+        $overdueProjects = $partner->projects()
+            ->where('status', '!=', 'Complete')
+            ->where('due_date', '<', Carbon::now())
+            ->get();
+
+
         //Completed Projects
         $completedProjects = $partner->projects()
             ->where('user_id', '!=', null)
@@ -55,6 +64,7 @@ class ProjectsAssignController extends Controller
         $total = [
             'totalPending' => count($pendingProjects),
             'totalAssigned' => count($assignedProjects),
+            'totalOverdue' => count($overdueProjects),
             'totalCompleted' => count($completedProjects),
             'allProjects' => count($allProjects)
 
@@ -64,7 +74,7 @@ class ProjectsAssignController extends Controller
 
         $pms = $partner->pms()->get();
 
-        return view('partner.projectsAssign.index', compact('pms', 'pendingProjects', 'assignedProjects', 'completedProjects', 'allProjects', 'total'));
+        return view('partner.projectsAssign.index', compact('pms', 'pendingProjects', 'assignedProjects','overdueProjects', 'completedProjects', 'allProjects', 'total'));
     }
 
     /**
@@ -158,8 +168,8 @@ class ProjectsAssignController extends Controller
         $this->validate($request, [
             'title' => 'required|string|max:200',
             'description' => 'required',
-            'start_date' => 'required|date|after:yesterday',
-            'due_date' => 'required|date|after:start_date',
+            'start_date' => 'required|date|before_or_equal:due_date',
+            'due_date' => 'required|date',
         ]);
 
         $project = Project::findBySlug($slug)->firstorfail();

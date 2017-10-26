@@ -49,7 +49,11 @@
                 <!-- Custom Tabs -->
                 <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="#pending" data-toggle="tab">
+                        <li class="active"><a href="#star" data-toggle="tab">
+                                <i class="fa fa-star text-yellow" aria-hidden="true"></i> Star Projects
+                                <span class="badge bg-yellow">{{$total['totalStars']}}</span></a>
+                        </li>
+                        <li><a href="#pending" data-toggle="tab">
                                 <i class="fa fa-hourglass-half" aria-hidden="true"></i> Pending Projects
                                 <span class="badge">{{$total['totalPending']}}</span></a>
                         </li>
@@ -59,14 +63,66 @@
                         </li>
                         <li><a href="#completed" data-toggle="tab">
                                 <i class="fa fa-handshake-o" aria-hidden="true"></i>
-                                Completed Projects<span class="badge">{{$total['totalCompleted']}}</span></a></li>
+                                Completed Projects <span class="badge">{{$total['totalCompleted']}}</span></a></li>
                         <li><a href="#all" data-toggle="tab">
                                 <i class="fa fa-archive" aria-hidden="true"></i>
                                 All Projects <span class="badge">{{$total['allProjects']}}</span></a></li>
 
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane active" id="pending">
+                        <div class="tab-pane active" id="star">
+
+                            @if ($starProjects->isNotEmpty())
+
+                                <table id="example1" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Option</th>
+                                        <th>Title</th>
+                                        <th>Status</th>
+                                        <th>Start date</th>
+                                        <th>Due date</th>
+
+
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($starProjects as $starProject)
+                                        <tr>
+                                            <td>
+                                                <div class="btn-group">
+
+                                                    <a data-toggle="tooltip" data-placement="top" title="Edit"
+                                                       class="btn btn-xs btn-warning"
+                                                       href="{{route('partner-project-assign.edit',$starProject->slug)}}"><i
+                                                                class="fa fa-fw fa-edit"></i></a>
+
+                                                </div>
+                                            </td>
+                                            <td>{{$starProject->title}}</td>
+                                            <td>{!! statusColor($starProject->status) !!}</td>
+                                            <td>{{$starProject->start_date->format(config('constants.time.format'))}}</td>
+                                            <td>{{$starProject->due_date->format(config('constants.time.format'))}}</td>
+
+                                        </tr>
+
+                                    @endforeach
+                                </table>
+                            @else
+
+                                <div class="callout callout-info">
+                                    <h4> No Star Projects !</h4>
+
+                                    <p>Please Check Back Later..!</p>
+                                </div>
+
+                            @endif
+
+
+                        </div>
+
+                        <div class="tab-pane" id="pending">
 
                             @if ($pendingProjects->isNotEmpty())
 
@@ -305,34 +361,7 @@
 
     <script>
         $(function () {
-            $('#example2').DataTable({
-                'paging': true,
-                'lengthChange': false,
-                'searching': true,
-                'ordering': true,
-                'info': true,
-                'autoWidth': false,
-                "order": [[0, "desc"]]
-            });
-            $('#example3').DataTable({
-                'paging': true,
-                'lengthChange': false,
-                'searching': true,
-                'ordering': true,
-                'info': true,
-                'autoWidth': false,
-                "order": [[0, "desc"]]
-            });
-            $('#example4').DataTable({
-                'paging': true,
-                'lengthChange': false,
-                'searching': true,
-                'ordering': true,
-                'info': true,
-                'autoWidth': false,
-                "order": [[0, "desc"]]
-            });
-            $('#example5').DataTable({
+            $('#example1,#example2,#example3,#example4,#example5').DataTable({
                 'paging': true,
                 'lengthChange': false,
                 'searching': true,

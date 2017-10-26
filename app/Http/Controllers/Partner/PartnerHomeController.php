@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Partner;
 use App\Model\Common\Project;
 use App\Model\Partner\Partner;
 use App\Model\User\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -71,6 +72,9 @@ class PartnerHomeController extends Controller
             ->dataset('Total Projects', $partner->projects()->get())
             ->dataset('Pending Projects', $partner->projects()->where('user_id', '=', null)
                 ->where('status', '=', 'open')->get())
+            ->dataset('Overdue Projects',$partner->projects()
+                ->where('status', '!=', 'Complete')
+                ->where('due_date', '<', Carbon::now())->get())
             ->dataset('Completed Projects', $partner->projects()->where('user_id', '!=', null)
                 ->where('status', '=', 'Completed')->get())
             ->groupByMonth();
