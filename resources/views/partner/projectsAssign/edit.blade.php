@@ -177,11 +177,13 @@
             //Date picker
             $('#datepicker').datepicker({
                 format: '{{config('constants.time.date_picker')}}',
-                autoclose: true
+                autoclose: true,
+                todayHighlight: true
             });
             $('#datepicker1').datepicker({
                 format: '{{config('constants.time.date_picker')}}',
-                autoclose: true
+                autoclose: true,
+                todayHighlight: true
             });
 
             CKEDITOR.replace('editor1');

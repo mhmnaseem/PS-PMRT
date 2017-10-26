@@ -25,6 +25,7 @@ class CreateProjectsTable extends Migration
             $table->date('due_date')->nullable();
             $table->date('complete_date')->nullable();
             $table->integer('progress')->default(0);
+            $table->smallInteger('star')->default(0);
             $table->timestamps();
 
             $table->foreign('partner_id')->references('id')->on('partners')->onDelete('cascade');

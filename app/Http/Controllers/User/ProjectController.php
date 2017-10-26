@@ -19,12 +19,18 @@ class ProjectController extends Controller
 
         $user = User::findorfail(auth()->user()->id);
 
-        //pending projects Projects
+        //star projects
+        $starProjects =$user->projects()
+            ->where('star', '=', 1)
+            ->get();
+
+
+        //pending projects
         $pendingProjects =$user->projects()
             ->where('status', '=', 'Open')
             ->get();
 
-        //Total improgress
+        // Overdue Projects
         $overdueProjects = $user->projects()
             ->where('status', '!=', 'Complete')
             ->where('due_date', '<', Carbon::now())
@@ -51,7 +57,7 @@ class ProjectController extends Controller
 
 
 
-        return view('user.projects.index', compact('pendingProjects', 'overdueProjects', 'completedProjects', 'allProjects', 'total'));
+        return view('user.projects.index', compact('starProjects','pendingProjects', 'overdueProjects', 'completedProjects', 'allProjects', 'total'));
     }
 
     /**

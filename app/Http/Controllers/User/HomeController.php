@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Model\User\User;
+use Carbon\Carbon;
 use ConsoleTVs\Charts\Facades\Charts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,9 +37,11 @@ class HomeController extends Controller
             ->count();
 
         //Total improgress
-        $TotalInprogress = $user->projects()
-            ->where('status', '=', 'Inprogress')
+        $TotalOverdue = $user->projects()
+            ->where('status', '!=', 'Complete')
+            ->where('due_date', '<', Carbon::now())
             ->count();
+
 
         //Completed Projects
         $completedProjects = $user->projects()
@@ -52,7 +55,7 @@ class HomeController extends Controller
         //all in one array
         $total = [
             'totalPending' => $pendingProjects,
-            'totalInprogress' => $TotalInprogress,
+            'totalOverdue' => $TotalOverdue,
             'totalCompleted' => $completedProjects,
             'totalProjects' => $TotalProjects
         ];
@@ -64,8 +67,9 @@ class HomeController extends Controller
             ->dataset('Total Projects', $user->projects()->get())
             ->dataset('Pending Projects', $user->projects()
                 ->where('status', '=', 'open')->get())
-            ->dataset('Inprogress Projects',$user->projects()
-                ->where('status', '=', 'Inprogress')->get())
+            ->dataset('Overdue Projects',$user->projects()
+                ->where('status', '!=', 'Complete')
+                ->where('due_date', '<', Carbon::now())->get())
             ->dataset('Completed Projects', $user->projects()
                 ->where('status', '=', 'Completed')->get())
             ->groupByMonth();

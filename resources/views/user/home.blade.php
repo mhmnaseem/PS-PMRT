@@ -35,22 +35,22 @@
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <a href="{{ url('admin/admin-project-assign#pending') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="{{ url('pm/projects#pending') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
                 <div class="col-lg-3 col-xs-6">
                     <!-- small box -->
-                    <div class="small-box bg-yellow">
+                    <div class="small-box bg-red">
                         <div class="inner">
-                            <h3>{{$total['totalInprogress']}}</h3>
+                            <h3>{{$total['totalOverdue']}}</h3>
 
-                            <p>Inprogress Projects</p>
+                            <p>Overdue Projects</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-load-a"></i>
+                            <i class="ion ion-fireball"></i>
                         </div>
-                        <a href="{{ url('admin/partner') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="{{ url('pm/projects#overdue') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -65,12 +65,12 @@
                         <div class="icon">
                             <i class="ion ion-stats-bars"></i>
                         </div>
-                        <a href="{{ url('admin/admin-project-assign#completed') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="{{ url('pm/projects#completed') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-xs-6">
                     <!-- small box -->
-                    <div class="small-box bg-red">
+                    <div class="small-box bg-yellow">
                         <div class="inner">
                             <h3>{{$total['totalProjects']}}</h3>
 
@@ -79,7 +79,7 @@
                         <div class="icon">
                             <i class="ion ion-pie-graph"></i>
                         </div>
-                        <a href="{{ url('/admin/admin-project-assign#all') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="{{ url('pm/projects#all') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->

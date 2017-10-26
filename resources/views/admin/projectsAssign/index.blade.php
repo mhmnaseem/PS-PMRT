@@ -59,9 +59,13 @@
                                 <i class="fa fa-random" aria-hidden="true"></i> PM Assigned <span
                                         class="badge">{{$total['totalAssigned']}}</span></a>
                         </li>
+                        <li><a href="#overdue" data-toggle="tab">
+                                <i class="fa fa fa-fire text-red" aria-hidden="true"></i> Overdue Projects <span
+                                        class="badge bg-red">{{$total['totalOverdue']}}</span></a>
+                        </li>
                         <li><a href="#completed" data-toggle="tab">
                                 <i class="fa fa-handshake-o" aria-hidden="true"></i>
-                                Completed <span class="badge">{{$total['totalCompleted']}}</span></a></li>
+                                Completed Projects <span class="badge">{{$total['totalCompleted']}}</span></a></li>
                         <li><a href="#all" data-toggle="tab">
                                 <i class="fa fa-archive" aria-hidden="true"></i>
                                 All Projects <span class="badge">{{$total['allProjects']}}</span></a></li>
@@ -203,13 +207,66 @@
                             @else
 
                                 <div class="callout callout-info">
-                                    <h4>No Project Assigned to your Account !</h4>
+                                    <h4>No PM Assigned Project!</h4>
 
                                     <p>Please Check Back Later..!</p>
                                 </div>
 
                             @endif
                         </div>
+                        <div class="tab-pane" id="overdue">
+
+                            @if ($overdueProjects->isNotEmpty())
+
+
+                                <table id="example3" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Option</th>
+                                        <th>Title</th>
+                                        <th>Status</th>
+                                        <th>Start date</th>
+                                        <th>Due date</th>
+
+
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($overdueProjects as $overdueProject)
+                                        <tr>
+                                            <td>
+                                                <div class="btn-group">
+
+                                                    <a data-toggle="tooltip" data-placement="top" title="Edit"
+                                                       class="btn btn-xs btn-warning"
+                                                       href="{{route('admin-project-assign.edit',$overdueProject->id)}}"><i
+                                                                class="fa fa-fw fa-edit"></i></a>
+
+                                                </div>
+                                            </td>
+                                            <td>{{$overdueProject->title}}</td>
+                                            <td>{!! statusColor($overdueProject->status) !!}</td>
+                                            <td>{{$overdueProject->start_date->format(config('constants.time.format'))}}</td>
+                                            <td>{!! '<small>'.$overdueProject->due_date->format(config('constants.time.format')).'</small> '. dueDays($overdueProject->due_date)  !!}</td>
+
+
+
+                                        </tr>
+                                    @endforeach
+                                </table>
+
+                            @else
+
+                                <div class="callout callout-info">
+                                    <h4>No Overdue Projects !</h4>
+
+                                    <p>Please Check Back Later..!</p>
+                                </div>
+
+                            @endif
+                        </div>
+                        <!-- /.tab-pane -->
                         <!-- /.tab-pane -->
                         <div class="tab-pane" id="completed">
 

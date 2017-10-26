@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Model\Common\Project;
 use App\Model\Partner\Partner;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -38,6 +39,11 @@ class ProjectsAssignController extends Controller
         $assignedProjects = Project::where('user_id', '!=', null)
             ->latest('id')->get();
 
+        //Overdue Projects
+        $overdueProjects = Project::where('status', '!=', 'Complete')
+            ->where('due_date', '<', Carbon::now())
+            ->get();
+
         //Completed Projects
         $completedProjects =  Project::where('user_id', '!=', null)
             ->where('status', '=', 'Completed')
@@ -50,17 +56,14 @@ class ProjectsAssignController extends Controller
         $total = [
             'totalPending' => count($pendingProjects),
             'totalAssigned' => count($assignedProjects),
+            'totalOverdue' => count($overdueProjects),
             'totalCompleted' => count($completedProjects),
             'allProjects' => count($allProjects)
 
         ];
 
 
-
-
-
-
-        return view('admin.projectsAssign.index',compact('pendingProjects', 'assignedProjects', 'completedProjects', 'allProjects', 'total'));
+        return view('admin.projectsAssign.index',compact('pendingProjects', 'assignedProjects', 'overdueProjects','completedProjects', 'allProjects', 'total'));
     }
 
     /**
@@ -85,8 +88,8 @@ class ProjectsAssignController extends Controller
         $this->validate($request,[
             'title' => 'required|string|max:200',
             'description' => 'required',
-            'start_date' => 'required|date|before_or_equal:due_date',
-            'due_date' => 'required|date',
+            'start_date' => 'required|date|after:yesterday',
+            'due_date' => 'required|date|after:start_date',
         ]);
 
         $project=new Project();
@@ -139,8 +142,8 @@ class ProjectsAssignController extends Controller
         $this->validate($request,[
             'title' => 'required|string|max:200',
             'description' => 'required',
-            'start_date' => 'required|date|before_or_equal:due_date',
-            'due_date' => 'required|date',
+            'start_date' => 'required|date|after:yesterday',
+            'due_date' => 'required|date|after:start_date',
         ]);
 
         $project=Project::findorfail($id);
