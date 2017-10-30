@@ -19,7 +19,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Projects
+                All Projects
 
             </h1>
             <ol class="breadcrumb">
@@ -30,19 +30,9 @@
         </section>
 
         <!-- Main content -->
-        <section class="content">
+        <section class="content" id="index-page">
 
-            <!-- Default box -->
-            <div class="box">
-                <div class="box-header with-border">
-                    <h3 class="box-title">All Projects</h3>
-                    {{--<a class="col-md-offset-5 btn btn-success" href="{{route('partner-project-assign.create')}}"> Add--}}
-                    {{--New </a>--}}
-
-                </div>
-
-
-                <!-- Custom Tabs -->
+            <!-- Custom Tabs -->
                 <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#star" data-toggle="tab">
@@ -361,11 +351,6 @@
                 </div>
                 <!-- nav-tabs-custom -->
 
-
-
-
-            </div>
-            <!-- /.box -->
 
         </section>
         <!-- /.content -->
