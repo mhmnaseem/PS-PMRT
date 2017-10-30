@@ -1,0 +1,11 @@
+.fa-star-o, .fa-star{
+    color:#f39c12;
+    font-size: 15px;
+}
+.tooltip-inner {
+    min-width: 100px;
+}
+.notes ul{
+    list-style: none;
+    padding: 0px;
+}

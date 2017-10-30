@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Model\Common\Project;
 use App\Model\User\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -60,6 +61,21 @@ class ProjectController extends Controller
         return view('user.projects.index', compact('starProjects','pendingProjects', 'overdueProjects', 'completedProjects', 'allProjects', 'total'));
     }
 
+
+    public function star(Request $request){
+
+        $project=Project::findBySlug($request->slug)->firstOrFail();
+        $project->star=$request->value;
+        $project->save();
+
+        return response()->json(
+            [
+                'success' => true,
+            ], 200
+        );
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -87,9 +103,10 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+        $project=Project::findBySlug($slug)->firstOrFail();
+        return view('user.projects.show',compact('project'));
     }
 
     /**

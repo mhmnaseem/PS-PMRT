@@ -39,10 +39,6 @@
                     {{--<a class="col-md-offset-5 btn btn-success" href="{{route('partner-project-assign.create')}}"> Add--}}
                     {{--New </a>--}}
 
-                    <div class="box-tools pull-right">
-
-
-                    </div>
                 </div>
 
 
@@ -50,7 +46,7 @@
                 <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#star" data-toggle="tab">
-                                <i class="fa fa-star text-yellow" aria-hidden="true"></i> Star Projects
+                                <i class="fa fa-star text-yellow" aria-hidden="true"></i> Stars Projects
                                 <span class="badge bg-yellow">{{$total['totalStars']}}</span></a>
                         </li>
                         <li><a href="#pending" data-toggle="tab">
@@ -93,11 +89,17 @@
                                             <td>
                                                 <div class="btn-group">
 
-                                                    <a data-toggle="tooltip" data-placement="top" title="Edit"
-                                                       class="btn btn-xs btn-warning"
-                                                       href="{{route('partner-project-assign.edit',$starProject->slug)}}"><i
-                                                                class="fa fa-fw fa-edit"></i></a>
-
+                                                    <a data-toggle="tooltip" data-placement="top" title="View & Edit"
+                                                       class="btn btn-xs btn-success"
+                                                       href="{{route('projects.show',$starProject->slug)}}"><i class="fa fa-fw fa-arrow-circle-o-right" aria-hidden="true"></i></a>
+                                                    @if($starProject->star==0)
+                                                        <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Star" data-slug="{{$starProject->slug}}" data-value="1"
+                                                           data-source="{{route('star')}}" class="ajax btn btn-default btn-xs"> <i
+                                                                    class="fa fa-fw fa-star-o"></i></a>
+                                                    @else
+                                                        <a href="#" data-toggle="tooltip" data-placement="top" title="Remove from Star" data-slug="{{$starProject->slug}}" data-value="0" data-source="{{route('star')}}"
+                                                           class="ajax btn btn-default btn-xs"> <i class="fa fa-fw fa-star"></i></a>
+                                                    @endif
                                                 </div>
                                             </td>
                                             <td>{{$starProject->title}}</td>
@@ -112,7 +114,7 @@
                             @else
 
                                 <div class="callout callout-info">
-                                    <h4> No Star Projects !</h4>
+                                    <h4> No Stars Projects !</h4>
 
                                     <p>Please Check Back Later..!</p>
                                 </div>
@@ -144,12 +146,17 @@
                                         <tr>
                                             <td>
                                                 <div class="btn-group">
-
-                                                    <a data-toggle="tooltip" data-placement="top" title="Edit"
-                                                       class="btn btn-xs btn-warning"
-                                                       href="{{route('partner-project-assign.edit',$pendingProject->slug)}}"><i
-                                                                class="fa fa-fw fa-edit"></i></a>
-
+                                                    <a data-toggle="tooltip" data-placement="top" title="View & Edit"
+                                                       class="btn btn-xs btn-success"
+                                                       href="{{route('projects.show',$pendingProject->slug)}}"><i class="fa fa-fw fa-arrow-circle-o-right" aria-hidden="true"></i></a>
+                                                    @if($pendingProject->star==0)
+                                                        <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Star" data-slug="{{$pendingProject->slug}}" data-value="1"
+                                                           data-source="{{route('star')}}" class="ajax btn btn-default btn-xs"> <i
+                                                                    class="fa fa-fw fa-star-o"></i></a>
+                                                    @else
+                                                        <a href="#" data-toggle="tooltip" data-placement="top" title="Remove from Star" data-slug="{{$pendingProject->slug}}" data-value="0" data-source="{{route('star')}}"
+                                                           class="ajax btn btn-default btn-xs"> <i class="fa fa-fw fa-star"></i></a>
+                                                    @endif
                                                 </div>
                                             </td>
                                             <td>{{$pendingProject->title}}</td>
@@ -198,11 +205,17 @@
                                             <td>
                                                 <div class="btn-group">
 
-                                                    <a data-toggle="tooltip" data-placement="top" title="Edit"
-                                                       class="btn btn-xs btn-warning"
-                                                       href="{{route('partner-project-assign.edit',$overdueProject->slug)}}"><i
-                                                                class="fa fa-fw fa-edit"></i></a>
-
+                                                    <a data-toggle="tooltip" data-placement="top" title="View & Edit"
+                                                       class="btn btn-xs btn-success"
+                                                       href="{{route('projects.show',$overdueProject->slug)}}"><i class="fa fa-fw fa-arrow-circle-o-right" aria-hidden="true"></i></a>
+                                                    @if($overdueProject->star==0)
+                                                        <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Star" data-slug="{{$overdueProject->slug}}" data-value="1"
+                                                           data-source="{{route('star')}}" class="ajax btn btn-default btn-xs"> <i
+                                                                    class="fa fa-fw fa-star-o"></i></a>
+                                                    @else
+                                                        <a href="#" data-toggle="tooltip" data-placement="top" title="Remove from Star" data-slug="{{$overdueProject->slug}}" data-value="0" data-source="{{route('star')}}"
+                                                           class="ajax btn btn-default btn-xs"> <i class="fa fa-fw fa-star"></i></a>
+                                                    @endif
                                                 </div>
                                             </td>
                                             <td>{{$overdueProject->title}}</td>
@@ -250,11 +263,17 @@
                                             <td>
                                                 <div class="btn-group">
 
-                                                    <a data-toggle="tooltip" data-placement="top" title="Edit"
-                                                       class="btn btn-xs btn-warning"
-                                                       href="{{route('partner-project-assign.edit',$completedProject->slug)}}"><i
-                                                                class="fa fa-fw fa-edit"></i></a>
-
+                                                    <a data-toggle="tooltip" data-placement="top" title="View & Edit"
+                                                       class="btn btn-xs btn-success"
+                                                       href="{{route('projects.show',$completedProject->slug)}}"><i class="fa fa-fw fa-arrow-circle-o-right" aria-hidden="true"></i></a>
+                                                    @if($completedProject->star==0)
+                                                        <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Star" data-slug="{{$completedProject->slug}}" data-value="1"
+                                                           data-source="{{route('star')}}" class="ajax btn btn-default btn-xs"> <i
+                                                                    class="fa fa-fw fa-star-o"></i></a>
+                                                    @else
+                                                        <a href="#" data-toggle="tooltip" data-placement="top" title="Remove from Star" data-slug="{{$completedProject->slug}}" data-value="0" data-source="{{route('star')}}"
+                                                           class="ajax btn btn-default btn-xs"> <i class="fa fa-fw fa-star"></i></a>
+                                                    @endif
                                                 </div>
                                             </td>
                                             <td>{{$completedProject->title}}</td>
@@ -302,11 +321,17 @@
                                             <td>
                                                 <div class="btn-group">
 
-                                                    <a data-toggle="tooltip" data-placement="top" title="Edit"
-                                                       class="btn btn-xs btn-warning"
-                                                       href="{{route('partner-project-assign.edit',$allProject->slug)}}"><i
-                                                                class="fa fa-fw fa-edit"></i></a>
-
+                                                    <a data-toggle="tooltip" data-placement="top" title="View & Edit"
+                                                       class="btn btn-xs btn-success"
+                                                       href="{{route('projects.show',$allProject->slug)}}"><i class="fa fa-fw fa-arrow-circle-o-right" aria-hidden="true"></i></a>
+                                                    @if($allProject->star==0)
+                                                        <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Star" data-slug="{{$allProject->slug}}" data-value="1"
+                                                           data-source="{{route('star')}}" class="ajax btn btn-default btn-xs"> <i
+                                                                    class="fa fa-fw fa-star-o"></i></a>
+                                                    @else
+                                                        <a href="#" data-toggle="tooltip" data-placement="top" title="Remove from Star" data-slug="{{$allProject->slug}}" data-value="0" data-source="{{route('star')}}"
+                                                           class="ajax btn btn-default btn-xs"> <i class="fa fa-fw fa-star"></i></a>
+                                                    @endif
                                                 </div>
                                             </td>
                                             <td>{{$allProject->title}}</td>
@@ -338,11 +363,7 @@
 
 
 
-                <!-- /.box-body -->
-                <div class="box-footer">
 
-                </div>
-                <!-- /.box-footer-->
             </div>
             <!-- /.box -->
 
@@ -369,6 +390,41 @@
                 'info': true,
                 'autoWidth': false,
                 "order": [[0, "desc"]]
+            });
+        });
+
+
+        $(document).ready(function () {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('.ajax').click(function () {
+                var t = $(this);
+
+
+                var data = {
+                    'slug': $(t).attr("data-slug"),
+                    'value': $(t).attr("data-value")
+                };
+
+
+                $.ajax({
+                    url: $(t).attr("data-source"),
+                    data: data,
+                    dataType: "json",
+                    type: "post",
+                    success: function (data) {
+                        console.log(data);
+                        if (data.success = 'true') {
+                            location.reload();
+                        }
+
+                    }
+                })
             });
         });
 
