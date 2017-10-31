@@ -26,4 +26,6 @@
     right: 0px;
 }
 
-
+.btn-group {
+    display: flex;
+}

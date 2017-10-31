@@ -64,6 +64,7 @@ Route::group(['namespace'=>'User'],function (){
 
     Route::resource('pm/projects', 'ProjectController');
     Route::post('pm/projects/star', 'ProjectController@star')->name('star');
+    Route::resource('pm/projects.pd', 'ProjectPdController');
 
     Route::get('/home', 'HomeController@index')->name('home');
 

@@ -158,75 +158,90 @@
                         <!-- /.row -->
 
 
-                        {{--@if ($starProjects->isNotEmpty())--}}
-
-                        {{--<table id="example1" class="table table-bordered table-striped">--}}
-                        {{--<thead>--}}
-                        {{--<tr>--}}
-                        {{--<th>Option</th>--}}
-                        {{--<th>Title</th>--}}
-                        {{--<th>Status</th>--}}
-                        {{--<th>Start date</th>--}}
-                        {{--<th>Due date</th>--}}
-
-
-
-                        {{--</tr>--}}
-                        {{--</thead>--}}
-                        {{--<tbody>--}}
-                        {{--@foreach($starProjects as $starProject)--}}
-                        {{--<tr>--}}
-                        {{--<td>--}}
-                        {{--<div class="btn-group">--}}
-
-                        {{--<a data-toggle="tooltip" data-placement="top" title="Edit"--}}
-                        {{--class="btn btn-xs btn-success"--}}
-                        {{--href="{{route('projects.show',$starProject->slug)}}"><i class="fa fa-fw fa-arrow-circle-o-right" aria-hidden="true"></i></a>--}}
-                        {{--@if($starProject->star==0)--}}
-                        {{--<a href="#" data-toggle="tooltip" data-placement="top" title="Add to Star" data-slug="{{$starProject->slug}}" data-value="1"--}}
-                        {{--data-source="{{route('star')}}" class="ajax btn btn-default btn-xs"> <i--}}
-                        {{--class="fa fa-fw fa-star-o"></i></a>--}}
-                        {{--@else--}}
-                        {{--<a href="#" data-toggle="tooltip" data-placement="top" title="Remove from Star" data-slug="{{$starProject->slug}}" data-value="0" data-source="{{route('star')}}"--}}
-                        {{--class="ajax btn btn-default btn-xs"> <i class="fa fa-fw fa-star"></i></a>--}}
-                        {{--@endif--}}
-                        {{--</div>--}}
-                        {{--</td>--}}
-                        {{--<td>{{$starProject->title}}</td>--}}
-                        {{--<td>{!! statusColor($starProject->status) !!}</td>--}}
-                        {{--<td>{{$starProject->start_date->format(config('constants.time.format'))}}</td>--}}
-                        {{--<td>{{$starProject->due_date->format(config('constants.time.format'))}}</td>--}}
-
-                        {{--</tr>--}}
-
-                        {{--@endforeach--}}
-                        {{--</table>--}}
-                        {{--@else--}}
-
-                        {{--<div class="callout callout-info">--}}
-                        {{--<h4> No Stars Projects !</h4>--}}
-
-                        {{--<p>Please Check Back Later..!</p>--}}
-                        {{--</div>--}}
-
-                        {{--@endif--}}
-
 
                     </div>
 
                     <div class="tab-pane" id="pd">
 
-                        {{--@if ()--}}
 
-                        {{--@else--}}
 
-                        {{--<div class="callout callout-info">--}}
-                        {{--<h4> No Pending Projects !</h4>--}}
 
-                        {{--<p>Please Check Back Later..!</p>--}}
-                        {{--</div>--}}
+                        <h3><span>P&D</span>
+                            <a data-toggle="tooltip" data-placement="top" title="Add New"
+                               class="pull-right btn btn-xs btn-default"
+                               href="{{route('projects.pd.create',$project->slug)}}"><i
+                                        class="fa fa-fw text-olive fa-2x fa-plus" aria-hidden="true"></i></a>
+                        </h3>
+                        <hr>
 
-                        {{--@endif--}}
+                        @if ($project->ProjectPd->isNotEmpty())
+
+                            <table id="" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Option</th>
+                                    <th>Status</th>
+                                    <th>date</th>
+                                    <th>Comment</th>
+
+
+
+
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($project->projectPd as $pd)
+                                    <tr>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a data-toggle="tooltip" data-placement="top" title="View"
+                                                   class="btn btn-xs btn-success"
+                                                   href="{{url('pm/projects/'.$project->slug.'/pd/'.$pd->id)}}"><i class="fa fa-fw fa-arrow-circle-o-right" aria-hidden="true"></i></a>
+                                                <a data-toggle="tooltip" data-placement="top" title="Edit"
+                                                   class="btn btn-xs btn-warning"
+                                                   href="{{url('pm/projects/'.$project->slug.'/pd/'.$pd->id.'/edit')}}"><i class="fa fa-fw fa-edit" aria-hidden="true"></i></a>
+                                                <form id="form-delete-{{$pd->id}}" method="post"
+                                                      action="{{url('pm/projects/'.$project->slug.'/pd/'.$pd->id)}}"
+                                                      style="display: none;">
+                                                    {{csrf_field()}}
+                                                    {{method_field('DELETE')}}
+
+                                                </form>
+
+                                                <a data-toggle="tooltip" data-placement="top" title="Delete"
+                                                   class="btn btn-xs btn-danger" href="#" onclick="
+
+                                                        if(confirm('Are you sure want to Delete?')) {
+                                                        event.preventDefault();
+                                                        document.getElementById('form-delete-{{$pd->id}}').submit();
+                                                        }else{
+                                                        event.preventDefault();
+                                                        }
+
+                                                        "><i class="fa fa-fw fa-trash"></i></a>
+                                            </div>
+                                        </td>
+                                        <td>{!! statusColor($pd->status) !!}</td>
+                                        <td>{{$pd->date->format(config('constants.time.format'))}}</td>
+                                        <td>
+                                        {!! htmlspecialchars_decode(str_limit($pd->comment,350)) !!}
+                                        </td>
+
+
+                                    </tr>
+
+                                @endforeach
+                            </table>
+                        @else
+
+                            <div class="callout callout-info">
+                                <h4> No P&D For this Project !</h4>
+
+                                <p>Please Check Back Later..!</p>
+                            </div>
+
+                        @endif
 
 
                     </div>
@@ -379,10 +394,10 @@
         });
 
 
-//        $(function () {
-//
-//            CKEDITOR.replace('editor1');
-//        });
+        //        $(function () {
+        //
+        //            CKEDITOR.replace('editor1');
+        //        });
 
 
         $(document).ready(function () {

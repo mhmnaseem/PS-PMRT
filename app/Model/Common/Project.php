@@ -29,4 +29,8 @@ class Project extends Model
     {
         $query->where('slug', '=', $slug);
     }
+    public function projectPd(){
+        return $this->hasMany('App\Model\User\Pd');
+    }
+
 }
