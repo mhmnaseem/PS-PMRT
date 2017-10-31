@@ -30,7 +30,7 @@
         </section>
 
         <!-- Main content -->
-        <section class="content" id="index-page">
+        <section class="content">
 
             <!-- Custom Tabs -->
                 <div class="nav-tabs-custom">

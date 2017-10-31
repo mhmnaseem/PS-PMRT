@@ -52,6 +52,7 @@
 <script>
     $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip();
+        $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
     });
     $(function () {
         var hash = window.location.hash;

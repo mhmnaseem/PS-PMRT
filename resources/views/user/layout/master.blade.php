@@ -9,6 +9,8 @@
     @include('user.layout.header')
     @include('user.layout.sidebar')
 
+    @include('flash::message')
+
     @section('main-content')
         @show
 

@@ -9,8 +9,11 @@
     @include('partner.layout.header')
     @include('partner.layout.sidebar')
 
+    @include('flash::message')
+
     @section('main-content')
         @show
+
 
 
     @include('partner.layout.footer')

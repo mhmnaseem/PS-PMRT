@@ -39,7 +39,7 @@ class ProjectController extends Controller
 
         //Completed Projects
         $completedProjects = $user->projects()
-            ->where('status', '=', 'Completed')
+            ->where('status', '=', 'Complete')
             ->get();
 
         //All Projects
@@ -115,9 +115,10 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
-        //
+        $project=Project::findBySlug($slug)->firstOrFail();
+        return view('user.projects.edit',compact('project'));
     }
 
     /**
@@ -127,9 +128,20 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
-        //
+        $this->validate($request,[
+            'status' => 'required'
+
+        ]);
+
+        $project=Project::findBySlug($slug)->firstOrFail();
+        $project->status=$request['status'];
+        $project->save();
+
+        flash('Project Updated Successfully..!')->success();
+
+        return redirect('pm/projects/'.$slug.'#home');
     }
 
     /**

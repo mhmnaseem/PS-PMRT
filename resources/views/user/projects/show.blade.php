@@ -32,7 +32,7 @@
         </section>
 
         <!-- Main content -->
-        <section class="content" id="show-page">
+        <section class="content">
 
 
             <!-- Custom Tabs -->
@@ -63,7 +63,8 @@
                             <i class="fa fa-pencil" aria-hidden="true"></i> Notes</a>
                     </li>
                     <li><a href="#attachments" data-toggle="tab">
-                            <i class="fa fa-paperclip" aria-hidden="true"></i> Attachments</a></li>
+                            <i class="fa fa-paperclip" aria-hidden="true"></i> Attachments</a>
+                    </li>
 
                 </ul>
                 <div class="tab-content">
@@ -88,7 +89,7 @@
 
                                             <a data-toggle="tooltip" data-placement="top" title="Edit"
                                                class="btn btn-xs btn-info"
-                                               href="{{route('projects.show',$project->slug)}}"><i
+                                               href="{{route('projects.edit',$project->slug)}}"><i
                                                         class="fa fa-fw fa-2x fa-edit" aria-hidden="true"></i></a>
                                             @if($project->star==0)
                                                 <a href="#" data-toggle="tooltip" data-placement="top"
@@ -100,7 +101,8 @@
                                                 <a href="#" data-toggle="tooltip" data-placement="top"
                                                    title="Remove from Star" data-slug="{{$project->slug}}"
                                                    data-value="0" data-source="{{route('star')}}"
-                                                   class="ajax btn btn-default btn-xs"> <i class="fa fa-fw fa-2x fa-star"></i></a>
+                                                   class="ajax btn btn-default btn-xs"> <i
+                                                            class="fa fa-fw fa-2x fa-star"></i></a>
                                             @endif
                                         </div>
                                     </div>
@@ -124,7 +126,11 @@
                                         <strong><i class="fa fa-calendar text-maroon margin-r-5"></i> Due Date</strong>
 
                                         <p class="text-muted">
-                                            @if ($project->due_date < Carbon\Carbon::now()) {!!'<small>'.$project->due_date->format(config('constants.time.format')).'</small> '. dueDays($project->due_date)!!} @else {{$project->due_date->format(config('constants.time.format'))}} @endif
+                                            @if ($project->due_date < Carbon\Carbon::now())
+                                                {!!'<small>'.$project->due_date->format(config('constants.time.format')).'</small> '. dueDays($project->due_date)!!}
+                                            @else
+                                                {{$project->due_date->format(config('constants.time.format'))}}
+                                            @endif
                                         </p>
 
                                         <hr>
@@ -373,10 +379,10 @@
         });
 
 
-        $(function () {
-
-            CKEDITOR.replace('editor1');
-        });
+//        $(function () {
+//
+//            CKEDITOR.replace('editor1');
+//        });
 
 
         $(document).ready(function () {
