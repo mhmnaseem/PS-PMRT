@@ -99,4 +99,34 @@ function selectUpdate($name, $value)
 
 }
 
+function portCreate($name)
+{
+    $key = "\'.$name.\'";
+
+    $html = '<select id="' . $name . '" class="form-control" name="' . $name . '" required>';
+    $html .= '<option value="N/A" ' . ((old($key) == 'N/A') ? "selected" : "") . '>N/A</option>';
+    $html .= '<option value="Regular" ' . ((old($key) == "Regular") ? " selected" : "") . '>Regular</option>';
+    $html .= '<option value="Project" ' . ((old($key) == "Project") ? " selected" : "") . '>Project</option>';
+
+    $html .= '</select>';
+
+
+    return $html;
+}
+
+function portUpdate($name,$value)
+{
+    $key = $name;
+
+    $html = '<select id="' . $name . '" class="form-control" name="' . $name . '" required>';
+    $html .= '<option value="N/A" ' . ((old($key,$value) == 'N/A') ? "selected" : "") . '>N/A</option>';
+    $html .= '<option value="Regular" ' . ((old($key,$value) == "Regular") ? " selected" : "") . '>Regular</option>';
+    $html .= '<option value="Project" ' . ((old($key,$value) == "Project") ? " selected" : "") . '>Project</option>';
+
+    $html .= '</select>';
+
+
+    return $html;
+}
+
 

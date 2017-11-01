@@ -70,6 +70,9 @@ Route::group(['namespace'=>'User'],function (){
     Route::resource('pm/projects.network-assessment', 'NetworkAssessmentController');
     Route::resource('pm/projects.admin-training', 'AdminTrainingController');
     Route::resource('pm/projects.back-end-build-out', 'BackEndBuildOutController');
+    Route::resource('pm/projects.number-porting', 'NumberPortingController');
+    Route::resource('pm/projects.onsite-delivery-go-live', 'OnsiteDeliveryGoLiveController');
+
 
     Route::get('/home', 'HomeController@index')->name('home');
 

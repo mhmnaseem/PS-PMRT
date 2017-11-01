@@ -201,7 +201,7 @@
                                                 <a data-toggle="tooltip" data-placement="top" title="Edit"
                                                    class="btn btn-xs btn-warning"
                                                    href="{{url('pm/projects/'.$project->slug.'/pd/'.$pd->id.'/edit')}}"><i class="fa fa-fw fa-edit" aria-hidden="true"></i></a>
-                                                <form id="form-delete-{{$pd->id}}" method="post"
+                                                <form id="form-delete-pd{{$pd->id}}" method="post"
                                                       action="{{url('pm/projects/'.$project->slug.'/pd/'.$pd->id)}}"
                                                       style="display: none;">
                                                     {{csrf_field()}}
@@ -214,7 +214,7 @@
 
                                                         if(confirm('Are you sure want to Delete?')) {
                                                         event.preventDefault();
-                                                        document.getElementById('form-delete-{{$pd->id}}').submit();
+                                                        document.getElementById('form-delete-pd{{$pd->id}}').submit();
                                                         }else{
                                                         event.preventDefault();
                                                         }
@@ -283,7 +283,7 @@
                                                 <a data-toggle="tooltip" data-placement="top" title="Edit"
                                                    class="btn btn-xs btn-warning"
                                                    href="{{url('pm/projects/'.$project->slug.'/network-assessment/'.$networkAssessment->id.'/edit')}}"><i class="fa fa-fw fa-edit" aria-hidden="true"></i></a>
-                                                <form id="form-delete-{{$networkAssessment->id}}" method="post"
+                                                <form id="form-delete-network{{$networkAssessment->id}}" method="post"
                                                       action="{{url('pm/projects/'.$project->slug.'/network-assessment/'.$networkAssessment->id)}}"
                                                       style="display: none;">
                                                     {{csrf_field()}}
@@ -296,7 +296,7 @@
 
                                                         if(confirm('Are you sure want to Delete?')) {
                                                         event.preventDefault();
-                                                        document.getElementById('form-delete-{{$networkAssessment->id}}').submit();
+                                                        document.getElementById('form-delete-network{{$networkAssessment->id}}').submit();
                                                         }else{
                                                         event.preventDefault();
                                                         }
@@ -364,7 +364,7 @@
                                                 <a data-toggle="tooltip" data-placement="top" title="Edit"
                                                    class="btn btn-xs btn-warning"
                                                    href="{{url('pm/projects/'.$project->slug.'/admin-training/'.$adminTraining->id.'/edit')}}"><i class="fa fa-fw fa-edit" aria-hidden="true"></i></a>
-                                                <form id="form-delete-{{$adminTraining->id}}" method="post"
+                                                <form id="form-delete-admin{{$adminTraining->id}}" method="post"
                                                       action="{{url('pm/projects/'.$project->slug.'/admin-training/'.$adminTraining->id)}}"
                                                       style="display: none;">
                                                     {{csrf_field()}}
@@ -377,7 +377,7 @@
 
                                                         if(confirm('Are you sure want to Delete?')) {
                                                         event.preventDefault();
-                                                        document.getElementById('form-delete-{{$adminTraining->id}}').submit();
+                                                        document.getElementById('form-delete-admin{{$adminTraining->id}}').submit();
                                                         }else{
                                                         event.preventDefault();
                                                         }
@@ -443,7 +443,7 @@
                                                 <a data-toggle="tooltip" data-placement="top" title="Edit"
                                                    class="btn btn-xs btn-warning"
                                                    href="{{url('pm/projects/'.$project->slug.'/back-end-build-out/'.$backEndBuildOut->id.'/edit')}}"><i class="fa fa-fw fa-edit" aria-hidden="true"></i></a>
-                                                <form id="form-delete-{{$backEndBuildOut->id}}" method="post"
+                                                <form id="form-delete-back{{$backEndBuildOut->id}}" method="post"
                                                       action="{{url('pm/projects/'.$project->slug.'/back-end-build-out/'.$backEndBuildOut->id)}}"
                                                       style="display: none;">
                                                     {{csrf_field()}}
@@ -456,7 +456,7 @@
 
                                                         if(confirm('Are you sure want to Delete?')) {
                                                         event.preventDefault();
-                                                        document.getElementById('form-delete-{{$backEndBuildOut->id}}').submit();
+                                                        document.getElementById('form-delete-back{{$backEndBuildOut->id}}').submit();
                                                         }else{
                                                         event.preventDefault();
                                                         }
@@ -489,34 +489,164 @@
                     <!-- /.tab-pane -->
                     <div class="tab-pane" id="number-porting">
 
-                        {{--@if ()--}}
+                        <h3><span>Number Porting</span>
+                            <a data-toggle="tooltip" data-placement="top" title="Add New"
+                               class="pull-right btn btn-xs btn-default"
+                               href="{{route('projects.number-porting.create',$project->slug)}}">
+                                <i class="fa fa-fw text-olive fa-2x fa-plus" aria-hidden="true"></i></a>
+                        </h3>
+                        <hr>
+
+                        @if ($project->projectNumberPorting->isNotEmpty())
+
+                            <table id="" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Option</th>
+                                    <th>Type</th>
+                                    <th>Status</th>
+                                    <th>Port Date</th>
+                                    <th>Comment</th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($project->projectNumberPorting as $numberPorting)
+                                    <tr>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a data-toggle="tooltip" data-placement="top" title="View"
+                                                   class="btn btn-xs btn-success"
+                                                   href="{{url('pm/projects/'.$project->slug.'/number-porting/'.$numberPorting->id)}}"><i class="fa fa-fw fa-arrow-circle-o-right" aria-hidden="true"></i></a>
+                                                <a data-toggle="tooltip" data-placement="top" title="Edit"
+                                                   class="btn btn-xs btn-warning"
+                                                   href="{{url('pm/projects/'.$project->slug.'/number-porting/'.$numberPorting->id.'/edit')}}"><i class="fa fa-fw fa-edit" aria-hidden="true"></i></a>
+                                                <form id="form-delete-number{{$numberPorting->id}}" method="post"
+                                                      action="{{url('pm/projects/'.$project->slug.'/number-porting/'.$numberPorting->id)}}"
+                                                      style="display: none;">
+                                                    {{csrf_field()}}
+                                                    {{method_field('DELETE')}}
+
+                                                </form>
+
+                                                <a data-toggle="tooltip" data-placement="top" title="Delete"
+                                                   class="btn btn-xs btn-danger" href="#" onclick="
+
+                                                        if(confirm('Are you sure want to Delete?')) {
+                                                        event.preventDefault();
+                                                        document.getElementById('form-delete-number{{$numberPorting->id}}').submit();
+                                                        }else{
+                                                        event.preventDefault();
+                                                        }
+
+                                                        "><i class="fa fa-fw fa-trash"></i></a>
+                                            </div>
+                                        </td>
+
+                                        <td>{{$numberPorting->type}}</td>
+                                        <td>{!! statusColor($numberPorting->status) !!}</td>
+                                        <td>{{$numberPorting->date->format(config('constants.time.format'))}}</td>
+                                        <td>
+                                            {!! htmlspecialchars_decode(str_limit($numberPorting->comment,350)) !!}
+                                        </td>
 
 
-                        {{--@else--}}
+                                    </tr>
 
-                        {{--<div class="callout callout-info">--}}
-                        {{--<h4> No Projects !</h4>--}}
+                                @endforeach
+                            </table>
+                        @else
 
-                        {{--<p>Please Create One..!</p>--}}
-                        {{--</div>--}}
+                            <div class="callout callout-info">
+                                <h4> No Number Porting for this Project !</h4>
 
-                        {{--@endif--}}
+                                <p>Please Create One..!</p>
+                            </div>
+
+                        @endif
                     </div>
                     <!-- /.tab-pane -->
                     <div class="tab-pane" id="onsite-delivery-go-live">
 
-                        {{--@if ()--}}
+                        <h3><span>Onsite Delivery/Go Live</span>
+                            <a data-toggle="tooltip" data-placement="top" title="Add New"
+                               class="pull-right btn btn-xs btn-default"
+                               href="{{route('projects.onsite-delivery-go-live.create',$project->slug)}}">
+                                <i class="fa fa-fw text-olive fa-2x fa-plus" aria-hidden="true"></i></a>
+                        </h3>
+                        <hr>
+
+                        @if ($project->projectOnsiteDeliveryGoLive->isNotEmpty())
+
+                            <table id="" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Option</th>
+                                    <th>Location</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Status</th>
+                                    <th>Comment</th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($project->projectOnsiteDeliveryGoLive as $onsiteDeliveryGoLive)
+                                    <tr>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a data-toggle="tooltip" data-placement="top" title="View"
+                                                   class="btn btn-xs btn-success"
+                                                   href="{{url('pm/projects/'.$project->slug.'/onsite-delivery-go-live/'.$onsiteDeliveryGoLive->id)}}"><i class="fa fa-fw fa-arrow-circle-o-right" aria-hidden="true"></i></a>
+                                                <a data-toggle="tooltip" data-placement="top" title="Edit"
+                                                   class="btn btn-xs btn-warning"
+                                                   href="{{url('pm/projects/'.$project->slug.'/onsite-delivery-go-live/'.$onsiteDeliveryGoLive->id.'/edit')}}"><i class="fa fa-fw fa-edit" aria-hidden="true"></i></a>
+                                                <form id="form-delete-onsite{{$onsiteDeliveryGoLive->id}}" method="post"
+                                                      action="{{url('pm/projects/'.$project->slug.'/onsite-delivery-go-live/'.$onsiteDeliveryGoLive->id)}}"
+                                                      style="display: none;">
+                                                    {{csrf_field()}}
+                                                    {{method_field('DELETE')}}
+
+                                                </form>
+
+                                                <a data-toggle="tooltip" data-placement="top" title="Delete"
+                                                   class="btn btn-xs btn-danger" href="#" onclick="
+
+                                                        if(confirm('Are you sure want to Delete?')) {
+                                                        event.preventDefault();
+                                                        document.getElementById('form-delete-onsite{{$onsiteDeliveryGoLive->id}}').submit();
+                                                        }else{
+                                                        event.preventDefault();
+                                                        }
+
+                                                        "><i class="fa fa-fw fa-trash"></i></a>
+                                            </div>
+                                        </td>
+                                        <td>{{$onsiteDeliveryGoLive->location}}</td>
+                                        <td>{{$onsiteDeliveryGoLive->start_date->format(config('constants.time.format'))}}</td>
+                                        <td>@if($onsiteDeliveryGoLive->end_date!="")
+                                                {{$onsiteDeliveryGoLive->end_date->format(config('constants.time.format'))}}
+                                            @endif
+                                        </td>
+                                        <td>{!! statusColor($onsiteDeliveryGoLive->status) !!}</td>
+                                        <td>
+                                            {!! htmlspecialchars_decode(str_limit($onsiteDeliveryGoLive->comment,350)) !!}
+                                        </td>
 
 
-                        {{--@else--}}
+                                    </tr>
 
-                        {{--<div class="callout callout-info">--}}
-                        {{--<h4> No Projects !</h4>--}}
+                                @endforeach
+                            </table>
+                        @else
 
-                        {{--<p>Please Create One..!</p>--}}
-                        {{--</div>--}}
+                            <div class="callout callout-info">
+                                <h4> No Onsite Delivery/Go Live for this Project !</h4>
 
-                        {{--@endif--}}
+                                <p>Please Create One..!</p>
+                            </div>
+
+                        @endif
                     </div>
                     <!-- /.tab-pane -->
                     <div class="tab-pane" id="notes">
