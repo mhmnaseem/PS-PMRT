@@ -45,7 +45,7 @@
                             <i class="fa fa-bullseye" aria-hidden="true"></i> P&D</a>
                     </li>
                     <li><a href="#network-assessment" data-toggle="tab">
-                            <i class="fa fa-quote-right" aria-hidden="true"></i> Probe/ Network Assessment</a>
+                            <i class="fa fa-file-text" aria-hidden="true"></i> Probe/ Network Assessment</a>
                     </li>
                     <li><a href="#admin-training" data-toggle="tab">
                             <i class="fa fa-book" aria-hidden="true"></i> Admin Training </a>
@@ -248,33 +248,162 @@
                     <!-- /.tab-pane -->
                     <div class="tab-pane" id="network-assessment">
 
-                        {{--@if ()--}}
+                        <h3><span>Probe/ Network Assessment</span>
+                            <a data-toggle="tooltip" data-placement="top" title="Add New"
+                               class="pull-right btn btn-xs btn-default"
+                               href="{{route('projects.network-assessment.create',$project->slug)}}"><i
+                                        class="fa fa-fw text-olive fa-2x fa-plus" aria-hidden="true"></i></a>
+                        </h3>
+                        <hr>
 
-                        {{--@else--}}
+                        @if ($project->projectNetworkAssessment->isNotEmpty())
 
-                        {{--<div class="callout callout-info">--}}
-                        {{--<h4>No Overdue Projects !</h4>--}}
+                            <table id="" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Option</th>
+                                    <th>Status</th>
+                                    <th>date</th>
+                                    <th>Comment</th>
 
-                        {{--<p>Please Check Back Later..!</p>--}}
-                        {{--</div>--}}
 
-                        {{--@endif--}}
+
+
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($project->projectNetworkAssessment as $networkAssessment)
+                                    <tr>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a data-toggle="tooltip" data-placement="top" title="View"
+                                                   class="btn btn-xs btn-success"
+                                                   href="{{url('pm/projects/'.$project->slug.'/network-assessment/'.$networkAssessment->id)}}"><i class="fa fa-fw fa-arrow-circle-o-right" aria-hidden="true"></i></a>
+                                                <a data-toggle="tooltip" data-placement="top" title="Edit"
+                                                   class="btn btn-xs btn-warning"
+                                                   href="{{url('pm/projects/'.$project->slug.'/network-assessment/'.$networkAssessment->id.'/edit')}}"><i class="fa fa-fw fa-edit" aria-hidden="true"></i></a>
+                                                <form id="form-delete-{{$networkAssessment->id}}" method="post"
+                                                      action="{{url('pm/projects/'.$project->slug.'/network-assessment/'.$networkAssessment->id)}}"
+                                                      style="display: none;">
+                                                    {{csrf_field()}}
+                                                    {{method_field('DELETE')}}
+
+                                                </form>
+
+                                                <a data-toggle="tooltip" data-placement="top" title="Delete"
+                                                   class="btn btn-xs btn-danger" href="#" onclick="
+
+                                                        if(confirm('Are you sure want to Delete?')) {
+                                                        event.preventDefault();
+                                                        document.getElementById('form-delete-{{$networkAssessment->id}}').submit();
+                                                        }else{
+                                                        event.preventDefault();
+                                                        }
+
+                                                        "><i class="fa fa-fw fa-trash"></i></a>
+                                            </div>
+                                        </td>
+                                        <td>{!! statusColor($networkAssessment->status) !!}</td>
+                                        <td>{{$networkAssessment->date->format(config('constants.time.format'))}}</td>
+                                        <td>
+                                            {!! htmlspecialchars_decode(str_limit($networkAssessment->comment,350)) !!}
+                                        </td>
+
+
+                                    </tr>
+
+                                @endforeach
+                            </table>
+                        @else
+
+                            <div class="callout callout-info">
+                                <h4> No Probe/ Network Assessment for this Project !</h4>
+
+                                <p>Please Check Back Later..!</p>
+                            </div>
+
+                        @endif
                     </div>
                     <!-- /.tab-pane -->
                     <div class="tab-pane" id="admin-training">
 
-                        {{--@if ()--}}
+                        <h3><span>Admin Training</span>
+                            <a data-toggle="tooltip" data-placement="top" title="Add New"
+                               class="pull-right btn btn-xs btn-default"
+                               href="{{route('projects.network-assessment.create',$project->slug)}}"><i
+                                        class="fa fa-fw text-olive fa-2x fa-plus" aria-hidden="true"></i></a>
+                        </h3>
+                        <hr>
+
+                        @if ($project->projectNetworkAssessment->isNotEmpty())
+
+                            <table id="" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Option</th>
+                                    <th>Status</th>
+                                    <th>date</th>
+                                    <th>Comment</th>
 
 
-                        {{--@else--}}
 
-                        {{--<div class="callout callout-info">--}}
-                        {{--<h4> No Completed Projects !</h4>--}}
 
-                        {{--<p>Please Check Back Later..!</p>--}}
-                        {{--</div>--}}
 
-                        {{--@endif--}}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($project->projectNetworkAssessment as $networkAssessment)
+                                    <tr>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a data-toggle="tooltip" data-placement="top" title="View"
+                                                   class="btn btn-xs btn-success"
+                                                   href="{{url('pm/projects/'.$project->slug.'/network-assessment/'.$networkAssessment->id)}}"><i class="fa fa-fw fa-arrow-circle-o-right" aria-hidden="true"></i></a>
+                                                <a data-toggle="tooltip" data-placement="top" title="Edit"
+                                                   class="btn btn-xs btn-warning"
+                                                   href="{{url('pm/projects/'.$project->slug.'/network-assessment/'.$networkAssessment->id.'/edit')}}"><i class="fa fa-fw fa-edit" aria-hidden="true"></i></a>
+                                                <form id="form-delete-{{$networkAssessment->id}}" method="post"
+                                                      action="{{url('pm/projects/'.$project->slug.'/network-assessment/'.$networkAssessment->id)}}"
+                                                      style="display: none;">
+                                                    {{csrf_field()}}
+                                                    {{method_field('DELETE')}}
+
+                                                </form>
+
+                                                <a data-toggle="tooltip" data-placement="top" title="Delete"
+                                                   class="btn btn-xs btn-danger" href="#" onclick="
+
+                                                        if(confirm('Are you sure want to Delete?')) {
+                                                        event.preventDefault();
+                                                        document.getElementById('form-delete-{{$networkAssessment->id}}').submit();
+                                                        }else{
+                                                        event.preventDefault();
+                                                        }
+
+                                                        "><i class="fa fa-fw fa-trash"></i></a>
+                                            </div>
+                                        </td>
+                                        <td>{!! statusColor($networkAssessment->status) !!}</td>
+                                        <td>{{$networkAssessment->date->format(config('constants.time.format'))}}</td>
+                                        <td>
+                                            {!! htmlspecialchars_decode(str_limit($networkAssessment->comment,350)) !!}
+                                        </td>
+
+
+                                    </tr>
+
+                                @endforeach
+                            </table>
+                        @else
+
+                            <div class="callout callout-info">
+                                <h4> No Admin Training for this Project !</h4>
+
+                                <p>Please Check Back Later..!</p>
+                            </div>
+
+                        @endif
                     </div>
                     <!-- /.tab-pane -->
 

@@ -33,4 +33,8 @@ class Project extends Model
         return $this->hasMany('App\Model\User\Pd');
     }
 
+    public function projectNetworkAssessment(){
+        return $this->hasMany('App\Model\User\NetworkAssessment');
+    }
+
 }

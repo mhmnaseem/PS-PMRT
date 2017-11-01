@@ -1,14 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\User;
-
 use App\Model\Common\Project;
-use App\Model\User\Pd;
+use App\Model\User\NetworkAssessment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-
-class ProjectPdController extends Controller
+class NetworkAssessmentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +25,7 @@ class ProjectPdController extends Controller
      */
     public function create($slug)
     {
-        return view('user.pd.create', compact('slug'));
+        return view('user.networkAssessment.create', compact('slug'));
     }
 
     /**
@@ -38,7 +36,7 @@ class ProjectPdController extends Controller
      */
     public function store(Request $request,$slug)
     {
-       $project=Project::findBySlug($slug)->firstOrFail();
+        $project=Project::findBySlug($slug)->firstOrFail();
 
         $this->validate($request,[
             'status' => 'required',
@@ -46,17 +44,17 @@ class ProjectPdController extends Controller
 
         ]);
 
-        $pd=new Pd();
-        $pd->status=$request->status;
-        $pd->date=$request->date;
-        $pd->comment=$request->comment;
-        $pd->project_id=$project->id;
-        $pd->save();
+        $networkAssessment=new NetworkAssessment();
+        $networkAssessment->status=$request->status;
+        $networkAssessment->date=$request->date;
+        $networkAssessment->comment=$request->comment;
+        $networkAssessment->project_id=$project->id;
+        $networkAssessment->save();
 
-        flash('P&D Created Successfully..!')->success();
+        flash('Network Assessment Created Successfully..!')->success();
 
 
-        return redirect('pm/projects/'.$slug.'#pd');
+        return redirect('pm/projects/'.$slug.'#network-assessment');
     }
 
     /**
@@ -68,8 +66,8 @@ class ProjectPdController extends Controller
     public function show($slug,$id)
     {
         $project=Project::findBySlug($slug)->firstOrFail();
-        $pd=$project->projectPd()->where('id',$id)->firstOrFail();
-        return view('user.pd.show', compact('pd','slug'));
+        $networkAssessment=$project->projectNetworkAssessment()->where('id',$id)->firstOrFail();
+        return view('user.networkAssessment.show', compact('networkAssessment','slug'));
     }
 
     /**
@@ -81,8 +79,8 @@ class ProjectPdController extends Controller
     public function edit($slug,$id)
     {
         $project=Project::findBySlug($slug)->firstOrFail();
-        $pd=$project->projectPd()->where('id',$id)->firstOrFail();
-        return view('user.pd.edit', compact('pd','slug'));
+        $networkAssessment=$project->projectNetworkAssessment()->where('id',$id)->firstOrFail();
+        return view('user.networkAssessment.edit', compact('networkAssessment','slug'));
     }
 
     /**
@@ -103,15 +101,15 @@ class ProjectPdController extends Controller
 
         ]);
 
-        $pd=$project->projectPd()->where('id',$id)->firstOrFail();
-        $pd->status=$request->status;
-        $pd->date=$request->date;
-        $pd->comment=$request->comment;
-        $pd->save();
+        $networkAssessment=$project->projectNetworkAssessment()->where('id',$id)->firstOrFail();
+        $networkAssessment->status=$request->status;
+        $networkAssessment->date=$request->date;
+        $networkAssessment->comment=$request->comment;
+        $networkAssessment->save();
 
-        flash('P&D Updated Successfully..!')->success();
+        flash('Network Assessment Updated Successfully..!')->success();
 
-        return redirect('pm/projects/'.$slug.'#pd');
+        return redirect('pm/projects/'.$slug.'#network-assessment');
     }
 
     /**
@@ -123,8 +121,8 @@ class ProjectPdController extends Controller
     public function destroy($slug,$id)
     {
         $project=Project::findBySlug($slug)->firstOrFail();
-        $project->projectPd()->where('id',$id)->firstOrFail()->delete();
-        flash('P&D Deleted Successfully..!')->success();
-        return redirect('pm/projects/'.$slug.'#pd');
+        $project->projectNetworkAssessment()->where('id',$id)->firstOrFail()->delete();
+        flash('Network Assessment Deleted Successfully..!')->success();
+        return redirect('pm/projects/'.$slug.'#network-assessment');
     }
 }
