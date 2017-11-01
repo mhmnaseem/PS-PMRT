@@ -16,12 +16,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-               Admin Training
+                Back End Build Out
 
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li><a href="#"> Admin Training</a></li>
+                <li><a href="#"> Back End Build Out</a></li>
                 <li class="active">Create</li>
             </ol>
         </section>
@@ -35,65 +35,41 @@
                     <div class="box box-primary">
 
                         <div class="box-header with-border">
-                            <h3 class="box-title">Create  Admin Training</h3>
+                            <h3 class="box-title">Create Back End Build Out</h3>
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
                         <form class="form-horizontal" role="form" method="post"
-                              action="{{route('projects.admin-training.store',$slug)}}">
+                              action="{{route('projects.back-end-build-out.store',$slug)}}">
                             {{csrf_field()}}
                             <div class="box-body">
 
 
-                                <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
-                                    <label for="title" class="col-md-4 control-label">Title</label>
+                               <div class="form-group{{ $errors->has('user_upload') ? ' has-error' : '' }}">
+                                    <label for="status" class="col-md-4 control-label">User Upload</label>
 
                                     <div class="col-md-6">
 
+                                       {!! selectCreate('user_upload') !!}
 
-                                            <input type="text" id="title" class="form-control" name="title"  value="{{ old('title') }}" required autofocus>
-
-                                      @if ($errors->has('title'))
+                                        @if ($errors->has('user_upload'))
                                             <span class="help-block">
-                                        <strong>{{ $errors->first('title') }}</strong>
+                                        <strong>{{ $errors->first('user_upload') }}</strong>
                                     </span>
                                         @endif
                                     </div>
                                 </div>
 
-
-                                <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
-                                    <label for="status" class="col-md-4 control-label">Status</label>
-
-                                    <div class="col-md-6">
-
-                                        {!! selectCreate('status') !!}
-
-                                        @if ($errors->has('status'))
-                                            <span class="help-block">
-                                        <strong>{{ $errors->first('status') }}</strong>
-                                    </span>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                <div class="form-group{{ $errors->has('date') ? ' has-error' : '' }}">
-                                    <label for="datepicker" class="col-md-4 control-label">Date</label>
+                                <div class="form-group{{ $errors->has('call_flows') ? ' has-error' : '' }}">
+                                    <label for="status" class="col-md-4 control-label">Call Flows</label>
 
                                     <div class="col-md-6">
 
-                                        <div class="input-group date">
-                                            <div class="input-group-addon">
-                                                <i class="fa fa-calendar"></i>
-                                            </div>
-                                            <input type="text" class="form-control pull-right" id="datepicker" name="date"  value="{{ old('start_date') }}" required autofocus>
-                                        </div>
-                                        <!-- /.input group -->
+                                        {!! selectCreate('call_flows') !!}
 
-
-                                        @if ($errors->has('date'))
+                                    @if ($errors->has('call_flows'))
                                             <span class="help-block">
-                                        <strong>{{ $errors->first('date') }}</strong>
+                                        <strong>{{ $errors->first('call_flows') }}</strong>
                                     </span>
                                         @endif
                                     </div>
@@ -117,7 +93,7 @@
 
                             <div class="box-footer">
                                 <button type="submit" class="btn btn-primary">Submit</button>
-                                <a class="btn btn-warning" href="{{url('pm/projects/'.$slug.'#admin-training')}}"> Back </a>
+                                <a class="btn btn-warning" href="{{url('pm/projects/'.$slug.'#back-end-build-out')}}"> Back </a>
                             </div>
                         </form>
                     </div>

@@ -16,13 +16,13 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Probe/ Network Assessment Update
+                Admin Training Update
 
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                 <li><a href="#">Project</a></li>
-                <li class="active">Probe/ Network Assessment Update</li>
+                <li class="active"> Admin Training Update</li>
             </ol>
         </section>
 
@@ -40,23 +40,34 @@
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
-                        <form class="form-horizontal" role="form" method="post" action="{{url('pm/projects/'.$slug.'/network-assessment/'.$networkAssessment->id.'')}}">
+                        <form class="form-horizontal" role="form" method="post" action="{{url('pm/projects/'.$slug.'/admin-training/'.$adminTraining->id)}}">
                             {{csrf_field()}}
                             {{method_field('PUT')}}
                             <div class="box-body">
+
+                                <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
+                                    <label for="title" class="col-md-4 control-label">Title</label>
+
+                                    <div class="col-md-6">
+
+
+                                        <input type="text" id="title" class="form-control" name="title"  value="{{ old('title',$adminTraining->title) }}" required autofocus>
+
+                                        @if ($errors->has('title'))
+                                            <span class="help-block">
+                                        <strong>{{ $errors->first('title') }}</strong>
+                                    </span>
+                                        @endif
+                                    </div>
+                                </div>
+
 
                                 <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
                                     <label for="title" class="col-md-4 control-label">Status</label>
 
                                     <div class="col-md-6">
-                                        <select id="status" class="form-control" name="status"
-                                                required>
-                                            <option value="N/A" {{(old('status',$networkAssessment->status)=='N/A')?"selected":''}}>N/A</option>
-                                            <option value="Onhold" {{(old('status',$networkAssessment->status)=='Onhold')?"selected":''}}>Onhold</option>
-                                            <option value="Inprogress"{{(old('status',$networkAssessment->status)=='Inprogress')?"selected":''}}>Inprogress</option>
-                                            <option value="Complete"{{(old('status',$networkAssessment->status)=='Complete')?"selected":''}}>Complete</option>
-                                            <option value="Closed"{{(old('status',$networkAssessment->status)=='Closed')?"selected":''}}>Closed</option>
-                                        </select>
+
+                                        {!! selectUpdate('status',$adminTraining->status) !!}
 
                                         @if ($errors->has('status'))
                                             <span class="help-block">
@@ -76,7 +87,7 @@
                                             <div class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </div>
-                                            <input type="text" class="form-control pull-right" id="datepicker" name="date"  value="{{ old('date',$networkAssessment->date->format(config('constants.time.format'))) }}" autofocus>
+                                            <input type="text" class="form-control pull-right" id="datepicker" name="date"  value="{{ old('date',$adminTraining->date->format(config('constants.time.format'))) }}" autofocus>
                                         </div>
                                         <!-- /.input group -->
 
@@ -95,7 +106,7 @@
                                     <div class="col-md-6">
 
                                         <textarea id="editor1" rows="4" cols="50" name="comment" class="form-control"
-                                                  required>{{ old('comment',$networkAssessment->comment)}}</textarea>
+                                                  required>{{ old('comment',$adminTraining->comment)}}</textarea>
                                         @if ($errors->has('comment'))
                                             <span class="help-block">
                                         <strong>{{ $errors->first('comment') }}</strong>
@@ -110,7 +121,7 @@
 
                             <div class="box-footer">
                                 <button type="submit" class="btn btn-primary">Submit</button>
-                                <a class="btn btn-warning" href="{{url('pm/projects/'.$slug.'#$network-assessment')}}"> Back </a>
+                                <a class="btn btn-warning" href="{{url('pm/projects/'.$slug.'#admin-training')}}"> Back </a>
                             </div>
                         </form>
                     </div>

@@ -38,6 +38,7 @@ Route::group(['namespace'=>'Partner'],function (){
 
     Route::resource('partner/partner-project-assign','ProjectsAssignController');
     Route::post('partner/pm-project-assign','ProjectsAssignController@assign')->name('pm-project-assign.assign');
+
     //partner Profile
     Route::get('partner/profile', 'PartnerHomeController@profileEdit')->name('partner.profile');
     Route::post('partner/profile', 'PartnerHomeController@profileUpdate');
@@ -61,12 +62,14 @@ Route::group(['namespace'=>'User'],function (){
     Route::post('pm/profile', 'HomeController@profileUpdate');
 
     //projects
-
     Route::resource('pm/projects', 'ProjectController');
     Route::post('pm/projects/star', 'ProjectController@star')->name('star');
+
+    // project sub tasks
     Route::resource('pm/projects.pd', 'ProjectPdController');
     Route::resource('pm/projects.network-assessment', 'NetworkAssessmentController');
     Route::resource('pm/projects.admin-training', 'AdminTrainingController');
+    Route::resource('pm/projects.back-end-build-out', 'BackEndBuildOutController');
 
     Route::get('/home', 'HomeController@index')->name('home');
 

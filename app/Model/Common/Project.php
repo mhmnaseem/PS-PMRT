@@ -36,5 +36,11 @@ class Project extends Model
     public function projectNetworkAssessment(){
         return $this->hasMany('App\Model\User\NetworkAssessment');
     }
+    public function projectAdminTraining(){
+        return $this->hasMany('App\Model\User\AdminTraining');
+    }
+    public function projectBackEndBuildOut(){
+        return $this->hasMany('App\Model\User\BackEndBuildOut');
+    }
 
 }

@@ -40,7 +40,7 @@
                         <div class="row">
                             <div class="col-sm-8">
 
-                                <h3>Probe/ Network Assessment Comment</h3>
+                                <h5><strong>Probe/ Network Assessment Comment</strong></h5>
                                 <hr>
 
 

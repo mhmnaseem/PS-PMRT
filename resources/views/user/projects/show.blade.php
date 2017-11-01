@@ -39,31 +39,31 @@
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#home" data-toggle="tab">
-                            <i class="fa fa-home"></i> Detail </a>
+                            <i class="fa fa-home text-success"></i> Detail </a>
                     </li>
                     <li><a href="#pd" data-toggle="tab">
-                            <i class="fa fa-bullseye" aria-hidden="true"></i> P&D</a>
+                            <i class="fa fa-bullseye text-aqua" aria-hidden="true"></i> P&D</a>
                     </li>
                     <li><a href="#network-assessment" data-toggle="tab">
-                            <i class="fa fa-file-text" aria-hidden="true"></i> Probe/ Network Assessment</a>
+                            <i class="fa fa-file-text text-maroon " aria-hidden="true"></i> Probe/ Network Assessment</a>
                     </li>
                     <li><a href="#admin-training" data-toggle="tab">
-                            <i class="fa fa-book" aria-hidden="true"></i> Admin Training </a>
+                            <i class="fa fa-book text-olive" aria-hidden="true"></i> Admin Training </a>
                     </li>
                     <li><a href="#back-end-build-out" data-toggle="tab">
-                            <i class="fa fa-shield" aria-hidden="true"></i> Back end Build Out </a>
+                            <i class="fa fa-shield text-fuchsia" aria-hidden="true"></i> Back End Build Out </a>
                     </li>
                     <li><a href="#number-porting" data-toggle="tab">
-                            <i class="fa fa-server" aria-hidden="true"></i> Number Porting </a>
+                            <i class="fa fa-server text-orange" aria-hidden="true"></i> Number Porting </a>
                     </li>
                     <li><a href="#onsite-delivery-go-live" data-toggle="tab">
-                            <i class="fa fa-shopping-cart" aria-hidden="true"></i> Onsite delivery/Go Live </a>
+                            <i class="fa fa-shopping-cart text-light-blue" aria-hidden="true"></i> Onsite Delivery/Go Live </a>
                     </li>
                     <li><a href="#notes" data-toggle="tab">
-                            <i class="fa fa-pencil" aria-hidden="true"></i> Notes</a>
+                            <i class="fa fa-pencil text-yellow" aria-hidden="true"></i> Notes</a>
                     </li>
                     <li><a href="#attachments" data-toggle="tab">
-                            <i class="fa fa-paperclip" aria-hidden="true"></i> Attachments</a>
+                            <i class="fa fa-paperclip text-red" aria-hidden="true"></i> Attachments</a>
                     </li>
 
                 </ul>
@@ -238,7 +238,7 @@
                             <div class="callout callout-info">
                                 <h4> No P&D For this Project !</h4>
 
-                                <p>Please Check Back Later..!</p>
+                                <p>Please Create One..!</p>
                             </div>
 
                         @endif
@@ -320,7 +320,7 @@
                             <div class="callout callout-info">
                                 <h4> No Probe/ Network Assessment for this Project !</h4>
 
-                                <p>Please Check Back Later..!</p>
+                                <p>Please Create One..!</p>
                             </div>
 
                         @endif
@@ -331,17 +331,18 @@
                         <h3><span>Admin Training</span>
                             <a data-toggle="tooltip" data-placement="top" title="Add New"
                                class="pull-right btn btn-xs btn-default"
-                               href="{{route('projects.network-assessment.create',$project->slug)}}"><i
-                                        class="fa fa-fw text-olive fa-2x fa-plus" aria-hidden="true"></i></a>
+                               href="{{route('projects.admin-training.create',$project->slug)}}">
+                                <i class="fa fa-fw text-olive fa-2x fa-plus" aria-hidden="true"></i></a>
                         </h3>
                         <hr>
 
-                        @if ($project->projectNetworkAssessment->isNotEmpty())
+                        @if ($project->projectAdminTraining->isNotEmpty())
 
                             <table id="" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
                                     <th>Option</th>
+                                    <th>Title</th>
                                     <th>Status</th>
                                     <th>date</th>
                                     <th>Comment</th>
@@ -353,18 +354,18 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($project->projectNetworkAssessment as $networkAssessment)
+                                @foreach($project->projectAdminTraining as $adminTraining)
                                     <tr>
                                         <td>
                                             <div class="btn-group">
                                                 <a data-toggle="tooltip" data-placement="top" title="View"
                                                    class="btn btn-xs btn-success"
-                                                   href="{{url('pm/projects/'.$project->slug.'/network-assessment/'.$networkAssessment->id)}}"><i class="fa fa-fw fa-arrow-circle-o-right" aria-hidden="true"></i></a>
+                                                   href="{{url('pm/projects/'.$project->slug.'/admin-training/'.$adminTraining->id)}}"><i class="fa fa-fw fa-arrow-circle-o-right" aria-hidden="true"></i></a>
                                                 <a data-toggle="tooltip" data-placement="top" title="Edit"
                                                    class="btn btn-xs btn-warning"
-                                                   href="{{url('pm/projects/'.$project->slug.'/network-assessment/'.$networkAssessment->id.'/edit')}}"><i class="fa fa-fw fa-edit" aria-hidden="true"></i></a>
-                                                <form id="form-delete-{{$networkAssessment->id}}" method="post"
-                                                      action="{{url('pm/projects/'.$project->slug.'/network-assessment/'.$networkAssessment->id)}}"
+                                                   href="{{url('pm/projects/'.$project->slug.'/admin-training/'.$adminTraining->id.'/edit')}}"><i class="fa fa-fw fa-edit" aria-hidden="true"></i></a>
+                                                <form id="form-delete-{{$adminTraining->id}}" method="post"
+                                                      action="{{url('pm/projects/'.$project->slug.'/admin-training/'.$adminTraining->id)}}"
                                                       style="display: none;">
                                                     {{csrf_field()}}
                                                     {{method_field('DELETE')}}
@@ -376,7 +377,7 @@
 
                                                         if(confirm('Are you sure want to Delete?')) {
                                                         event.preventDefault();
-                                                        document.getElementById('form-delete-{{$networkAssessment->id}}').submit();
+                                                        document.getElementById('form-delete-{{$adminTraining->id}}').submit();
                                                         }else{
                                                         event.preventDefault();
                                                         }
@@ -384,10 +385,11 @@
                                                         "><i class="fa fa-fw fa-trash"></i></a>
                                             </div>
                                         </td>
-                                        <td>{!! statusColor($networkAssessment->status) !!}</td>
-                                        <td>{{$networkAssessment->date->format(config('constants.time.format'))}}</td>
+                                        <td>{{$adminTraining->title}}</td>
+                                        <td>{!! statusColor($adminTraining->status) !!}</td>
+                                        <td>{{$adminTraining->date->format(config('constants.time.format'))}}</td>
                                         <td>
-                                            {!! htmlspecialchars_decode(str_limit($networkAssessment->comment,350)) !!}
+                                            {!! htmlspecialchars_decode(str_limit($adminTraining->comment,350)) !!}
                                         </td>
 
 
@@ -400,7 +402,7 @@
                             <div class="callout callout-info">
                                 <h4> No Admin Training for this Project !</h4>
 
-                                <p>Please Check Back Later..!</p>
+                                <p>Please Create One..!</p>
                             </div>
 
                         @endif
@@ -410,18 +412,79 @@
                     <!-- /.tab-pane -->
                     <div class="tab-pane" id="back-end-build-out">
 
-                        {{--@if ()--}}
+                        <h3><span>Back End Build Out</span>
+                            <a data-toggle="tooltip" data-placement="top" title="Add New"
+                               class="pull-right btn btn-xs btn-default"
+                               href="{{route('projects.back-end-build-out.create',$project->slug)}}">
+                                <i class="fa fa-fw text-olive fa-2x fa-plus" aria-hidden="true"></i></a>
+                        </h3>
+                        <hr>
+
+                        @if ($project->projectBackEndBuildOut->isNotEmpty())
+
+                            <table id="" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Option</th>
+                                    <th>User Upload</th>
+                                    <th>Call Flows</th>
+                                    <th>Comment</th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($project->projectBackEndBuildOut as $backEndBuildOut)
+                                    <tr>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a data-toggle="tooltip" data-placement="top" title="View"
+                                                   class="btn btn-xs btn-success"
+                                                   href="{{url('pm/projects/'.$project->slug.'/back-end-build-out/'.$backEndBuildOut->id)}}"><i class="fa fa-fw fa-arrow-circle-o-right" aria-hidden="true"></i></a>
+                                                <a data-toggle="tooltip" data-placement="top" title="Edit"
+                                                   class="btn btn-xs btn-warning"
+                                                   href="{{url('pm/projects/'.$project->slug.'/back-end-build-out/'.$backEndBuildOut->id.'/edit')}}"><i class="fa fa-fw fa-edit" aria-hidden="true"></i></a>
+                                                <form id="form-delete-{{$backEndBuildOut->id}}" method="post"
+                                                      action="{{url('pm/projects/'.$project->slug.'/back-end-build-out/'.$backEndBuildOut->id)}}"
+                                                      style="display: none;">
+                                                    {{csrf_field()}}
+                                                    {{method_field('DELETE')}}
+
+                                                </form>
+
+                                                <a data-toggle="tooltip" data-placement="top" title="Delete"
+                                                   class="btn btn-xs btn-danger" href="#" onclick="
+
+                                                        if(confirm('Are you sure want to Delete?')) {
+                                                        event.preventDefault();
+                                                        document.getElementById('form-delete-{{$backEndBuildOut->id}}').submit();
+                                                        }else{
+                                                        event.preventDefault();
+                                                        }
+
+                                                        "><i class="fa fa-fw fa-trash"></i></a>
+                                            </div>
+                                        </td>
+
+                                        <td>{!! statusColor($backEndBuildOut->user_upload) !!}</td>
+                                        <td>{!! statusColor($backEndBuildOut->call_flows) !!}</td>
+                                        <td>
+                                            {!! htmlspecialchars_decode(str_limit($backEndBuildOut->comment,350)) !!}
+                                        </td>
 
 
-                        {{--@else--}}
+                                    </tr>
 
-                        {{--<div class="callout callout-info">--}}
-                        {{--<h4> No Projects !</h4>--}}
+                                @endforeach
+                            </table>
+                        @else
 
-                        {{--<p>Please Check Back Later..!</p>--}}
-                        {{--</div>--}}
+                            <div class="callout callout-info">
+                                <h4> No Back End Build Out for this Project !</h4>
 
-                        {{--@endif--}}
+                                <p>Please Create One..!</p>
+                            </div>
+
+                        @endif
                     </div>
                     <!-- /.tab-pane -->
                     <div class="tab-pane" id="number-porting">
@@ -434,7 +497,7 @@
                         {{--<div class="callout callout-info">--}}
                         {{--<h4> No Projects !</h4>--}}
 
-                        {{--<p>Please Check Back Later..!</p>--}}
+                        {{--<p>Please Create One..!</p>--}}
                         {{--</div>--}}
 
                         {{--@endif--}}
@@ -450,7 +513,7 @@
                         {{--<div class="callout callout-info">--}}
                         {{--<h4> No Projects !</h4>--}}
 
-                        {{--<p>Please Check Back Later..!</p>--}}
+                        {{--<p>Please Create One..!</p>--}}
                         {{--</div>--}}
 
                         {{--@endif--}}
@@ -466,7 +529,7 @@
                         {{--<div class="callout callout-info">--}}
                         {{--<h4> No Projects !</h4>--}}
 
-                        {{--<p>Please Check Back Later..!</p>--}}
+                        {{--<p>Please Create One..!</p>--}}
                         {{--</div>--}}
 
                         {{--@endif--}}
@@ -483,7 +546,7 @@
                         {{--<div class="callout callout-info">--}}
                         {{--<h4> No Projects !</h4>--}}
 
-                        {{--<p>Please Check Back Later..!</p>--}}
+                        {{--<p>Please Create One..!</p>--}}
                         {{--</div>--}}
 
                         {{--@endif--}}

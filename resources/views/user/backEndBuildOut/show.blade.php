@@ -20,13 +20,13 @@
         <section class="content-header">
             <h1>
 
-                P&D
+                Back End Build Out
 
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                 <li><a href="#">Project Details</a></li>
-                <li><a href="#">P&D</a></li>
+                <li><a href="{{url('pm/projects/'.$slug.'#back-end-build-out')}}">Back End Build Out</a></li>
 
             </ol>
         </section>
@@ -40,11 +40,11 @@
                         <div class="row">
                             <div class="col-sm-8">
 
-                                <h5><strong>P&D Comment</strong></h5>
+                                <h5><strong>Back End Build Out Comment</strong></h5>
                                 <hr>
 
 
-                                {!! htmlspecialchars_decode($pd->comment) !!}
+                                {!! htmlspecialchars_decode($backEndBuildOut->comment) !!}
 
 
                             </div>
@@ -56,28 +56,30 @@
 
                                             <a data-toggle="tooltip" data-placement="top" title="Edit"
                                                class="btn btn-xs btn-warning"
-                                               href="{{url('pm/projects/'.$slug.'/pd/'.$pd->id.'/edit')}}"><i
+                                               href="{{url('pm/projects/'.$slug.'/back-end-build-out/'.$backEndBuildOut->id.'/edit')}}"><i
                                                         class="fa fa-fw fa-2x fa-edit" aria-hidden="true"></i></a>
                                             <a data-toggle="tooltip" data-placement="top" title="Go Back"
                                                class="btn btn-xs btn-info"
-                                               href="{{url('pm/projects/'.$slug.'#pd')}}"><i
+                                               href="{{url('pm/projects/'.$slug.'#back-end-build-out')}}"><i
                                                         class="fa fa-fw fa-2x fa-angle-double-left" aria-hidden="true"></i></a>
 
                                         </div>
                                     </div>
                                     <div class="box-body">
                                         <strong><i class="fa fa-check-circle text-maroon margin-r-5"></i>
-                                            Status</strong>
+                                            User Upload</strong>
 
                                         <p>
-                                            {!! statusColor($pd->status) !!}
+                                            {!! statusColor($backEndBuildOut->user_upload) !!}
                                         </p>
 
                                         <hr>
+                                        <strong><i class="fa fa-check-circle text-maroon margin-r-5"></i>
+                                            Call Flows</strong>
 
-                                        <strong><i class="fa fa-calendar text-maroon margin-r-5"></i> Date</strong>
-
-                                        <p class="text-muted">{{$pd->date->format(config('constants.time.format'))}}</p>
+                                        <p>
+                                            {!! statusColor($backEndBuildOut->call_flows) !!}
+                                        </p>
 
                                     </div>
                                     <!-- /.box-body -->

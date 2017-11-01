@@ -47,14 +47,8 @@
                                     <label for="status" class="col-md-4 control-label">Status</label>
 
                                     <div class="col-md-6">
-                                        <select id="status" class="form-control" name="status"
-                                                required>
-                                            <option value="N/A" {{(old('status')=='N/A')?"selected":''}}>N/A</option>
-                                            <option value="Onhold" {{(old('status')=='Onhold')?"selected":''}}>Onhold</option>
-                                            <option value="Inprogress"{{(old('status')=='Inprogress')?"selected":''}}>Inprogress</option>
-                                            <option value="Complete"{{(old('status')=='Complete')?"selected":''}}>Complete</option>
-                                            <option value="Closed"{{(old('status')=='Closed')?"selected":''}}>Closed</option>
-                                        </select>
+
+                                        {!! selectCreate('status') !!}
 
                                         @if ($errors->has('status'))
                                             <span class="help-block">

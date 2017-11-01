@@ -20,13 +20,13 @@
         <section class="content-header">
             <h1>
 
-                Probe/ Network Assessment
+                Admin Training
 
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                 <li><a href="#">Project Details</a></li>
-                <li><a href="{{url('pm/projects/'.$slug.'#network-assessment')}}">Probe/ Network Assessment</a></li>
+                <li><a href="{{url('pm/projects/'.$slug.'#admin-training')}}">Admin Training</a></li>
 
             </ol>
         </section>
@@ -35,16 +35,19 @@
         <section class="content">
             <!-- general form elements -->
             <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">{{$adminTraining->title}}</h3>
+                </div>
                 <div class="box-body">
                 <!-- /.box-body -->
                         <div class="row">
                             <div class="col-sm-8">
 
-                                <h3>Probe/ Network Assessment Comment</h3>
+                                <h5><strong>Admin Training Comment</strong></h5>
                                 <hr>
 
 
-                                {!! htmlspecialchars_decode($networkAssessment->comment) !!}
+                                {!! htmlspecialchars_decode($adminTraining->comment) !!}
 
 
                             </div>
@@ -56,11 +59,11 @@
 
                                             <a data-toggle="tooltip" data-placement="top" title="Edit"
                                                class="btn btn-xs btn-warning"
-                                               href="{{url('pm/projects/'.$slug.'/network-assessment/'.$networkAssessment->id.'/edit')}}"><i
+                                               href="{{url('pm/projects/'.$slug.'/admin-training/'.$adminTraining->id.'/edit')}}"><i
                                                         class="fa fa-fw fa-2x fa-edit" aria-hidden="true"></i></a>
                                             <a data-toggle="tooltip" data-placement="top" title="Go Back"
                                                class="btn btn-xs btn-info"
-                                               href="{{url('pm/projects/'.$slug.'#network-assessment')}}"><i
+                                               href="{{url('pm/projects/'.$slug.'#admin-training')}}"><i
                                                         class="fa fa-fw fa-2x fa-angle-double-left" aria-hidden="true"></i></a>
 
                                         </div>
@@ -70,14 +73,14 @@
                                             Status</strong>
 
                                         <p>
-                                            {!! statusColor($networkAssessment->status) !!}
+                                            {!! statusColor($adminTraining->status) !!}
                                         </p>
 
                                         <hr>
 
                                         <strong><i class="fa fa-calendar text-maroon margin-r-5"></i> Date</strong>
 
-                                        <p class="text-muted">{{$networkAssessment->date->format(config('constants.time.format'))}}</p>
+                                        <p class="text-muted">{{$adminTraining->date->format(config('constants.time.format'))}}</p>
 
                                     </div>
                                     <!-- /.box-body -->

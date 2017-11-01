@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\User;
 
 use App\Model\Common\Project;
-use App\Model\User\AdminTraining;
+use App\Model\User\BackEndBuildOut;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class AdminTrainingController extends Controller
+class BackEndBuildOutController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,7 +26,7 @@ class AdminTrainingController extends Controller
      */
     public function create($slug)
     {
-        return view('user.adminTraining.create', compact('slug'));
+        return view('user.backEndBuildOut.create', compact('slug'));
     }
 
     /**
@@ -40,24 +40,21 @@ class AdminTrainingController extends Controller
         $project=Project::findBySlug($slug)->firstOrFail();
 
         $this->validate($request,[
-            'title' => 'required',
-            'status' => 'required',
-            'date' => 'required|date|after:yesterday'
-
+            'user_upload' => 'required',
+            'call_flows' => 'required'
         ]);
 
-        $adminTraining=new AdminTraining();
-        $adminTraining->title=$request->title;
-        $adminTraining->status=$request->status;
-        $adminTraining->date=$request->date;
-        $adminTraining->comment=$request->comment;
-        $adminTraining->project_id=$project->id;
-        $adminTraining->save();
+        $backEndBuildOut=new BackEndBuildOut();
+        $backEndBuildOut->user_upload=$request->user_upload;
+        $backEndBuildOut->call_flows=$request->call_flows;
+        $backEndBuildOut->comment=$request->comment;
+        $backEndBuildOut->project_id=$project->id;
+        $backEndBuildOut->save();
 
-        flash('Admin Training Created Successfully..!')->success();
+        flash('Back End Build Out Created Successfully..!')->success();
 
 
-        return redirect('pm/projects/'.$slug.'#admin-training');
+        return redirect('pm/projects/'.$slug.'#back-end-build-out');
     }
 
     /**
@@ -69,8 +66,8 @@ class AdminTrainingController extends Controller
     public function show($slug,$id)
     {
         $project=Project::findBySlug($slug)->firstOrFail();
-        $adminTraining=$project->projectAdminTraining()->where('id',$id)->firstOrFail();
-        return view('user.adminTraining.show', compact('adminTraining','slug'));
+        $backEndBuildOut=$project->projectBackEndBuildOut()->where('id',$id)->firstOrFail();
+        return view('user.backEndBuildOut.show', compact('backEndBuildOut','slug'));
     }
 
     /**
@@ -82,8 +79,8 @@ class AdminTrainingController extends Controller
     public function edit($slug,$id)
     {
         $project=Project::findBySlug($slug)->firstOrFail();
-        $adminTraining=$project->projectAdminTraining()->where('id',$id)->firstOrFail();
-        return view('user.adminTraining.edit', compact('adminTraining','slug'));
+        $backEndBuildOut=$project->projectBackEndBuildOut()->where('id',$id)->firstOrFail();
+        return view('user.backEndBuildOut.edit', compact('backEndBuildOut','slug'));
     }
 
     /**
@@ -99,22 +96,21 @@ class AdminTrainingController extends Controller
 
 
         $this->validate($request,[
-            'title' => 'required',
-            'status' => 'required',
-            'date' => 'required|date'
+            'user_upload' => 'required',
+            'call_flows' => 'required'
+
 
         ]);
 
-        $adminTraining=$project->projectAdminTraining()->where('id',$id)->firstOrFail();
-        $adminTraining->title=$request->title;
-        $adminTraining->status=$request->status;
-        $adminTraining->date=$request->date;
-        $adminTraining->comment=$request->comment;
-        $adminTraining->save();
+        $backEndBuildOut=$project->projectBackEndBuildOut()->where('id',$id)->firstOrFail();
+        $backEndBuildOut->user_upload=$request->user_upload;
+        $backEndBuildOut->call_flows=$request->call_flows;
+        $backEndBuildOut->comment=$request->comment;
+        $backEndBuildOut->save();
 
-        flash('Admin Training Updated Successfully..!')->success();
+        flash('Back End Build Out Updated Successfully..!')->success();
 
-        return redirect('pm/projects/'.$slug.'#admin-training');
+        return redirect('pm/projects/'.$slug.'#back-end-build-out');
     }
 
     /**
@@ -126,8 +122,8 @@ class AdminTrainingController extends Controller
     public function destroy($slug,$id)
     {
         $project=Project::findBySlug($slug)->firstOrFail();
-        $project->projectAdminTraining()->where('id',$id)->firstOrFail()->delete();
-        flash('Admin Training Deleted Successfully..!')->success();
-        return redirect('pm/projects/'.$slug.'#admin-training');
+        $project->projectBackEndBuildOut()->where('id',$id)->firstOrFail()->delete();
+        flash('Back End Build Out Deleted Successfully..!')->success();
+        return redirect('pm/projects/'.$slug.'#back-end-build-out');
     }
 }

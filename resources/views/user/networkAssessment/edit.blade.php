@@ -40,7 +40,7 @@
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
-                        <form class="form-horizontal" role="form" method="post" action="{{url('pm/projects/'.$slug.'/network-assessment/'.$networkAssessment->id.'')}}">
+                        <form class="form-horizontal" role="form" method="post" action="{{url('pm/projects/'.$slug.'/network-assessment/'.$networkAssessment->id)}}">
                             {{csrf_field()}}
                             {{method_field('PUT')}}
                             <div class="box-body">
@@ -49,14 +49,8 @@
                                     <label for="title" class="col-md-4 control-label">Status</label>
 
                                     <div class="col-md-6">
-                                        <select id="status" class="form-control" name="status"
-                                                required>
-                                            <option value="N/A" {{(old('status',$networkAssessment->status)=='N/A')?"selected":''}}>N/A</option>
-                                            <option value="Onhold" {{(old('status',$networkAssessment->status)=='Onhold')?"selected":''}}>Onhold</option>
-                                            <option value="Inprogress"{{(old('status',$networkAssessment->status)=='Inprogress')?"selected":''}}>Inprogress</option>
-                                            <option value="Complete"{{(old('status',$networkAssessment->status)=='Complete')?"selected":''}}>Complete</option>
-                                            <option value="Closed"{{(old('status',$networkAssessment->status)=='Closed')?"selected":''}}>Closed</option>
-                                        </select>
+
+                                        {!! selectUpdate('status',$networkAssessment->status) !!}
 
                                         @if ($errors->has('status'))
                                             <span class="help-block">
@@ -110,7 +104,7 @@
 
                             <div class="box-footer">
                                 <button type="submit" class="btn btn-primary">Submit</button>
-                                <a class="btn btn-warning" href="{{url('pm/projects/'.$slug.'#$network-assessment')}}"> Back </a>
+                                <a class="btn btn-warning" href="{{url('pm/projects/'.$slug.'#network-assessment')}}"> Back </a>
                             </div>
                         </form>
                     </div>

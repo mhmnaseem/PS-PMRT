@@ -40,7 +40,7 @@
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
-                        <form class="form-horizontal" role="form" method="post" action="{{url('pm/projects/'.$slug.'/pd/'.$pd->id.'')}}">
+                        <form class="form-horizontal" role="form" method="post" action="{{url('pm/projects/'.$slug.'/pd/'.$pd->id)}}">
                             {{csrf_field()}}
                             {{method_field('PUT')}}
                             <div class="box-body">
@@ -49,14 +49,8 @@
                                     <label for="title" class="col-md-4 control-label">Status</label>
 
                                     <div class="col-md-6">
-                                        <select id="status" class="form-control" name="status"
-                                                required>
-                                            <option value="N/A" {{(old('status',$pd->status)=='N/A')?"selected":''}}>N/A</option>
-                                            <option value="Onhold" {{(old('status',$pd->status)=='Onhold')?"selected":''}}>Onhold</option>
-                                            <option value="Inprogress"{{(old('status',$pd->status)=='Inprogress')?"selected":''}}>Inprogress</option>
-                                            <option value="Complete"{{(old('status',$pd->status)=='Complete')?"selected":''}}>Complete</option>
-                                            <option value="Closed"{{(old('status',$pd->status)=='Closed')?"selected":''}}>Closed</option>
-                                        </select>
+
+                                        {!! selectUpdate('status',$pd->status) !!}
 
                                         @if ($errors->has('status'))
                                             <span class="help-block">
