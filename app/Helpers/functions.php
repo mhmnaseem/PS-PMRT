@@ -53,17 +53,19 @@ function calculateProgress($slug)
 
     if ($total <= 20) {
         $labelColor = 'danger';
-    } elseif ($total > 20 && $total <= 50) {
+    } elseif ($total > 20 && $total <= 33) {
         $labelColor = 'warning';
-    } elseif ($total > 50 && $total <= 75) {
+    } elseif ($total > 34 && $total <= 66) {
         $labelColor = 'info';
+    } elseif ($total > 67 && $total <= 83) {
+        $labelColor = 'primary';
     } else {
         $labelColor = 'success';
     }
 
 
     return $total . '% <div class="progress progress-xs" style="margin-top:0px;">
-						  <div class="progress-bar progress-bar-' . $labelColor . '" role="progressbar" aria-valuenow="' . $total . '" aria-valuemin="0" aria-valuemax="100" style="width: ' . $total . '%">
+						  <div class="progress-bar progress-bar-striped active progress-bar-' . $labelColor . '" role="progressbar" aria-valuenow="' . $total . '" aria-valuemin="0" aria-valuemax="100" style="width: ' . $total . '%">
 						  </div>
 						</div>';
 
