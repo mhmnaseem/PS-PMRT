@@ -72,7 +72,9 @@ Route::group(['namespace'=>'User'],function (){
     Route::resource('pm/projects.back-end-build-out', 'BackEndBuildOutController');
     Route::resource('pm/projects.number-porting', 'NumberPortingController');
     Route::resource('pm/projects.onsite-delivery-go-live', 'OnsiteDeliveryGoLiveController');
-
+    Route::resource('pm/projects.attachment', 'AttachmentController');
+    Route::get('pm/projects/{project}/attachment/{attachment}', 'AttachmentController@download');
+    Route::resource('pm/projects.note', 'NoteController');
 
     Route::get('/home', 'HomeController@index')->name('home');
 

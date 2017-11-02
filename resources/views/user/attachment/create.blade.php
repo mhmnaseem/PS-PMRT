@@ -2,8 +2,6 @@
 
 @section ('header')
 
-    <link rel="stylesheet" href="{{asset('admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
-
 @endsection
 
 
@@ -16,12 +14,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-               Admin Training
+               Attachment
 
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li><a href="#"> Admin Training</a></li>
+                <li><a href="#">Attachment</a></li>
                 <li class="active">Create</li>
             </ol>
         </section>
@@ -35,12 +33,12 @@
                     <div class="box box-primary">
 
                         <div class="box-header with-border">
-                            <h3 class="box-title">Create  Admin Training</h3>
+                            <h3 class="box-title">Create Attachment</h3>
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
                         <form class="form-horizontal" role="form" method="post"
-                              action="{{route('projects.admin-training.store',$slug)}}">
+                              action="{{route('projects.attachment.store',$slug)}}" enctype="multipart/form-data">
                             {{csrf_field()}}
                             <div class="box-body">
 
@@ -62,53 +60,16 @@
                                 </div>
 
 
-                                <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
-                                    <label for="status" class="col-md-4 control-label">Status</label>
+                                <div class="form-group{{ $errors->has('attachment') ? ' has-error' : '' }}">
+                                    <label for="attachment" class="col-md-4 control-label">Attachment</label>
 
                                     <div class="col-md-6">
 
-                                        {!! selectCreate('status') !!}
+                                       <input type="file" name="attachment" id="attachment" required>
 
-                                        @if ($errors->has('status'))
+                                        @if ($errors->has('attachment'))
                                             <span class="help-block">
-                                        <strong>{{ $errors->first('status') }}</strong>
-                                    </span>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                <div class="form-group{{ $errors->has('date') ? ' has-error' : '' }}">
-                                    <label for="datepicker" class="col-md-4 control-label">Date</label>
-
-                                    <div class="col-md-6">
-
-                                        <div class="input-group date">
-                                            <div class="input-group-addon">
-                                                <i class="fa fa-calendar"></i>
-                                            </div>
-                                            <input type="text" class="form-control pull-right" id="datepicker" name="date"  value="{{ old('date') }}" required autofocus>
-                                        </div>
-                                        <!-- /.input group -->
-
-
-                                        @if ($errors->has('date'))
-                                            <span class="help-block">
-                                        <strong>{{ $errors->first('date') }}</strong>
-                                    </span>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                <div class="form-group{{ $errors->has('comment') ? ' has-error' : '' }}">
-                                    <label for="email" class="col-md-4 control-label">Comment</label>
-
-                                    <div class="col-md-6">
-
-                                        <textarea id="editor1" rows="4" cols="50" name="comment" class="form-control"
-                                                  required>{{ old('comment')}}</textarea>
-                                        @if ($errors->has('comment'))
-                                            <span class="help-block">
-                                        <strong>{{ $errors->first('comment') }}</strong>
+                                        <strong>{{ $errors->first('attachment') }}</strong>
                                     </span>
                                         @endif
                                     </div>
@@ -117,7 +78,7 @@
 
                             <div class="box-footer">
                                 <button type="submit" class="btn btn-primary">Submit</button>
-                                <a class="btn btn-warning" href="{{url('pm/projects/'.$slug.'#admin-training')}}"> Back </a>
+                                <a class="btn btn-warning" href="{{url('pm/projects/'.$slug.'#attachments')}}"> Back </a>
                             </div>
                         </form>
                     </div>

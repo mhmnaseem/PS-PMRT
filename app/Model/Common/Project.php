@@ -64,5 +64,16 @@ class Project extends Model
         return $this->hasMany('App\Model\User\OnsiteDeliveryGoLive');
     }
 
+    public function projectAttachment()
+    {
+        return $this->hasMany('App\Model\User\Attachment');
+    }
+
+    public function projectNote()
+    {
+        return $this->hasOne('App\Model\User\Note');
+    }
+
+
 
 }

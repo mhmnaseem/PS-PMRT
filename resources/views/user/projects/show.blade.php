@@ -116,6 +116,15 @@
 
                                         <hr>
 
+                                        <strong><i class="fa fa-spinner text-maroon margin-r-5"></i>
+                                            Progress</strong>
+
+                                        <p>
+                                            {!! calculateProgress($project->slug) !!}
+                                        </p>
+
+                                        <hr>
+
                                         <strong><i class="fa fa-calendar text-maroon margin-r-5"></i> Start
                                             Date</strong>
 
@@ -138,15 +147,7 @@
                                         <strong><i class="fa fa-file-text-o text-maroon margin-r-5"></i> Notes</strong>
 
 
-                                        <textarea disabled class="notes">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neasdasd
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neasdasd
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neasdasd
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neasdasd
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neasdasd
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neasdasd
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neasdasd
-
-                                        </textarea>
+                                        <textarea disabled class="notes">@if($project->projectNote !=null ){{$project->projectNote->note}}@endif</textarea>
 
                                     </div>
                                     <!-- /.box-body -->
@@ -387,7 +388,9 @@
                                         </td>
                                         <td>{{$adminTraining->title}}</td>
                                         <td>{!! statusColor($adminTraining->status) !!}</td>
-                                        <td>{{$adminTraining->date->format(config('constants.time.format'))}}</td>
+                                        <td>@if($adminTraining->date!="")
+                                                {{$adminTraining->date->format(config('constants.time.format'))}}
+                                            @endif</td>
                                         <td>
                                             {!! htmlspecialchars_decode(str_limit($adminTraining->comment,350)) !!}
                                         </td>
@@ -650,36 +653,100 @@
                     </div>
                     <!-- /.tab-pane -->
                     <div class="tab-pane" id="notes">
+                        <h3><span>Notes</span>
 
-                        {{--@if ()--}}
+                        </h3>
+                        <hr>
+
+                        <form class= role="form" method="post"
+                              action="{{route('projects.note.store',$project->slug)}}">
+                            {{csrf_field()}}
+
+                             <div class="form-group">
+                                   <div class="col-sm-8">
+
+                                        <textarea class="form-control notes" placeholder="Note" name="note" cols="30" rows="10">@if($project->projectNote !=null ){{$project->projectNote->note}}@endif</textarea>
+
+                                    </div>
+                                </div>
+                            <div class="clearfix"></div>
+                                <div class="box-footer">
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                        </form>
 
 
-                        {{--@else--}}
 
-                        {{--<div class="callout callout-info">--}}
-                        {{--<h4> No Projects !</h4>--}}
-
-                        {{--<p>Please Create One..!</p>--}}
-                        {{--</div>--}}
-
-                        {{--@endif--}}
                     </div>
                     <!-- /.tab-pane -->
 
                     <div class="tab-pane" id="attachments">
 
-                        {{--@if ()--}}
+                        <h3><span>Attachments</span>
+                            <a data-toggle="tooltip" data-placement="top" title="Add New"
+                               class="pull-right btn btn-xs btn-default"
+                               href="{{route('projects.attachment.create',$project->slug)}}">
+                                <i class="fa fa-fw text-olive fa-2x fa-plus" aria-hidden="true"></i></a>
+                        </h3>
+                        <hr>
+
+                        @if ($project->projectAttachment->isNotEmpty())
+
+                            <table id="" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Option</th>
+                                    <th>Title</th>
+                                    <th>Created Date</th>
+                                    <th>Download</th>
 
 
-                        {{--@else--}}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($project->projectAttachment as $attachment)
+                                    <tr>
+                                        <td>
+                                            <div class="btn-group">
+                                               <form id="form-delete-attachment{{$attachment->id}}" method="post"
+                                                      action="{{url('pm/projects/'.$project->slug.'/attachment/'.$attachment->id)}}"
+                                                      style="display: none;">
+                                                    {{csrf_field()}}
+                                                    {{method_field('DELETE')}}
 
-                        {{--<div class="callout callout-info">--}}
-                        {{--<h4> No Projects !</h4>--}}
+                                                </form>
 
-                        {{--<p>Please Create One..!</p>--}}
-                        {{--</div>--}}
+                                                <a data-toggle="tooltip" data-placement="top" title="Delete"
+                                                   class="btn btn-xs btn-danger" href="#" onclick="
 
-                        {{--@endif--}}
+                                                        if(confirm('Are you sure want to Delete?')) {
+                                                        event.preventDefault();
+                                                        document.getElementById('form-delete-attachment{{$attachment->id}}').submit();
+                                                        }else{
+                                                        event.preventDefault();
+                                                        }
+
+                                                        "><i class="fa fa-fw fa-trash"></i></a>
+                                            </div>
+                                        </td>
+                                        <td>{{$attachment->title}}</td>
+                                        <td>{{$attachment->created_at->format(config('constants.time.format'))}}</td>
+                                        <td><i class="fa fa-paperclip"></i> <a href="{{url('pm/projects/'.$project->slug.'/attachment/'.$attachment->id)}}">{{$attachment->attachment_url}}</a></td>
+
+
+                                    </tr>
+
+                                @endforeach
+                            </table>
+                        @else
+
+                            <div class="callout callout-info">
+                                <h4> No Attachments for this Project !</h4>
+
+                                <p>Please Create One..!</p>
+                            </div>
+
+                        @endif
                     </div>
                     <!-- /.tab-pane -->
 

@@ -18,7 +18,7 @@ class CreateAdminTrainingsTable extends Migration
             $table->string('title','100')->nullable();
             $table->string('status')->nullable();
             $table->date('date')->nullable();
-            $table->string('comment',1000)->nullable();
+            $table->text('comment')->nullable();
             $table->integer('project_id')->unsigned()->nullable();
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
             $table->timestamps();
