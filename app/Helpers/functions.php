@@ -8,48 +8,7 @@ use Carbon\Carbon;
 function calculateProgress($slug)
 {
 
-    $project = Project::findBySlug($slug)->firstOrFail();
-
-    $pd = $project->projectPd()->count();
-    if ($pd >= 1) {
-        $pdValue = 1 * 100 / 6;
-    } else {
-        $pdValue = 0;
-    }
-    $networkAssessment = $project->projectNetworkAssessment()->count();
-    if ($networkAssessment >= 1) {
-        $networkAssessmentValue = 1 * 100 / 6;
-    } else {
-        $networkAssessmentValue = 0;
-    }
-    $adminTraining = $project->projectAdminTraining()->count();
-    if ($adminTraining >= 1) {
-        $adminTrainingValue = 1 * 100 / 6;
-    } else {
-        $adminTrainingValue = 0;
-    }
-    $backEndBuildOut = $project->projectBackEndBuildOut()->count();
-    if ($backEndBuildOut >= 1) {
-        $backEndBuildOutValue = 1 * 100 / 6;
-    } else {
-        $backEndBuildOutValue = 0;
-    }
-    $numberPorting = $project->projectNumberPorting()->count();
-    if ($numberPorting >= 1) {
-        $numberPortingValue = 1 * 100 / 6;
-    } else {
-        $numberPortingValue = 0;
-    }
-    $onsiteDeliveryGoLive = $project->projectOnsiteDeliveryGoLive()->count();
-    if ($onsiteDeliveryGoLive >= 1) {
-        $onsiteDeliveryGoLiveValue = 1 * 100 / 6;
-    } else {
-        $onsiteDeliveryGoLiveValue = 0;
-    }
-
-    $totalValue = $pdValue + $networkAssessmentValue + $adminTrainingValue + $backEndBuildOutValue + $numberPortingValue + $onsiteDeliveryGoLiveValue;
-
-    $total=round($totalValue);
+    $total = getProgress($slug);
 
     if ($total <= 20) {
         $labelColor = 'danger';
@@ -63,12 +22,105 @@ function calculateProgress($slug)
         $labelColor = 'success';
     }
 
-
     return $total . '% <div class="progress progress-xs" style="margin-top:0px;">
 						  <div class="progress-bar progress-bar-striped active progress-bar-' . $labelColor . '" role="progressbar" aria-valuenow="' . $total . '" aria-valuemin="0" aria-valuemax="100" style="width: ' . $total . '%">
 						  </div>
 						</div>';
 
+}
+
+
+function getProgress($slug)
+{
+    $project = Project::findBySlug($slug)->firstOrFail();
+
+    $pd = $project->projectPd()->count();
+    if ($pd >= 1) {
+
+        $pdCollects=$project->projectPd()->get();
+        $pdValue = getProgressByCollection($pdCollects);
+
+    } else {
+        $pdValue = 0;
+    }
+    $networkAssessment = $project->projectNetworkAssessment()->count();
+    if ($networkAssessment >= 1) {
+
+        $networkAssessmentCollects=$project->projectNetworkAssessment()->get();
+        $networkAssessmentValue = getProgressByCollection($networkAssessmentCollects);
+
+    } else {
+        $networkAssessmentValue = 0;
+    }
+    $adminTraining = $project->projectAdminTraining()->count();
+    if ($adminTraining >= 1) {
+
+       $adminTrainingCollects=$project->projectAdminTraining()->get();
+       $adminTrainingValue = getProgressByCollection($adminTrainingCollects);
+
+    } else {
+        $adminTrainingValue = 0;
+    }
+    $backEndBuildOut = $project->projectBackEndBuildOut()->count();
+    if ($backEndBuildOut >= 1) {
+
+        $progressArray = [];
+        $progressCollects = $project->projectBackEndBuildOut()->get();
+        foreach ($progressCollects as $progressCollect) {
+            if ($progressCollect->user_upload == "Complete" & $progressCollect->call_flows == "Complete") {
+                $progressArray[$progressCollect->id] = ((1 * 100 / 6) / $backEndBuildOut);
+            }
+
+        }
+
+        $backEndBuildOutValue = array_sum($progressArray);
+
+    } else {
+        $backEndBuildOutValue = 0;
+    }
+    $numberPorting = $project->projectNumberPorting()->count();
+    if ($numberPorting >= 1) {
+
+
+        $numberPortingCollects=$project->projectNumberPorting()->get();
+        $numberPortingValue = getProgressByCollection($numberPortingCollects);
+
+
+    } else {
+        $numberPortingValue = 0;
+    }
+    $onsiteDeliveryGoLive = $project->projectOnsiteDeliveryGoLive()->count();
+    if ($onsiteDeliveryGoLive >= 1) {
+
+        $onsiteDeliveryGoLiveCollects=$project->projectNumberPorting()->get();
+        $onsiteDeliveryGoLiveValue = getProgressByCollection($onsiteDeliveryGoLiveCollects);
+
+
+    } else {
+        $onsiteDeliveryGoLiveValue = 0;
+    }
+
+    $totalValue = $pdValue + $networkAssessmentValue + $adminTrainingValue + $backEndBuildOutValue + $numberPortingValue + $onsiteDeliveryGoLiveValue;
+
+    $total = round($totalValue);
+
+
+    return $total;
+}
+
+function getProgressByCollection($collection)
+{
+
+    $progressArray = [];
+    $progressCollects = $collection;
+    $childCount=$progressCollects->count();
+    foreach ($progressCollects as $progressCollect) {
+        if ($progressCollect->status == "Complete") {
+            $progressArray[$progressCollect->id] = ((1 * 100 / 6) / $childCount);
+        }
+
+    }
+    return array_sum($progressArray);
 }
 
 function statusColor($status)
@@ -122,7 +174,7 @@ function selectCreate($name)
     $html .= '<option value="N/A" ' . ((old($key) == 'N/A') ? "selected" : "") . '>N/A</option>';
     $html .= '<option value="Onhold" ' . ((old($key) == "Onhold") ? " selected" : "") . '>Onhold</option>';
     $html .= '<option value="Pending" ' . ((old($key) == "Pending") ? " selected" : "") . '>Pending</option>';
-    $html .= '<option value="Submitted" ' . ((old($key) == "Closed") ? " selected" : "") . '>Submitted</option>';
+    $html .= '<option value="Submitted" ' . ((old($key) == "Submitted") ? " selected" : "") . '>Submitted</option>';
     $html .= '<option value="Inprogress" ' . ((old($key) == "Inprogress") ? " selected" : "") . '>Inprogress</option>';
     $html .= '<option value="Complete" ' . ((old($key) == "Complete") ? " selected" : "") . '>Complete</option>';
     $html .= '<option value="Approved" ' . ((old($key) == "Closed") ? " selected" : "") . '>Approved</option>';
@@ -142,7 +194,7 @@ function selectUpdate($name, $value)
     $html .= '<option value="N/A" ' . ((old($key, $value) == 'N/A') ? "selected" : "") . '>N/A</option>';
     $html .= '<option value="Onhold" ' . ((old($key, $value) == "Onhold") ? " selected" : "") . '>Onhold</option>';
     $html .= '<option value="Pending" ' . ((old($key, $value) == "Pending") ? " selected" : "") . '>Pending</option>';
-    $html .= '<option value="Submitted" ' . ((old($key, $value) == "Closed") ? " selected" : "") . '>Submitted</option>';
+    $html .= '<option value="Submitted" ' . ((old($key, $value) == "Submitted") ? " selected" : "") . '>Submitted</option>';
     $html .= '<option value="Inprogress" ' . ((old($key, $value) == "Inprogress") ? " selected" : "") . '>Inprogress</option>';
     $html .= '<option value="Complete" ' . ((old($key, $value) == "Complete") ? " selected" : "") . '>Complete</option>';
     $html .= '<option value="Approved" ' . ((old($key, $value) == "Closed") ? " selected" : "") . '>Approved</option>';

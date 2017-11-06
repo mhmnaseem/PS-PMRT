@@ -29,7 +29,7 @@ class UserController extends Controller
     {
         $partner=Partner::find(auth()->user()->id);
         $pms=$partner->pms()->get();
-        return view('partner.UserAccount.index',compact('pms'));
+        return view('partner.userAccount.index',compact('pms'));
     }
 
     /**
@@ -39,7 +39,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('partner.UserAccount.create');
+        return view('partner.userAccount.create');
     }
 
     /**
@@ -91,7 +91,7 @@ class UserController extends Controller
     public function edit($slug)
     {
         $pm=User::findBySlug($slug)->firstOrFail();
-        return view('partner.UserAccount.edit', compact('pm'));
+        return view('partner.userAccount.edit', compact('pm'));
     }
 
     /**

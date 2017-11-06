@@ -28,7 +28,7 @@ class UserController extends Controller
     public function index()
     {
         $pms=User::all();
-        return view('admin.UserAccount.index',compact('pms'));
+        return view('admin.userAccount.index',compact('pms'));
     }
 
     /**
@@ -39,7 +39,7 @@ class UserController extends Controller
     public function create()
     {
         $partners=Partner::all();
-        return view('admin.UserAccount.create',compact('partners'));
+        return view('admin.userAccount.create',compact('partners'));
     }
 
     /**
@@ -93,7 +93,7 @@ class UserController extends Controller
     {
         $pm=User::where('id', $id)->firstOrFail();
         $partners=Partner::all();
-        return view('admin.UserAccount.edit', compact('pm','partners'));
+        return view('admin.userAccount.edit', compact('pm','partners'));
     }
 
     /**

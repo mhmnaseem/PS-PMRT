@@ -23,8 +23,8 @@
 <link rel="stylesheet" href="{{asset('admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
 <!-- Daterange picker -->
 <link rel="stylesheet" href="{{asset('admin/bower_components/bootstrap-daterangepicker/daterangepicker.css')}}">
-<!-- bootstrap wysihtml5 - text editor -->
-<link rel="stylesheet" href="{{asset('admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
+<!-- pace -->
+<link rel="stylesheet" href="{{asset('admin/plugins/pace/pace.min.css')}}">
 <!-- custom css -->
 <link rel="stylesheet" href="{{asset('css/custom.css')}}">
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

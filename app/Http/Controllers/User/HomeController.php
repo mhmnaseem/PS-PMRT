@@ -36,7 +36,7 @@ class HomeController extends Controller
             ->where('status', '=', 'open')
             ->count();
 
-        //Total improgress
+        //Total inprogress
         $TotalOverdue = $user->projects()
             ->where('status', '!=', 'Complete')
             ->where('due_date', '<', Carbon::now())
@@ -45,7 +45,7 @@ class HomeController extends Controller
 
         //Completed Projects
         $completedProjects = $user->projects()
-            ->where('status', '=', 'Completed')
+            ->where('status', '=', 'Complete')
             ->count();
 
         //Total Projects
