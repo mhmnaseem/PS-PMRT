@@ -249,6 +249,7 @@
                                         <th>Progress</th>
                                         <th>Start date</th>
                                         <th>Due date</th>
+                                        <th>Complete date</th>
 
 
 
@@ -278,6 +279,13 @@
                                             <td>{!! calculateProgress($completedProject->slug) !!}</td>
                                             <td>{{$completedProject->start_date->format(config('constants.time.format'))}}</td>
                                             <td>{{$completedProject->due_date->format(config('constants.time.format'))}}</td>
+                                            <td>
+                                                @if($completedProject->complete_date != null)
+                                                {{$completedProject->complete_date->format(config('constants.time.format'))}}
+                                                @else
+                                                    Not Complete yet
+                                                @endif
+                                            </td>
 
 
 
@@ -310,6 +318,7 @@
                                         <th>Progress</th>
                                         <th>Start date</th>
                                         <th>Due date</th>
+                                        <th>Complete date</th>
 
 
                                     </tr>
@@ -338,7 +347,13 @@
                                             <td>{!! calculateProgress($allProject->slug) !!}</td>
                                             <td>{{$allProject->start_date->format(config('constants.time.format'))}}</td>
                                             <td>{{$allProject->due_date->format(config('constants.time.format'))}}</td>
-
+                                            <td>
+                                                @if($allProject->complete_date != null)
+                                                    {{$allProject->complete_date->format(config('constants.time.format'))}}
+                                                @else
+                                                    Not Complete yet
+                                                @endif
+                                            </td>
 
 
                                         </tr>

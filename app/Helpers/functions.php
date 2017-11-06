@@ -103,9 +103,9 @@ function getProgress($slug)
     $totalValue = $pdValue + $networkAssessmentValue + $adminTrainingValue + $backEndBuildOutValue + $numberPortingValue + $onsiteDeliveryGoLiveValue;
 
     $total = round($totalValue);
+    $intTotal=(int) $total;
 
-
-    return $total;
+    return $intTotal;
 }
 
 function getProgressByCollection($collection)
@@ -177,7 +177,7 @@ function selectCreate($name)
     $html .= '<option value="Submitted" ' . ((old($key) == "Submitted") ? " selected" : "") . '>Submitted</option>';
     $html .= '<option value="Inprogress" ' . ((old($key) == "Inprogress") ? " selected" : "") . '>Inprogress</option>';
     $html .= '<option value="Complete" ' . ((old($key) == "Complete") ? " selected" : "") . '>Complete</option>';
-    $html .= '<option value="Approved" ' . ((old($key) == "Closed") ? " selected" : "") . '>Approved</option>';
+    $html .= '<option value="Approved" ' . ((old($key) == "Approved") ? " selected" : "") . '>Approved</option>';
     $html .= '<option value="Closed" ' . ((old($key) == "Closed") ? " selected" : "") . '>Closed</option>';
 
     $html .= '</select>';
@@ -197,7 +197,7 @@ function selectUpdate($name, $value)
     $html .= '<option value="Submitted" ' . ((old($key, $value) == "Submitted") ? " selected" : "") . '>Submitted</option>';
     $html .= '<option value="Inprogress" ' . ((old($key, $value) == "Inprogress") ? " selected" : "") . '>Inprogress</option>';
     $html .= '<option value="Complete" ' . ((old($key, $value) == "Complete") ? " selected" : "") . '>Complete</option>';
-    $html .= '<option value="Approved" ' . ((old($key, $value) == "Closed") ? " selected" : "") . '>Approved</option>';
+    $html .= '<option value="Approved" ' . ((old($key, $value) == "Approved") ? " selected" : "") . '>Approved</option>';
     $html .= '<option value="Closed" ' . ((old($key, $value) == "Closed") ? " selected" : "") . '>Closed</option>';
 
     $html .= '</select>';

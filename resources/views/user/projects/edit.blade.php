@@ -49,13 +49,7 @@
 
                                 <div class="col-md-6">
 
-                                <select id="status" class="form-control" name="status"
-                                required>
-                                <option value="Onhold" {{($project->status=='Onhold')?"selected":''}}>Onhold</option>
-                                <option value="Inprogress"{{($project->status=='Inprogress')?"selected":''}}>Inprogress</option>
-                                <option value="Complete"{{($project->status=='Complete')?"selected":''}}>Complete</option>
-                                <option value="Closed"{{($project->status=='Closed')?"selected":''}}>Closed</option>
-                                </select>
+                                    {!! selectUpdate('status',$project->status) !!}
 
                                 @if ($errors->has('status'))
                                 <span class="help-block">

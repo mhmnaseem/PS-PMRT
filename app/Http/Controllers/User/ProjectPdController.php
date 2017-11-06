@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Model\Common\Project;
 use App\Model\User\Pd;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -56,12 +57,14 @@ class ProjectPdController extends Controller
 
         ]);
 
+
         $pd=new Pd();
         $pd->status=$request->status;
         $pd->date=$request->date;
         $pd->comment=$request->comment;
         $pd->project_id=$project->id;
         $pd->save();
+
 
         flash('P&D Created Successfully..!')->success();
 
@@ -114,10 +117,12 @@ class ProjectPdController extends Controller
         ]);
 
         $pd=$project->projectPd()->where('id',$id)->firstOrFail();
+
         $pd->status=$request->status;
         $pd->date=$request->date;
         $pd->comment=$request->comment;
         $pd->save();
+
 
         flash('P&D Updated Successfully..!')->success();
 
