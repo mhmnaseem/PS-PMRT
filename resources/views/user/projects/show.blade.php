@@ -78,7 +78,7 @@
                         <div class="row">
 
                             <div class="col-sm-12">
-                                <h5><strong>Project Snap Shot</strong></h5>
+                                <h5><strong>Project Overview</strong></h5>
                                 @if ($project->ProjectPd->isNotEmpty() || $project->projectNetworkAssessment->isNotEmpty() || $project->projectAdminTraining->isNotEmpty() || $project->projectBackEndBuildOut->isNotEmpty() || $project->projectBackEndBuildOut->isNotEmpty() || $project->projectNumberPorting->isNotEmpty() || $project->projectOnsiteDeliveryGoLive->isNotEmpty())
 
                                     <table id="snapshot" class="table table-bordered table-striped">
@@ -178,6 +178,12 @@
 
 
                                     </table>
+
+                                    <h5><strong>Export Overview</strong></h5>
+                                        <div id="buttons"></div>
+
+
+
                                 @else
 
                                     <div class="callout callout-info">
@@ -189,7 +195,6 @@
                                 @endif
                             </div>
                         </div>
-
 
                         <div class="row">
                             <div class="col-sm-8">
@@ -911,20 +916,13 @@
 
     <script>
         $(function () {
-            $('#snapshot').DataTable({
+            var table =$('#snapshot').DataTable({
                 'paging': false,
                 'lengthChange': false,
                 'searching': false,
                 'info': true,
                 'autoWidth': false,
-                dom: 'Bfrtip',
-                buttons: [
-                    {extend: 'copy', className: 'btn btn-default'},
-                    {extend: 'csv', className: 'btn btn-default'},
-                    {extend: 'excel', className: 'btn btn-default'},
-                    {extend: 'pdf', className: 'btn btn-default '},
-                    {extend: 'print', className: 'btn btn-default'}
-                ],
+
                 "order": [],
                 "columnDefs": [ {
                     "targets"  : 'no-sort',
@@ -932,6 +930,14 @@
                 }]
 
             });
+            var buttons = new $.fn.dataTable.Buttons(table, {
+                buttons: [
+
+                    {extend: 'pdf', className: 'btn btn-default '},
+                    {extend: 'copy', className: 'btn btn-default'}
+
+                ],
+            }).container().appendTo($('#buttons'));
         });
 
 

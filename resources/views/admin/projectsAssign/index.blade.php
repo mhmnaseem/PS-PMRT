@@ -153,6 +153,7 @@
                                         <th>Option</th>
                                         <th>Title</th>
                                         <th>Status</th>
+                                        <th>Progress</th>
                                         <th>Start date</th>
                                         <th>Due date</th>
                                         <th>Partner</th>
@@ -194,6 +195,7 @@
                                             </td>
                                             <td>{{$assignedProject->title}}</td>
                                             <td>{!! statusColor($assignedProject->status) !!}</td>
+                                            <td>{!! calculateProgress($assignedProject->slug) !!}</td>
                                             <td>{{$assignedProject->start_date->format(config('constants.time.format'))}}</td>
                                             <td>{{$assignedProject->due_date->format(config('constants.time.format'))}}</td>
                                             <td>{{$assignedProject->partner->name}}</td>
@@ -225,6 +227,7 @@
                                         <th>Option</th>
                                         <th>Title</th>
                                         <th>Status</th>
+                                        <th>Progress</th>
                                         <th>Start date</th>
                                         <th>Due date</th>
                                         <th>Partner</th>
@@ -249,6 +252,7 @@
                                             </td>
                                             <td>{{$overdueProject->title}}</td>
                                             <td>{!! statusColor($overdueProject->status) !!}</td>
+                                            <td>{!! calculateProgress($overdueProject->slug) !!}</td>
                                             <td>{{$overdueProject->start_date->format(config('constants.time.format'))}}</td>
                                             <td>{!! '<small>'.$overdueProject->due_date->format(config('constants.time.format')).'</small> '. dueDays($overdueProject->due_date)  !!}</td>
                                             <td>{{$overdueProject->partner->name}}</td>
@@ -286,6 +290,7 @@
                                         <th>Option</th>
                                         <th>Title</th>
                                         <th>Status</th>
+                                        <th>Progress</th>
                                         <th>Start date</th>
                                         <th>Due date</th>
                                         <th>Partner</th>
@@ -329,6 +334,7 @@
                                             </td>
                                             <td>{{$completedProject->title}}</td>
                                             <td>{!! statusColor($completedProject->status) !!}</td>
+                                            <td>{!! calculateProgress($completedProject->slug) !!}</td>
                                             <td>{{$completedProject->start_date->format(config('constants.time.format'))}}</td>
                                             <td>{{$completedProject->due_date->format(config('constants.time.format'))}}</td>
                                             <td>{{$completedProject->partner->name}}</td>
@@ -361,6 +367,7 @@
                                         <th>Option</th>
                                         <th>Title</th>
                                         <th>Status</th>
+                                        <th>Progress</th>
                                         <th>Start date</th>
                                         <th>Due date</th>
                                         <th>Partner</th>
@@ -404,6 +411,7 @@
                                             </td>
                                             <td>{{$allProject->title}}</td>
                                             <td>{!! statusColor($allProject->status) !!}</td>
+                                            <td>{!! calculateProgress($allProject->slug) !!}</td>
                                             <td>{{$allProject->start_date->format(config('constants.time.format'))}}</td>
                                             <td>{{$allProject->due_date->format(config('constants.time.format'))}}</td>
                                             <td>{{$allProject->partner->name}}</td>

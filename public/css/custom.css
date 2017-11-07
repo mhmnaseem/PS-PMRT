@@ -29,3 +29,12 @@
 .btn-group {
     display: flex;
 }
+
+#buttons {
+    background-color: #5f5b5b;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+div.dt-buttons{
+    float:none !important;
+}

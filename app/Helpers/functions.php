@@ -164,9 +164,9 @@ function getProgressBySubTask($collection)
     $childCount=$progressCollects->count();
     foreach ($progressCollects as $progressCollect) {
         if ($progressCollect->status == "Complete") {
-            $progressArray[$progressCollect->id] = ((1 * 100 / 6)/ $childCount);
+            $progressArray[$progressCollect->id] = (1 * 100/ $childCount);
         }elseif($progressCollect->status != "Complete"){
-            $progressArray[$progressCollect->id] = ((1 * 100 / 6)/ $childCount/4);
+            $progressArray[$progressCollect->id] = (1 * 100/ $childCount/4);
         }
 
     }
@@ -209,9 +209,9 @@ function getProgressBySubTaskBackEnd($collection)
     $childCount=$progressCollects->count();
     foreach ($progressCollects as $progressCollect) {
         if ($progressCollect->user_upload == "Complete" & $progressCollect->call_flows == "Complete") {
-            $progressArray[$progressCollect->id] = ((1 * 100 / 6)/ $childCount);
+            $progressArray[$progressCollect->id] = (1 * 100 / $childCount);
         }elseif($progressCollect->user_upload != "Complete" || $progressCollect->call_flows != "Complete"){
-            $progressArray[$progressCollect->id] = ((1 * 100 / 6)/$childCount/4);
+            $progressArray[$progressCollect->id] = (1 * 100 /$childCount/4);
         }
 
     }

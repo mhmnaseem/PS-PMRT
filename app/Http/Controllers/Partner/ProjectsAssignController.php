@@ -39,6 +39,7 @@ class ProjectsAssignController extends Controller
 
         //assigned Projects
         $assignedProjects = $partner->projects()
+            ->where('status', '!=', 'Complete')
             ->where('user_id', '!=', null)
             ->latest('id')->get();
 
@@ -53,7 +54,7 @@ class ProjectsAssignController extends Controller
         //Completed Projects
         $completedProjects = $partner->projects()
             ->where('user_id', '!=', null)
-            ->where('status', '=', 'Completed')
+            ->where('status', '=', 'Complete')
             ->latest('id')->get();
 
         //all Projects
