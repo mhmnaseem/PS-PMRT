@@ -69,6 +69,8 @@ function getProgress($slug)
         foreach ($progressCollects as $progressCollect) {
             if ($progressCollect->user_upload == "Complete" & $progressCollect->call_flows == "Complete") {
                 $progressArray[$progressCollect->id] = ((1 * 100 / 6) / $backEndBuildOut);
+            }elseif($progressCollect->user_upload != "Complete" || $progressCollect->call_flows != "Complete"){
+                $progressArray[$progressCollect->id] = ((1 * 100 / 6)/$backEndBuildOut/4);
             }
 
         }
@@ -103,9 +105,9 @@ function getProgress($slug)
     $totalValue = $pdValue + $networkAssessmentValue + $adminTrainingValue + $backEndBuildOutValue + $numberPortingValue + $onsiteDeliveryGoLiveValue;
 
     $total = round($totalValue);
-    $intTotal=(int) $total;
 
-    return $intTotal;
+
+    return (int) $total;
 }
 
 function getProgressByCollection($collection)
@@ -117,10 +119,104 @@ function getProgressByCollection($collection)
     foreach ($progressCollects as $progressCollect) {
         if ($progressCollect->status == "Complete") {
             $progressArray[$progressCollect->id] = ((1 * 100 / 6) / $childCount);
+        }elseif($progressCollect->status != "Complete"){
+            $progressArray[$progressCollect->id] = ((1 * 100 / 6) / $childCount/4);
         }
 
     }
-    return array_sum($progressArray);
+
+
+    return (int) array_sum($progressArray);
+}
+
+
+
+function calculateSubTaskProgress($collection)
+{
+
+    $total = getProgressBySubTask($collection);
+
+    if ($total <= 20) {
+        $labelColor = 'danger';
+    } elseif ($total > 20 && $total <= 33) {
+        $labelColor = 'warning';
+    } elseif ($total > 34 && $total <= 66) {
+        $labelColor = 'info';
+    } elseif ($total > 67 && $total <= 83) {
+        $labelColor = 'primary';
+    } else {
+        $labelColor = 'success';
+    }
+
+    return $total . '% <div class="progress progress-xs" style="margin-top:0px;">
+						  <div class="progress-bar progress-bar-striped active progress-bar-' . $labelColor . '" role="progressbar" aria-valuenow="' . $total . '" aria-valuemin="0" aria-valuemax="100" style="width: ' . $total . '%">
+						  </div>
+						</div>';
+
+}
+
+
+function getProgressBySubTask($collection)
+{
+
+    $progressArray = [];
+    $progressCollects = $collection;
+    $childCount=$progressCollects->count();
+    foreach ($progressCollects as $progressCollect) {
+        if ($progressCollect->status == "Complete") {
+            $progressArray[$progressCollect->id] = ((1 * 100 / 6)/ $childCount);
+        }elseif($progressCollect->status != "Complete"){
+            $progressArray[$progressCollect->id] = ((1 * 100 / 6)/ $childCount/4);
+        }
+
+    }
+
+
+
+    return (int) array_sum($progressArray);
+}
+
+
+function calculateSubTaskProgressBackEnd($collection)
+{
+
+    $total = getProgressBySubTaskBackEnd($collection);
+
+    if ($total <= 20) {
+        $labelColor = 'danger';
+    } elseif ($total > 20 && $total <= 33) {
+        $labelColor = 'warning';
+    } elseif ($total > 34 && $total <= 66) {
+        $labelColor = 'info';
+    } elseif ($total > 67 && $total <= 83) {
+        $labelColor = 'primary';
+    } else {
+        $labelColor = 'success';
+    }
+
+    return $total . '% <div class="progress progress-xs" style="margin-top:0px;">
+						  <div class="progress-bar progress-bar-striped active progress-bar-' . $labelColor . '" role="progressbar" aria-valuenow="' . $total . '" aria-valuemin="0" aria-valuemax="100" style="width: ' . $total . '%">
+						  </div>
+						</div>';
+
+}
+
+function getProgressBySubTaskBackEnd($collection)
+{
+
+    $progressArray = [];
+    $progressCollects = $collection;
+    $childCount=$progressCollects->count();
+    foreach ($progressCollects as $progressCollect) {
+        if ($progressCollect->user_upload == "Complete" & $progressCollect->call_flows == "Complete") {
+            $progressArray[$progressCollect->id] = ((1 * 100 / 6)/ $childCount);
+        }elseif($progressCollect->user_upload != "Complete" || $progressCollect->call_flows != "Complete"){
+            $progressArray[$progressCollect->id] = ((1 * 100 / 6)/$childCount/4);
+        }
+
+    }
+
+    return (int) array_sum($progressArray);
 }
 
 function statusColor($status)

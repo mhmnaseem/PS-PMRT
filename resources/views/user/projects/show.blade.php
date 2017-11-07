@@ -4,10 +4,13 @@
 
     <link rel="stylesheet"
           href="{{asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
+    <link rel="stylesheet"
+          href="https://cdn.datatables.net/buttons/1.4.2/css/buttons.dataTables.min.css">
+
 
 @endsection
 
-
+@section('title', $project->title)
 
 @section ('main-content')
 
@@ -45,7 +48,8 @@
                             <i class="fa fa-bullseye text-aqua" aria-hidden="true"></i> P&D</a>
                     </li>
                     <li><a href="#network-assessment" data-toggle="tab">
-                            <i class="fa fa-file-text text-maroon " aria-hidden="true"></i> Probe/ Network Assessment</a>
+                            <i class="fa fa-file-text text-maroon " aria-hidden="true"></i> Probe/ Network
+                            Assessment</a>
                     </li>
                     <li><a href="#admin-training" data-toggle="tab">
                             <i class="fa fa-book text-olive" aria-hidden="true"></i> Admin Training </a>
@@ -57,7 +61,8 @@
                             <i class="fa fa-server text-orange" aria-hidden="true"></i> Number Porting </a>
                     </li>
                     <li><a href="#onsite-delivery-go-live" data-toggle="tab">
-                            <i class="fa fa-shopping-cart text-light-blue" aria-hidden="true"></i> Onsite Delivery/Go Live </a>
+                            <i class="fa fa-shopping-cart text-light-blue" aria-hidden="true"></i> Onsite Delivery/Go
+                            Live </a>
                     </li>
                     <li><a href="#notes" data-toggle="tab">
                             <i class="fa fa-pencil text-yellow" aria-hidden="true"></i> Notes</a>
@@ -69,6 +74,122 @@
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="home">
+
+                        <div class="row">
+
+                            <div class="col-sm-12">
+                                <h5><strong>Project Snap Shot</strong></h5>
+                                @if ($project->ProjectPd->isNotEmpty() || $project->projectNetworkAssessment->isNotEmpty() || $project->projectAdminTraining->isNotEmpty() || $project->projectBackEndBuildOut->isNotEmpty() || $project->projectBackEndBuildOut->isNotEmpty() || $project->projectNumberPorting->isNotEmpty() || $project->projectOnsiteDeliveryGoLive->isNotEmpty())
+
+                                    <table id="snapshot" class="table table-bordered table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th class="no-sort">Task Name</th>
+                                            <th class="no-sort">Status</th>
+                                            <th class="no-sort">Task Progress</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @if ($project->ProjectPd->isNotEmpty())
+                                            <tr>
+                                                <td>P&D</td>
+                                                <td>
+                                                    @foreach($project->projectPd as $pd)
+
+                                                        Task {{$loop->index+1}} - {!! statusColor($pd->status) !!} <br>
+
+                                                    @endforeach
+                                                </td>
+                                                <td>{!! calculateSubTaskProgress($project->projectPd) !!}</td>
+                                            </tr>
+                                        @endif
+
+                                        @if ($project->projectNetworkAssessment->isNotEmpty())
+                                            <tr>
+                                                <td>Probe/Network Assessment</td>
+                                                <td>
+                                                    @foreach($project->projectNetworkAssessment as $network)
+
+                                                        Task {{$loop->index+1}} - {!! statusColor($network->status) !!}
+                                                        <br>
+
+                                                    @endforeach
+                                                </td>
+                                                <td>{!! calculateSubTaskProgress($project->projectNetworkAssessment) !!}</td>
+                                            </tr>
+                                        @endif
+
+                                        @if ($project->projectAdminTraining->isNotEmpty())
+                                            <tr>
+                                                <td>Admin Training</td>
+                                                <td>
+                                                    @foreach($project->projectAdminTraining as $admin)
+
+                                                        {{$admin->title}} - {!! statusColor($admin->status) !!} <br>
+
+                                                    @endforeach
+                                                </td>
+                                                <td>{!! calculateSubTaskProgress($project->projectAdminTraining) !!}</td>
+                                            </tr>
+                                        @endif
+
+                                        @if ($project->projectBackEndBuildOut->isNotEmpty())
+                                            <tr>
+                                                <td>Back End Build Out</td>
+                                                <td>
+                                                    @foreach($project->projectBackEndBuildOut as $backend)
+
+                                                        Task {{$loop->index+1}} - <strong> User Upload</strong>  {!! statusColor($backend->user_upload) !!} <strong> Call Flows</strong> {!! statusColor($backend->call_flows) !!}<br>
+
+                                                    @endforeach
+                                                </td>
+                                                <td>{!! calculateSubTaskProgressBackEnd($project->projectBackEndBuildOut) !!}</td>
+                                            </tr>
+                                        @endif
+
+                                        @if ($project->projectNumberPorting->isNotEmpty())
+                                            <tr>
+                                                <td>Number Porting</td>
+                                                <td>
+                                                    @foreach($project->projectNumberPorting as $numberPort)
+
+                                                        {{$numberPort->type}} - {!! statusColor($numberPort->status) !!}<br>
+
+                                                    @endforeach
+                                                </td>
+                                                <td>{!! calculateSubTaskProgress($project->projectNumberPorting) !!}</td>
+                                            </tr>
+                                        @endif
+
+                                        @if ($project->projectOnsiteDeliveryGoLive->isNotEmpty())
+                                            <tr>
+                                                <td>Onsite Delivery/Go Live</td>
+                                                <td>
+                                                    @foreach($project->projectOnsiteDeliveryGoLive as $onSiteDelivery)
+
+                                                        {{$onSiteDelivery->location}} - {!! statusColor($onSiteDelivery->status) !!}<br>
+
+                                                    @endforeach
+                                                </td>
+                                                <td>{!! calculateSubTaskProgress($project->projectOnsiteDeliveryGoLive) !!}</td>
+                                            </tr>
+                                        @endif
+
+
+
+                                    </table>
+                                @else
+
+                                    <div class="callout callout-info">
+                                        <h4> No Task SnapShot For this Project !</h4>
+
+                                        <p>Please Create a Task..!</p>
+                                    </div>
+
+                                @endif
+                            </div>
+                        </div>
+
 
                         <div class="row">
                             <div class="col-sm-8">
@@ -117,7 +238,7 @@
                                         <hr>
 
                                         <strong><i class="fa fa-spinner text-maroon margin-r-5"></i>
-                                            Progress</strong>
+                                            Project Progress</strong>
 
                                         <p>
                                             {!! calculateProgress($project->slug) !!}
@@ -147,7 +268,8 @@
                                         <strong><i class="fa fa-file-text-o text-maroon margin-r-5"></i> Notes</strong>
 
 
-                                        <textarea disabled class="notes">@if($project->projectNote !=null ){{$project->projectNote->note}}@endif</textarea>
+                                        <textarea disabled
+                                                  class="notes">@if($project->projectNote !=null ){{$project->projectNote->note}}@endif</textarea>
 
                                     </div>
                                     <!-- /.box-body -->
@@ -159,12 +281,9 @@
                         <!-- /.row -->
 
 
-
                     </div>
 
                     <div class="tab-pane" id="pd">
-
-
 
 
                         <h3><span>P&D</span>
@@ -186,9 +305,6 @@
                                     <th>Comment</th>
 
 
-
-
-
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -198,10 +314,13 @@
                                             <div class="btn-group">
                                                 <a data-toggle="tooltip" data-placement="top" title="View"
                                                    class="btn btn-xs btn-success"
-                                                   href="{{url('pm/projects/'.$project->slug.'/pd/'.$pd->id)}}"><i class="fa fa-fw fa-arrow-circle-o-right" aria-hidden="true"></i></a>
+                                                   href="{{url('pm/projects/'.$project->slug.'/pd/'.$pd->id)}}"><i
+                                                            class="fa fa-fw fa-arrow-circle-o-right"
+                                                            aria-hidden="true"></i></a>
                                                 <a data-toggle="tooltip" data-placement="top" title="Edit"
                                                    class="btn btn-xs btn-warning"
-                                                   href="{{url('pm/projects/'.$project->slug.'/pd/'.$pd->id.'/edit')}}"><i class="fa fa-fw fa-edit" aria-hidden="true"></i></a>
+                                                   href="{{url('pm/projects/'.$project->slug.'/pd/'.$pd->id.'/edit')}}"><i
+                                                            class="fa fa-fw fa-edit" aria-hidden="true"></i></a>
                                                 <form id="form-delete-pd{{$pd->id}}" method="post"
                                                       action="{{url('pm/projects/'.$project->slug.'/pd/'.$pd->id)}}"
                                                       style="display: none;">
@@ -226,7 +345,7 @@
                                         <td>{!! statusColor($pd->status) !!}</td>
                                         <td>{{$pd->date->format(config('constants.time.format'))}}</td>
                                         <td>
-                                        {!! htmlspecialchars_decode(str_limit($pd->comment,350)) !!}
+                                            {!! htmlspecialchars_decode(str_limit($pd->comment,350)) !!}
                                         </td>
 
 
@@ -268,9 +387,6 @@
                                     <th>Comment</th>
 
 
-
-
-
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -280,10 +396,13 @@
                                             <div class="btn-group">
                                                 <a data-toggle="tooltip" data-placement="top" title="View"
                                                    class="btn btn-xs btn-success"
-                                                   href="{{url('pm/projects/'.$project->slug.'/network-assessment/'.$networkAssessment->id)}}"><i class="fa fa-fw fa-arrow-circle-o-right" aria-hidden="true"></i></a>
+                                                   href="{{url('pm/projects/'.$project->slug.'/network-assessment/'.$networkAssessment->id)}}"><i
+                                                            class="fa fa-fw fa-arrow-circle-o-right"
+                                                            aria-hidden="true"></i></a>
                                                 <a data-toggle="tooltip" data-placement="top" title="Edit"
                                                    class="btn btn-xs btn-warning"
-                                                   href="{{url('pm/projects/'.$project->slug.'/network-assessment/'.$networkAssessment->id.'/edit')}}"><i class="fa fa-fw fa-edit" aria-hidden="true"></i></a>
+                                                   href="{{url('pm/projects/'.$project->slug.'/network-assessment/'.$networkAssessment->id.'/edit')}}"><i
+                                                            class="fa fa-fw fa-edit" aria-hidden="true"></i></a>
                                                 <form id="form-delete-network{{$networkAssessment->id}}" method="post"
                                                       action="{{url('pm/projects/'.$project->slug.'/network-assessment/'.$networkAssessment->id)}}"
                                                       style="display: none;">
@@ -349,9 +468,6 @@
                                     <th>Comment</th>
 
 
-
-
-
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -361,10 +477,13 @@
                                             <div class="btn-group">
                                                 <a data-toggle="tooltip" data-placement="top" title="View"
                                                    class="btn btn-xs btn-success"
-                                                   href="{{url('pm/projects/'.$project->slug.'/admin-training/'.$adminTraining->id)}}"><i class="fa fa-fw fa-arrow-circle-o-right" aria-hidden="true"></i></a>
+                                                   href="{{url('pm/projects/'.$project->slug.'/admin-training/'.$adminTraining->id)}}"><i
+                                                            class="fa fa-fw fa-arrow-circle-o-right"
+                                                            aria-hidden="true"></i></a>
                                                 <a data-toggle="tooltip" data-placement="top" title="Edit"
                                                    class="btn btn-xs btn-warning"
-                                                   href="{{url('pm/projects/'.$project->slug.'/admin-training/'.$adminTraining->id.'/edit')}}"><i class="fa fa-fw fa-edit" aria-hidden="true"></i></a>
+                                                   href="{{url('pm/projects/'.$project->slug.'/admin-training/'.$adminTraining->id.'/edit')}}"><i
+                                                            class="fa fa-fw fa-edit" aria-hidden="true"></i></a>
                                                 <form id="form-delete-admin{{$adminTraining->id}}" method="post"
                                                       action="{{url('pm/projects/'.$project->slug.'/admin-training/'.$adminTraining->id)}}"
                                                       style="display: none;">
@@ -442,10 +561,13 @@
                                             <div class="btn-group">
                                                 <a data-toggle="tooltip" data-placement="top" title="View"
                                                    class="btn btn-xs btn-success"
-                                                   href="{{url('pm/projects/'.$project->slug.'/back-end-build-out/'.$backEndBuildOut->id)}}"><i class="fa fa-fw fa-arrow-circle-o-right" aria-hidden="true"></i></a>
+                                                   href="{{url('pm/projects/'.$project->slug.'/back-end-build-out/'.$backEndBuildOut->id)}}"><i
+                                                            class="fa fa-fw fa-arrow-circle-o-right"
+                                                            aria-hidden="true"></i></a>
                                                 <a data-toggle="tooltip" data-placement="top" title="Edit"
                                                    class="btn btn-xs btn-warning"
-                                                   href="{{url('pm/projects/'.$project->slug.'/back-end-build-out/'.$backEndBuildOut->id.'/edit')}}"><i class="fa fa-fw fa-edit" aria-hidden="true"></i></a>
+                                                   href="{{url('pm/projects/'.$project->slug.'/back-end-build-out/'.$backEndBuildOut->id.'/edit')}}"><i
+                                                            class="fa fa-fw fa-edit" aria-hidden="true"></i></a>
                                                 <form id="form-delete-back{{$backEndBuildOut->id}}" method="post"
                                                       action="{{url('pm/projects/'.$project->slug.'/back-end-build-out/'.$backEndBuildOut->id)}}"
                                                       style="display: none;">
@@ -520,10 +642,13 @@
                                             <div class="btn-group">
                                                 <a data-toggle="tooltip" data-placement="top" title="View"
                                                    class="btn btn-xs btn-success"
-                                                   href="{{url('pm/projects/'.$project->slug.'/number-porting/'.$numberPorting->id)}}"><i class="fa fa-fw fa-arrow-circle-o-right" aria-hidden="true"></i></a>
+                                                   href="{{url('pm/projects/'.$project->slug.'/number-porting/'.$numberPorting->id)}}"><i
+                                                            class="fa fa-fw fa-arrow-circle-o-right"
+                                                            aria-hidden="true"></i></a>
                                                 <a data-toggle="tooltip" data-placement="top" title="Edit"
                                                    class="btn btn-xs btn-warning"
-                                                   href="{{url('pm/projects/'.$project->slug.'/number-porting/'.$numberPorting->id.'/edit')}}"><i class="fa fa-fw fa-edit" aria-hidden="true"></i></a>
+                                                   href="{{url('pm/projects/'.$project->slug.'/number-porting/'.$numberPorting->id.'/edit')}}"><i
+                                                            class="fa fa-fw fa-edit" aria-hidden="true"></i></a>
                                                 <form id="form-delete-number{{$numberPorting->id}}" method="post"
                                                       action="{{url('pm/projects/'.$project->slug.'/number-porting/'.$numberPorting->id)}}"
                                                       style="display: none;">
@@ -600,10 +725,13 @@
                                             <div class="btn-group">
                                                 <a data-toggle="tooltip" data-placement="top" title="View"
                                                    class="btn btn-xs btn-success"
-                                                   href="{{url('pm/projects/'.$project->slug.'/onsite-delivery-go-live/'.$onsiteDeliveryGoLive->id)}}"><i class="fa fa-fw fa-arrow-circle-o-right" aria-hidden="true"></i></a>
+                                                   href="{{url('pm/projects/'.$project->slug.'/onsite-delivery-go-live/'.$onsiteDeliveryGoLive->id)}}"><i
+                                                            class="fa fa-fw fa-arrow-circle-o-right"
+                                                            aria-hidden="true"></i></a>
                                                 <a data-toggle="tooltip" data-placement="top" title="Edit"
                                                    class="btn btn-xs btn-warning"
-                                                   href="{{url('pm/projects/'.$project->slug.'/onsite-delivery-go-live/'.$onsiteDeliveryGoLive->id.'/edit')}}"><i class="fa fa-fw fa-edit" aria-hidden="true"></i></a>
+                                                   href="{{url('pm/projects/'.$project->slug.'/onsite-delivery-go-live/'.$onsiteDeliveryGoLive->id.'/edit')}}"><i
+                                                            class="fa fa-fw fa-edit" aria-hidden="true"></i></a>
                                                 <form id="form-delete-onsite{{$onsiteDeliveryGoLive->id}}" method="post"
                                                       action="{{url('pm/projects/'.$project->slug.'/onsite-delivery-go-live/'.$onsiteDeliveryGoLive->id)}}"
                                                       style="display: none;">
@@ -658,23 +786,23 @@
                         </h3>
                         <hr>
 
-                        <form class= role="form" method="post"
+                        <form class=role="form" method="post"
                               action="{{route('projects.note.store',$project->slug)}}">
                             {{csrf_field()}}
 
-                             <div class="form-group">
-                                   <div class="col-sm-8">
+                            <div class="form-group">
+                                <div class="col-sm-8">
 
-                                        <textarea class="form-control notes" placeholder="Note" name="note" cols="30" rows="10">@if($project->projectNote !=null ){{$project->projectNote->note}}@endif</textarea>
+<textarea class="form-control notes" placeholder="Note" name="note" cols="30"
+          rows="10">@if($project->projectNote !=null ){{$project->projectNote->note}}@endif</textarea>
 
-                                    </div>
                                 </div>
+                            </div>
                             <div class="clearfix"></div>
-                                <div class="box-footer">
-                                    <button type="submit" class="btn btn-primary">Save</button>
-                                </div>
+                            <div class="box-footer">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
                         </form>
-
 
 
                     </div>
@@ -708,7 +836,7 @@
                                     <tr>
                                         <td>
                                             <div class="btn-group">
-                                               <form id="form-delete-attachment{{$attachment->id}}" method="post"
+                                                <form id="form-delete-attachment{{$attachment->id}}" method="post"
                                                       action="{{url('pm/projects/'.$project->slug.'/attachment/'.$attachment->id)}}"
                                                       style="display: none;">
                                                     {{csrf_field()}}
@@ -731,7 +859,9 @@
                                         </td>
                                         <td>{{$attachment->title}}</td>
                                         <td>{{$attachment->created_at->format(config('constants.time.format'))}}</td>
-                                        <td><i class="fa fa-paperclip"></i> <a href="{{url('pm/projects/'.$project->slug.'/attachment/'.$attachment->id)}}">{{$attachment->attachment_url}}</a></td>
+                                        <td><i class="fa fa-paperclip"></i> <a
+                                                    href="{{url('pm/projects/'.$project->slug.'/attachment/'.$attachment->id)}}">{{$attachment->attachment_url}}</a>
+                                        </td>
 
 
                                     </tr>
@@ -768,17 +898,39 @@
     <script src="{{asset('admin/bower_components/ckeditor/ckeditor.js')}}"></script>
     <script src="{{asset('admin/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="https://cdn.datatables.net/buttons/1.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.4.2/js/buttons.flash.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.4.2/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.4.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.4.2/js/buttons.print.min.js"></script>
+
+
 
     <script>
         $(function () {
-            $('#example1,#example2,#example3,#example4,#example5').DataTable({
-                'paging': true,
+            $('#snapshot').DataTable({
+                'paging': false,
                 'lengthChange': false,
-                'searching': true,
-                'ordering': true,
+                'searching': false,
                 'info': true,
                 'autoWidth': false,
-                "order": [[0, "desc"]]
+                dom: 'Bfrtip',
+                buttons: [
+                    {extend: 'copy', className: 'btn btn-default'},
+                    {extend: 'csv', className: 'btn btn-default'},
+                    {extend: 'excel', className: 'btn btn-default'},
+                    {extend: 'pdf', className: 'btn btn-default '},
+                    {extend: 'print', className: 'btn btn-default'}
+                ],
+                "order": [],
+                "columnDefs": [ {
+                    "targets"  : 'no-sort',
+                    "orderable": false,
+                }]
+
             });
         });
 
