@@ -42,27 +42,25 @@
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#home" data-toggle="tab">
-                            <i class="fa fa-home text-success"></i> Detail </a>
+                            <i class="fa fa-home text-success"></i> Overview </a>
                     </li>
                     <li><a href="#pd" data-toggle="tab">
-                            <i class="fa fa-bullseye text-aqua" aria-hidden="true"></i> P&D</a>
+                            <i class="fa fa-bullseye text-aqua" aria-hidden="true"></i> Planning and Design</a>
                     </li>
                     <li><a href="#network-assessment" data-toggle="tab">
-                            <i class="fa fa-file-text text-maroon " aria-hidden="true"></i> Probe/ Network
-                            Assessment</a>
-                    </li>
-                    <li><a href="#admin-training" data-toggle="tab">
-                            <i class="fa fa-book text-olive" aria-hidden="true"></i> Admin Training </a>
+                            <i class="fa fa-file-text text-maroon " aria-hidden="true"></i> Network Assessment</a>
                     </li>
                     <li><a href="#back-end-build-out" data-toggle="tab">
-                            <i class="fa fa-shield text-fuchsia" aria-hidden="true"></i> Back End Build Out </a>
+                            <i class="fa fa-shield text-fuchsia" aria-hidden="true"></i> Backend Build </a>
                     </li>
                     <li><a href="#number-porting" data-toggle="tab">
                             <i class="fa fa-server text-orange" aria-hidden="true"></i> Number Porting </a>
                     </li>
+                    <li><a href="#admin-training" data-toggle="tab">
+                            <i class="fa fa-book text-olive" aria-hidden="true"></i> Training </a>
+                    </li>
                     <li><a href="#onsite-delivery-go-live" data-toggle="tab">
-                            <i class="fa fa-shopping-cart text-light-blue" aria-hidden="true"></i> Onsite Delivery/Go
-                            Live </a>
+                            <i class="fa fa-shopping-cart text-light-blue" aria-hidden="true"></i> Go Live</a>
                     </li>
                     <li><a href="#notes" data-toggle="tab">
                             <i class="fa fa-pencil text-yellow" aria-hidden="true"></i> Notes</a>
@@ -78,108 +76,90 @@
                         <div class="row">
 
                             <div class="col-sm-12">
-                                <h5><strong>Project Overview</strong></h5>
+                                <h5><strong>Project Snap Shot</strong></h5>
                                 @if ($project->ProjectPd->isNotEmpty() || $project->projectNetworkAssessment->isNotEmpty() || $project->projectAdminTraining->isNotEmpty() || $project->projectBackEndBuildOut->isNotEmpty() || $project->projectBackEndBuildOut->isNotEmpty() || $project->projectNumberPorting->isNotEmpty() || $project->projectOnsiteDeliveryGoLive->isNotEmpty())
 
                                     <table id="snapshot" class="table table-bordered table-striped">
                                         <thead>
                                         <tr>
+                                            <th class="no-sort">Project Phase</th>
                                             <th class="no-sort">Task Name</th>
-                                            <th class="no-sort">Status</th>
+                                            <th class="no-sort">Task Status</th>
                                             <th class="no-sort">Task Progress</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         @if ($project->ProjectPd->isNotEmpty())
+                                            @foreach($project->projectPd as $pd)
                                             <tr>
                                                 <td>P&D</td>
-                                                <td>
-                                                    @foreach($project->projectPd as $pd)
-
-                                                        Task {{$loop->index+1}} - {!! statusColor($pd->status) !!} <br>
-
-                                                    @endforeach
-                                                </td>
-                                                <td>{!! calculateSubTaskProgress($project->projectPd) !!}</td>
+                                                <td>{{$pd->title}}</td>
+                                                <td>{!! statusColor($pd->status) !!} </td>
+                                                <td>{!! calculateSubTaskProgress($project->projectPd,$pd->id) !!}</td>
                                             </tr>
+                                            @endforeach
                                         @endif
 
                                         @if ($project->projectNetworkAssessment->isNotEmpty())
+                                            @foreach($project->projectNetworkAssessment as $network)
                                             <tr>
                                                 <td>Probe/Network Assessment</td>
-                                                <td>
-                                                    @foreach($project->projectNetworkAssessment as $network)
-
-                                                        Task {{$loop->index+1}} - {!! statusColor($network->status) !!}
-                                                        <br>
-
-                                                    @endforeach
-                                                </td>
-                                                <td>{!! calculateSubTaskProgress($project->projectNetworkAssessment) !!}</td>
+                                                <td>{{$network->title}}</td>
+                                                <td>{!! statusColor($network->status) !!} </td>
+                                                <td>{!! calculateSubTaskProgress($project->projectNetworkAssessment,$network->id) !!}</td>
                                             </tr>
+                                            @endforeach
                                         @endif
 
                                         @if ($project->projectAdminTraining->isNotEmpty())
+                                            @foreach($project->projectAdminTraining as $admin)
                                             <tr>
-                                                <td>Admin Training</td>
-                                                <td>
-                                                    @foreach($project->projectAdminTraining as $admin)
-
-                                                        {{$admin->title}} - {!! statusColor($admin->status) !!} <br>
-
-                                                    @endforeach
-                                                </td>
-                                                <td>{!! calculateSubTaskProgress($project->projectAdminTraining) !!}</td>
+                                                <td>Training</td>
+                                                <td>{{$admin->title}}</td>
+                                                <td>{!! statusColor($admin->status) !!}</td>
+                                                <td>{!! calculateSubTaskProgress($project->projectAdminTraining,$admin->id) !!}</td>
                                             </tr>
+                                            @endforeach
                                         @endif
 
                                         @if ($project->projectBackEndBuildOut->isNotEmpty())
+                                            @foreach($project->projectBackEndBuildOut as $backend)
                                             <tr>
                                                 <td>Back End Build Out</td>
-                                                <td>
-                                                    @foreach($project->projectBackEndBuildOut as $backend)
-
-                                                        Task {{$loop->index+1}} - <strong> User Upload</strong>  {!! statusColor($backend->user_upload) !!} <strong> Call Flows</strong> {!! statusColor($backend->call_flows) !!}<br>
-
-                                                    @endforeach
-                                                </td>
-                                                <td>{!! calculateSubTaskProgressBackEnd($project->projectBackEndBuildOut) !!}</td>
+                                                <td>{{$backend->title}}</td>
+                                                <td>{!! statusColor($backend->status) !!}</td>
+                                                <td>{!! calculateSubTaskProgress($project->projectBackEndBuildOut,$backend->id) !!}</td>
                                             </tr>
+                                            @endforeach
                                         @endif
 
                                         @if ($project->projectNumberPorting->isNotEmpty())
+                                            @foreach($project->projectNumberPorting as $numberPort)
                                             <tr>
                                                 <td>Number Porting</td>
-                                                <td>
-                                                    @foreach($project->projectNumberPorting as $numberPort)
-
-                                                        {{$numberPort->type}} - {!! statusColor($numberPort->status) !!}<br>
-
-                                                    @endforeach
-                                                </td>
-                                                <td>{!! calculateSubTaskProgress($project->projectNumberPorting) !!}</td>
+                                                <td>{{$numberPort->title}}</td>
+                                                <td>{!! statusColor($numberPort->status) !!}</td>
+                                                <td>{!! calculateSubTaskProgress($project->projectNumberPorting,$numberPort->id) !!}</td>
                                             </tr>
+                                            @endforeach
                                         @endif
 
                                         @if ($project->projectOnsiteDeliveryGoLive->isNotEmpty())
+                                            @foreach($project->projectOnsiteDeliveryGoLive as $onSiteDelivery)
                                             <tr>
                                                 <td>Onsite Delivery/Go Live</td>
-                                                <td>
-                                                    @foreach($project->projectOnsiteDeliveryGoLive as $onSiteDelivery)
-
-                                                        {{$onSiteDelivery->location}} - {!! statusColor($onSiteDelivery->status) !!}<br>
-
-                                                    @endforeach
-                                                </td>
-                                                <td>{!! calculateSubTaskProgress($project->projectOnsiteDeliveryGoLive) !!}</td>
+                                                <td>{{$onSiteDelivery->title}}</td>
+                                                <td>{!! statusColor($onSiteDelivery->status) !!}</td>
+                                                <td>{!! calculateSubTaskProgress($project->projectOnsiteDeliveryGoLive,$onSiteDelivery->id) !!}</td>
                                             </tr>
+                                            @endforeach
                                         @endif
 
-
+                                        </tbody>
 
                                     </table>
 
-                                    <h5><strong>Export Overview</strong></h5>
+                                    <h5><strong>Export Snap Shot</strong></h5>
                                         <div id="buttons"></div>
 
 
@@ -217,19 +197,19 @@
                                                class="btn btn-xs btn-info"
                                                href="{{route('projects.edit',$project->slug)}}"><i
                                                         class="fa fa-fw fa-2x fa-edit" aria-hidden="true"></i></a>
-                                            @if($project->star==0)
-                                                <a href="#" data-toggle="tooltip" data-placement="top"
-                                                   title="Add to Star" data-slug="{{$project->slug}}" data-value="1"
-                                                   data-source="{{route('star')}}" class="ajax btn btn-default btn-xs">
-                                                    <i
-                                                            class="fa fa-fw fa-2x fa-star-o"></i></a>
-                                            @else
-                                                <a href="#" data-toggle="tooltip" data-placement="top"
-                                                   title="Remove from Star" data-slug="{{$project->slug}}"
-                                                   data-value="0" data-source="{{route('star')}}"
-                                                   class="ajax btn btn-default btn-xs"> <i
-                                                            class="fa fa-fw fa-2x fa-star"></i></a>
-                                            @endif
+                                            {{--@if($project->star==0)--}}
+                                                {{--<a href="#" data-toggle="tooltip" data-placement="top"--}}
+                                                   {{--title="Add to Star" data-slug="{{$project->slug}}" data-value="1"--}}
+                                                   {{--data-source="{{route('star')}}" class="ajax btn btn-default btn-xs">--}}
+                                                    {{--<i--}}
+                                                            {{--class="fa fa-fw fa-2x fa-star-o"></i></a>--}}
+                                            {{--@else--}}
+                                                {{--<a href="#" data-toggle="tooltip" data-placement="top"--}}
+                                                   {{--title="Remove from Star" data-slug="{{$project->slug}}"--}}
+                                                   {{--data-value="0" data-source="{{route('star')}}"--}}
+                                                   {{--class="ajax btn btn-default btn-xs"> <i--}}
+                                                            {{--class="fa fa-fw fa-2x fa-star"></i></a>--}}
+                                            {{--@endif--}}
                                         </div>
                                     </div>
                                     <div class="box-body">
@@ -291,7 +271,7 @@
                     <div class="tab-pane" id="pd">
 
 
-                        <h3><span>P&D</span>
+                        <h3><span>Planning and Design</span>
                             <a data-toggle="tooltip" data-placement="top" title="Add New"
                                class="pull-right btn btn-xs btn-default"
                                href="{{route('projects.pd.create',$project->slug)}}"><i
@@ -305,6 +285,7 @@
                                 <thead>
                                 <tr>
                                     <th>Option</th>
+                                    <th>Title</th>
                                     <th>Status</th>
                                     <th>date</th>
                                     <th>Comment</th>
@@ -347,6 +328,7 @@
                                                         "><i class="fa fa-fw fa-trash"></i></a>
                                             </div>
                                         </td>
+                                        <td>{{$pd->title}}</td>
                                         <td>{!! statusColor($pd->status) !!}</td>
                                         <td>{{$pd->date->format(config('constants.time.format'))}}</td>
                                         <td>
@@ -357,6 +339,7 @@
                                     </tr>
 
                                 @endforeach
+                                </tbody>
                             </table>
                         @else
 
@@ -373,7 +356,7 @@
                     <!-- /.tab-pane -->
                     <div class="tab-pane" id="network-assessment">
 
-                        <h3><span>Probe/ Network Assessment</span>
+                        <h3><span>Network Assessment</span>
                             <a data-toggle="tooltip" data-placement="top" title="Add New"
                                class="pull-right btn btn-xs btn-default"
                                href="{{route('projects.network-assessment.create',$project->slug)}}"><i
@@ -387,6 +370,7 @@
                                 <thead>
                                 <tr>
                                     <th>Option</th>
+                                    <th>Title</th>
                                     <th>Status</th>
                                     <th>date</th>
                                     <th>Comment</th>
@@ -429,6 +413,7 @@
                                                         "><i class="fa fa-fw fa-trash"></i></a>
                                             </div>
                                         </td>
+                                        <td>{{$networkAssessment->title}}</td>
                                         <td>{!! statusColor($networkAssessment->status) !!}</td>
                                         <td>{{$networkAssessment->date->format(config('constants.time.format'))}}</td>
                                         <td>
@@ -439,6 +424,7 @@
                                     </tr>
 
                                 @endforeach
+                                </tbody>
                             </table>
                         @else
 
@@ -451,9 +437,178 @@
                         @endif
                     </div>
                     <!-- /.tab-pane -->
+
+
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="back-end-build-out">
+
+                        <h3><span>Back End Build Out</span>
+                            <a data-toggle="tooltip" data-placement="top" title="Add New"
+                               class="pull-right btn btn-xs btn-default"
+                               href="{{route('projects.back-end-build-out.create',$project->slug)}}">
+                                <i class="fa fa-fw text-olive fa-2x fa-plus" aria-hidden="true"></i></a>
+                        </h3>
+                        <hr>
+
+                        @if ($project->projectBackEndBuildOut->isNotEmpty())
+
+                            <table id="" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Option</th>
+                                    <th>Title</th>
+                                    <th>Status</th>
+                                    <th>Comment</th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($project->projectBackEndBuildOut as $backEndBuildOut)
+                                    <tr>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a data-toggle="tooltip" data-placement="top" title="View"
+                                                   class="btn btn-xs btn-success"
+                                                   href="{{url('pm/projects/'.$project->slug.'/back-end-build-out/'.$backEndBuildOut->id)}}"><i
+                                                            class="fa fa-fw fa-arrow-circle-o-right"
+                                                            aria-hidden="true"></i></a>
+                                                <a data-toggle="tooltip" data-placement="top" title="Edit"
+                                                   class="btn btn-xs btn-warning"
+                                                   href="{{url('pm/projects/'.$project->slug.'/back-end-build-out/'.$backEndBuildOut->id.'/edit')}}"><i
+                                                            class="fa fa-fw fa-edit" aria-hidden="true"></i></a>
+                                                <form id="form-delete-back{{$backEndBuildOut->id}}" method="post"
+                                                      action="{{url('pm/projects/'.$project->slug.'/back-end-build-out/'.$backEndBuildOut->id)}}"
+                                                      style="display: none;">
+                                                    {{csrf_field()}}
+                                                    {{method_field('DELETE')}}
+
+                                                </form>
+
+                                                <a data-toggle="tooltip" data-placement="top" title="Delete"
+                                                   class="btn btn-xs btn-danger" href="#" onclick="
+
+                                                        if(confirm('Are you sure want to Delete?')) {
+                                                        event.preventDefault();
+                                                        document.getElementById('form-delete-back{{$backEndBuildOut->id}}').submit();
+                                                        }else{
+                                                        event.preventDefault();
+                                                        }
+
+                                                        "><i class="fa fa-fw fa-trash"></i></a>
+                                            </div>
+                                        </td>
+                                        <td>{{$backEndBuildOut->title}} </td>
+                                        <td>{!! statusColor($backEndBuildOut->status) !!}</td>
+
+                                        <td>
+                                            {!! htmlspecialchars_decode(str_limit($backEndBuildOut->comment,350)) !!}
+                                        </td>
+
+
+                                    </tr>
+
+                                @endforeach
+                                </tbody>
+                            </table>
+                        @else
+
+                            <div class="callout callout-info">
+                                <h4> No Back End Build Out for this Project !</h4>
+
+                                <p>Please Create One..!</p>
+                            </div>
+
+                        @endif
+                    </div>
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="number-porting">
+
+                        <h3><span>Number Porting</span>
+                            <a data-toggle="tooltip" data-placement="top" title="Add New"
+                               class="pull-right btn btn-xs btn-default"
+                               href="{{route('projects.number-porting.create',$project->slug)}}">
+                                <i class="fa fa-fw text-olive fa-2x fa-plus" aria-hidden="true"></i></a>
+                        </h3>
+                        <hr>
+
+                        @if ($project->projectNumberPorting->isNotEmpty())
+
+                            <table id="" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Option</th>
+                                    <th>Title</th>
+                                    <th>Type</th>
+                                    <th>Status</th>
+                                    <th>Port Date</th>
+                                    <th>Comment</th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($project->projectNumberPorting as $numberPorting)
+                                    <tr>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a data-toggle="tooltip" data-placement="top" title="View"
+                                                   class="btn btn-xs btn-success"
+                                                   href="{{url('pm/projects/'.$project->slug.'/number-porting/'.$numberPorting->id)}}"><i
+                                                            class="fa fa-fw fa-arrow-circle-o-right"
+                                                            aria-hidden="true"></i></a>
+                                                <a data-toggle="tooltip" data-placement="top" title="Edit"
+                                                   class="btn btn-xs btn-warning"
+                                                   href="{{url('pm/projects/'.$project->slug.'/number-porting/'.$numberPorting->id.'/edit')}}"><i
+                                                            class="fa fa-fw fa-edit" aria-hidden="true"></i></a>
+                                                <form id="form-delete-number{{$numberPorting->id}}" method="post"
+                                                      action="{{url('pm/projects/'.$project->slug.'/number-porting/'.$numberPorting->id)}}"
+                                                      style="display: none;">
+                                                    {{csrf_field()}}
+                                                    {{method_field('DELETE')}}
+
+                                                </form>
+
+                                                <a data-toggle="tooltip" data-placement="top" title="Delete"
+                                                   class="btn btn-xs btn-danger" href="#" onclick="
+
+                                                        if(confirm('Are you sure want to Delete?')) {
+                                                        event.preventDefault();
+                                                        document.getElementById('form-delete-number{{$numberPorting->id}}').submit();
+                                                        }else{
+                                                        event.preventDefault();
+                                                        }
+
+                                                        "><i class="fa fa-fw fa-trash"></i></a>
+                                            </div>
+                                        </td>
+                                        <td>{{$numberPorting->title}}</td>
+                                        <td>{{$numberPorting->type}}</td>
+                                        <td>{!! statusColor($numberPorting->status) !!}</td>
+                                        <td>{{$numberPorting->date->format(config('constants.time.format'))}}</td>
+                                        <td>
+                                            {!! htmlspecialchars_decode(str_limit($numberPorting->comment,350)) !!}
+                                        </td>
+
+
+                                    </tr>
+
+                                @endforeach
+                                </tbody>
+                            </table>
+                        @else
+
+                            <div class="callout callout-info">
+                                <h4> No Number Porting for this Project !</h4>
+
+                                <p>Please Create One..!</p>
+                            </div>
+
+                        @endif
+                    </div>
+                    <!-- /.tab-pane -->
+
                     <div class="tab-pane" id="admin-training">
 
-                        <h3><span>Admin Training</span>
+                        <h3><span>Training</span>
                             <a data-toggle="tooltip" data-placement="top" title="Add New"
                                class="pull-right btn btn-xs btn-default"
                                href="{{route('projects.admin-training.create',$project->slug)}}">
@@ -523,11 +678,12 @@
                                     </tr>
 
                                 @endforeach
+                                </tbody>
                             </table>
                         @else
 
                             <div class="callout callout-info">
-                                <h4> No Admin Training for this Project !</h4>
+                                <h4> No Training for this Project !</h4>
 
                                 <p>Please Create One..!</p>
                             </div>
@@ -536,172 +692,9 @@
                     </div>
                     <!-- /.tab-pane -->
 
-                    <!-- /.tab-pane -->
-                    <div class="tab-pane" id="back-end-build-out">
-
-                        <h3><span>Back End Build Out</span>
-                            <a data-toggle="tooltip" data-placement="top" title="Add New"
-                               class="pull-right btn btn-xs btn-default"
-                               href="{{route('projects.back-end-build-out.create',$project->slug)}}">
-                                <i class="fa fa-fw text-olive fa-2x fa-plus" aria-hidden="true"></i></a>
-                        </h3>
-                        <hr>
-
-                        @if ($project->projectBackEndBuildOut->isNotEmpty())
-
-                            <table id="" class="table table-bordered table-striped">
-                                <thead>
-                                <tr>
-                                    <th>Option</th>
-                                    <th>User Upload</th>
-                                    <th>Call Flows</th>
-                                    <th>Comment</th>
-
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($project->projectBackEndBuildOut as $backEndBuildOut)
-                                    <tr>
-                                        <td>
-                                            <div class="btn-group">
-                                                <a data-toggle="tooltip" data-placement="top" title="View"
-                                                   class="btn btn-xs btn-success"
-                                                   href="{{url('pm/projects/'.$project->slug.'/back-end-build-out/'.$backEndBuildOut->id)}}"><i
-                                                            class="fa fa-fw fa-arrow-circle-o-right"
-                                                            aria-hidden="true"></i></a>
-                                                <a data-toggle="tooltip" data-placement="top" title="Edit"
-                                                   class="btn btn-xs btn-warning"
-                                                   href="{{url('pm/projects/'.$project->slug.'/back-end-build-out/'.$backEndBuildOut->id.'/edit')}}"><i
-                                                            class="fa fa-fw fa-edit" aria-hidden="true"></i></a>
-                                                <form id="form-delete-back{{$backEndBuildOut->id}}" method="post"
-                                                      action="{{url('pm/projects/'.$project->slug.'/back-end-build-out/'.$backEndBuildOut->id)}}"
-                                                      style="display: none;">
-                                                    {{csrf_field()}}
-                                                    {{method_field('DELETE')}}
-
-                                                </form>
-
-                                                <a data-toggle="tooltip" data-placement="top" title="Delete"
-                                                   class="btn btn-xs btn-danger" href="#" onclick="
-
-                                                        if(confirm('Are you sure want to Delete?')) {
-                                                        event.preventDefault();
-                                                        document.getElementById('form-delete-back{{$backEndBuildOut->id}}').submit();
-                                                        }else{
-                                                        event.preventDefault();
-                                                        }
-
-                                                        "><i class="fa fa-fw fa-trash"></i></a>
-                                            </div>
-                                        </td>
-
-                                        <td>{!! statusColor($backEndBuildOut->user_upload) !!}</td>
-                                        <td>{!! statusColor($backEndBuildOut->call_flows) !!}</td>
-                                        <td>
-                                            {!! htmlspecialchars_decode(str_limit($backEndBuildOut->comment,350)) !!}
-                                        </td>
-
-
-                                    </tr>
-
-                                @endforeach
-                            </table>
-                        @else
-
-                            <div class="callout callout-info">
-                                <h4> No Back End Build Out for this Project !</h4>
-
-                                <p>Please Create One..!</p>
-                            </div>
-
-                        @endif
-                    </div>
-                    <!-- /.tab-pane -->
-                    <div class="tab-pane" id="number-porting">
-
-                        <h3><span>Number Porting</span>
-                            <a data-toggle="tooltip" data-placement="top" title="Add New"
-                               class="pull-right btn btn-xs btn-default"
-                               href="{{route('projects.number-porting.create',$project->slug)}}">
-                                <i class="fa fa-fw text-olive fa-2x fa-plus" aria-hidden="true"></i></a>
-                        </h3>
-                        <hr>
-
-                        @if ($project->projectNumberPorting->isNotEmpty())
-
-                            <table id="" class="table table-bordered table-striped">
-                                <thead>
-                                <tr>
-                                    <th>Option</th>
-                                    <th>Type</th>
-                                    <th>Status</th>
-                                    <th>Port Date</th>
-                                    <th>Comment</th>
-
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($project->projectNumberPorting as $numberPorting)
-                                    <tr>
-                                        <td>
-                                            <div class="btn-group">
-                                                <a data-toggle="tooltip" data-placement="top" title="View"
-                                                   class="btn btn-xs btn-success"
-                                                   href="{{url('pm/projects/'.$project->slug.'/number-porting/'.$numberPorting->id)}}"><i
-                                                            class="fa fa-fw fa-arrow-circle-o-right"
-                                                            aria-hidden="true"></i></a>
-                                                <a data-toggle="tooltip" data-placement="top" title="Edit"
-                                                   class="btn btn-xs btn-warning"
-                                                   href="{{url('pm/projects/'.$project->slug.'/number-porting/'.$numberPorting->id.'/edit')}}"><i
-                                                            class="fa fa-fw fa-edit" aria-hidden="true"></i></a>
-                                                <form id="form-delete-number{{$numberPorting->id}}" method="post"
-                                                      action="{{url('pm/projects/'.$project->slug.'/number-porting/'.$numberPorting->id)}}"
-                                                      style="display: none;">
-                                                    {{csrf_field()}}
-                                                    {{method_field('DELETE')}}
-
-                                                </form>
-
-                                                <a data-toggle="tooltip" data-placement="top" title="Delete"
-                                                   class="btn btn-xs btn-danger" href="#" onclick="
-
-                                                        if(confirm('Are you sure want to Delete?')) {
-                                                        event.preventDefault();
-                                                        document.getElementById('form-delete-number{{$numberPorting->id}}').submit();
-                                                        }else{
-                                                        event.preventDefault();
-                                                        }
-
-                                                        "><i class="fa fa-fw fa-trash"></i></a>
-                                            </div>
-                                        </td>
-
-                                        <td>{{$numberPorting->type}}</td>
-                                        <td>{!! statusColor($numberPorting->status) !!}</td>
-                                        <td>{{$numberPorting->date->format(config('constants.time.format'))}}</td>
-                                        <td>
-                                            {!! htmlspecialchars_decode(str_limit($numberPorting->comment,350)) !!}
-                                        </td>
-
-
-                                    </tr>
-
-                                @endforeach
-                            </table>
-                        @else
-
-                            <div class="callout callout-info">
-                                <h4> No Number Porting for this Project !</h4>
-
-                                <p>Please Create One..!</p>
-                            </div>
-
-                        @endif
-                    </div>
-                    <!-- /.tab-pane -->
                     <div class="tab-pane" id="onsite-delivery-go-live">
 
-                        <h3><span>Onsite Delivery/Go Live</span>
+                        <h3><span>Go Live</span>
                             <a data-toggle="tooltip" data-placement="top" title="Add New"
                                class="pull-right btn btn-xs btn-default"
                                href="{{route('projects.onsite-delivery-go-live.create',$project->slug)}}">
@@ -715,6 +708,7 @@
                                 <thead>
                                 <tr>
                                     <th>Option</th>
+                                    <th>Title</th>
                                     <th>Location</th>
                                     <th>Start Date</th>
                                     <th>End Date</th>
@@ -758,6 +752,7 @@
                                                         "><i class="fa fa-fw fa-trash"></i></a>
                                             </div>
                                         </td>
+                                        <td>{{$onsiteDeliveryGoLive->title}}</td>
                                         <td>{{$onsiteDeliveryGoLive->location}}</td>
                                         <td>{{$onsiteDeliveryGoLive->start_date->format(config('constants.time.format'))}}</td>
                                         <td>@if($onsiteDeliveryGoLive->end_date!="")
@@ -773,6 +768,7 @@
                                     </tr>
 
                                 @endforeach
+                                </tbody>
                             </table>
                         @else
 
@@ -872,11 +868,12 @@
                                     </tr>
 
                                 @endforeach
+                                </tbody>
                             </table>
                         @else
 
                             <div class="callout callout-info">
-                                <h4> No Attachments for this Project !</h4>
+                                <h4>No Attachments for this Project !</h4>
 
                                 <p>Please Create One..!</p>
                             </div>
@@ -917,7 +914,7 @@
     <script>
         $(function () {
             var table =$('#snapshot').DataTable({
-                'paging': false,
+                'paging': true,
                 'lengthChange': false,
                 'searching': false,
                 'info': true,
@@ -941,10 +938,6 @@
         });
 
 
-        //        $(function () {
-        //
-        //            CKEDITOR.replace('editor1');
-        //        });
 
 
         $(document).ready(function () {

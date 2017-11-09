@@ -37,17 +37,17 @@ class ProjectsAssignController extends Controller
 
         //assigned Projects
         $assignedProjects = Project::where('user_id', '!=', null)
-            ->where('status', '!=', 'Complete')
+            ->where('status', '!=', 'Completed')
             ->latest('id')->get();
 
         //Overdue Projects
-        $overdueProjects = Project::where('status', '!=', 'Complete')
+        $overdueProjects = Project::where('status', '!=', 'Completed')
             ->where('due_date', '<', Carbon::now())
             ->get();
 
         //Completed Projects
         $completedProjects =  Project::where('user_id', '!=', null)
-            ->where('status', '=', 'Complete')
+            ->where('status', '=', 'Completed')
             ->latest('id')->get();
 
         //all Projects

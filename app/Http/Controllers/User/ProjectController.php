@@ -19,6 +19,7 @@ class ProjectController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+
     }
 
     /**
@@ -31,35 +32,35 @@ class ProjectController extends Controller
 
         $user = User::findorfail(auth()->user()->id);
 
-        //star projects
-        $starProjects = $user->projects()
-            ->where('star', '=', 1)
-            ->get();
-
-
         //pending projects
         $pendingProjects = $user->projects()
             ->where('status', '=', 'Open')
-            ->get();
+            ->latest('id')->get();
 
         // Overdue Projects
         $overdueProjects = $user->projects()
-            ->where('status', '!=', 'Complete')
+            ->where('status', '!=', 'Completed')
             ->where('due_date', '<', Carbon::now())
-            ->get();
+            ->latest('id')->get();
 
         //Completed Projects
         $completedProjects = $user->projects()
-            ->where('status', '=', 'Complete')
-            ->get();
+            ->where('status', '=', 'Completed')
+            ->latest('id')->get();
 
         //All Projects
         $allProjects = $user->projects()->get();
 
 
+        //assigned Projects
+        $assignedProjects = $user->projects()
+            ->where('status', '!=', 'Completed')
+            ->latest('id')->get();
+
+
         //count results and put in array
         $total = [
-            'totalStars' => count($starProjects),
+            'totalAssigned' => count($assignedProjects),
             'totalPending' => count($pendingProjects),
             'totalOverdue' => count($overdueProjects),
             'totalCompleted' => count($completedProjects),
@@ -67,20 +68,166 @@ class ProjectController extends Controller
         ];
 
 
-        return view('user.projects.index', compact('starProjects', 'pendingProjects', 'overdueProjects', 'completedProjects', 'allProjects', 'total'));
+        return view('user.projects.index', compact('pendingProjects', 'overdueProjects', 'completedProjects', 'allProjects','assignedProjects', 'total'));
     }
 
 
-    public function star(Request $request)
+    public function snapShot(Request $request)
     {
 
         $project = Project::findBySlug($request->slug)->firstOrFail();
-        $project->star = $request->value;
-        $project->save();
+
+
+
+        $html ='<table id="snapshot" class="table table-bordered table-striped">';
+        $html .='<thead>';
+        $html .='<tr>';
+        $html .='<th class="no-sort">Project Phase</th>';
+        $html .='<th class="no-sort">Task Name</th>';
+        $html .='<th class="no-sort">Task Status</th>';
+        $html .='<th class="no-sort">Task Progress</th>';
+        $html .='</tr>';
+        $html .='</thead>';
+        $html .='<tbody>';
+        // p&d
+        if ($project->ProjectPd->isNotEmpty()) {
+
+            foreach ($project->projectPd as $pd){
+                $html .= '<tr>';
+                $html .= '<td>P&D</td>';
+                $html .= '<td>';
+                $html .= 'Task';
+                $html .= '</td>';
+                $html .= '<td>';
+                $html .= statusColor($pd->status);
+                $html .= '</td>';
+                $html .= '<td>';
+                $html .= calculateSubTaskProgress($project->ProjectPd,$pd->id);
+                $html .= '</td>';
+                $html .='</tr>';
+            }
+
+
+        }
+        // network Assessment
+        if ($project->projectNetworkAssessment->isNotEmpty()) {
+
+            foreach ($project->projectNetworkAssessment as $network){
+                $html .= '<tr>';
+                $html .= '<td>Probe/Network Assessment</td>';
+                $html .= '<td>';
+                $html .= 'Task';
+                $html .= '</td>';
+                $html .= '<td>';
+                $html .= statusColor($network->status);
+                $html .= '</td>';
+                $html .= '<td>';
+                $html .= calculateSubTaskProgress($project->projectNetworkAssessment,$network->id);
+                $html .= '</td>';
+                $html .='</tr>';
+            }
+
+
+        }
+        //Admin Training
+        if ($project->projectAdminTraining->isNotEmpty()) {
+
+            foreach ($project->projectAdminTraining as $admin){
+                $html .= '<tr>';
+                $html .= '<td>Admin Training</td>';
+                $html .= '<td>';
+                $html .= 'Task';
+                $html .= '</td>';
+                $html .= '<td>';
+                $html .= statusColor($admin->status);
+                $html .= '</td>';
+                $html .= '<td>';
+                $html .= calculateSubTaskProgress($project->projectAdminTraining,$admin->id);
+                $html .= '</td>';
+                $html .='</tr>';
+            }
+
+
+        }
+
+        //Back End Build Out
+        if ($project->projectAdminTraining->isNotEmpty()) {
+
+            foreach ($project->projectBackEndBuildOut as $backend){
+                $html .= '<tr>';
+                $html .= '<td>Back End Build Out</td>';
+                $html .= '<td>';
+                $html .= 'Task';
+                $html .= '</td>';
+                $html .= '<td>';
+                $html .= 'User Upload :'. statusColor($backend->user_upload);
+                $html .= '<br> Call Flows :'. statusColor($backend->call_flows);
+                $html .= '</td>';
+                $html .= '<td>';
+                $html .= calculateSubTaskProgressBackEnd($project->projectBackEndBuildOut,$backend->id);
+                $html .= '</td>';
+                $html .='</tr>';
+            }
+
+
+        }
+
+        //Number Porting
+        if ($project->projectAdminTraining->isNotEmpty()) {
+
+            foreach ($project->projectNumberPorting as $numberPort){
+                $html .= '<tr>';
+                $html .= '<td>Number Porting</td>';
+                $html .= '<td>';
+                $html .= 'Task';
+                $html .= '</td>';
+                $html .= '<td>';
+                $html .= statusColor($numberPort->status);
+                $html .= '</td>';
+                $html .= '<td>';
+                $html .= calculateSubTaskProgress($project->projectNumberPorting,$numberPort->id);
+                $html .= '</td>';
+                $html .='</tr>';
+            }
+
+
+        }
+
+        //Onsite Delivery/Go Live
+        if ($project->projectOnsiteDeliveryGoLive->isNotEmpty()) {
+
+            foreach ($project->projectNumberPorting as $onSiteDelivery){
+                $html .= '<tr>';
+                $html .= '<td>Onsite Delivery/Go Live</td>';
+                $html .= '<td>';
+                $html .= 'Task';
+                $html .= '</td>';
+                $html .= '<td>';
+                $html .= statusColor($onSiteDelivery->status);
+                $html .= '</td>';
+                $html .= '<td>';
+                $html .= calculateSubTaskProgress($project->projectOnsiteDeliveryGoLive,$onSiteDelivery->id);
+                $html .= '</td>';
+                $html .='</tr>';
+            }
+
+
+        }
+
+
+
+
+        $html .='</tbody>';
+        $html .='</table>';
+        $html .='<h5><strong>Export Snap Shot</strong></h5>';
+        $html .='<div id="buttons"></div>';
+
+
 
         return response()->json(
             [
                 'success' => true,
+                'html'=>$html
             ], 200
         );
 

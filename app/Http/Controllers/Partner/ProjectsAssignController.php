@@ -39,14 +39,14 @@ class ProjectsAssignController extends Controller
 
         //assigned Projects
         $assignedProjects = $partner->projects()
-            ->where('status', '!=', 'Complete')
+            ->where('status', '!=', 'Completed')
             ->where('user_id', '!=', null)
             ->latest('id')->get();
 
 
         // Overdue Projects
         $overdueProjects = $partner->projects()
-            ->where('status', '!=', 'Complete')
+            ->where('status', '!=', 'Completed')
             ->where('due_date', '<', Carbon::now())
             ->get();
 
@@ -54,7 +54,7 @@ class ProjectsAssignController extends Controller
         //Completed Projects
         $completedProjects = $partner->projects()
             ->where('user_id', '!=', null)
-            ->where('status', '=', 'Complete')
+            ->where('status', '=', 'Completed')
             ->latest('id')->get();
 
         //all Projects

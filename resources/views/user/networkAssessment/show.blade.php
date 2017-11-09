@@ -20,13 +20,13 @@
         <section class="content-header">
             <h1>
 
-                Probe/ Network Assessment
+                Network Assessment
 
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                 <li><a href="#">Project Details</a></li>
-                <li><a href="{{url('pm/projects/'.$slug.'#network-assessment')}}">Probe/ Network Assessment</a></li>
+                <li><a href="{{url('pm/projects/'.$slug.'#network-assessment')}}">Network Assessment</a></li>
 
             </ol>
         </section>
@@ -35,12 +35,15 @@
         <section class="content">
             <!-- general form elements -->
             <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">{{$networkAssessment->title}}</h3>
+                </div>
                 <div class="box-body">
                 <!-- /.box-body -->
                         <div class="row">
                             <div class="col-sm-8">
 
-                                <h5><strong>Probe/ Network Assessment Comment</strong></h5>
+                                <h5><strong>Network Assessment Comment</strong></h5>
                                 <hr>
 
 

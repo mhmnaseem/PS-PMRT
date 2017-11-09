@@ -35,7 +35,9 @@
         <section class="content">
             <!-- general form elements -->
             <div class="box box-primary">
-
+                <div class="box-header with-border">
+                    <h3 class="box-title">{{$numberPorting->title}}</h3>
+                </div>
                 <div class="box-body">
                 <!-- /.box-body -->
                         <div class="row">

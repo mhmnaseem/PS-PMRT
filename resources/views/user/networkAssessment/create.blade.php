@@ -16,12 +16,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Probe/ Network Assessment
+                Network Assessment
 
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li><a href="#">Probe/ Network Assessment</a></li>
+                <li><a href="#">Network Assessment</a></li>
                 <li class="active">Create</li>
             </ol>
         </section>
@@ -34,7 +34,7 @@
                 <!-- general form elements -->
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Create Probe/ Network Assessment</h3>
+                            <h3 class="box-title">Create Network Assessment</h3>
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
@@ -42,6 +42,22 @@
                               action="{{route('projects.network-assessment.store',$slug)}}">
                             {{csrf_field()}}
                             <div class="box-body">
+
+                                <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
+                                    <label for="title" class="col-md-4 control-label">Title</label>
+
+                                    <div class="col-md-6">
+
+
+                                        <input type="text" id="title" class="form-control" name="title"  value="{{ old('title') }}" required autofocus>
+
+                                        @if ($errors->has('title'))
+                                            <span class="help-block">
+                                        <strong>{{ $errors->first('title') }}</strong>
+                                    </span>
+                                        @endif
+                                    </div>
+                                </div>
 
                                 <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
                                     <label for="status" class="col-md-4 control-label">Status</label>

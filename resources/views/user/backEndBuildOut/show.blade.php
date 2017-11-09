@@ -35,6 +35,9 @@
         <section class="content">
             <!-- general form elements -->
             <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">{{$backEndBuildOut->title}}</h3>
+                </div>
                 <div class="box-body">
                 <!-- /.box-body -->
                         <div class="row">
@@ -67,19 +70,14 @@
                                     </div>
                                     <div class="box-body">
                                         <strong><i class="fa fa-check-circle text-maroon margin-r-5"></i>
-                                            User Upload</strong>
+                                           Status</strong>
 
                                         <p>
-                                            {!! statusColor($backEndBuildOut->user_upload) !!}
+                                            {!! statusColor($backEndBuildOut->status) !!}
                                         </p>
 
                                         <hr>
-                                        <strong><i class="fa fa-check-circle text-maroon margin-r-5"></i>
-                                            Call Flows</strong>
 
-                                        <p>
-                                            {!! statusColor($backEndBuildOut->call_flows) !!}
-                                        </p>
 
                                     </div>
                                     <!-- /.box-body -->

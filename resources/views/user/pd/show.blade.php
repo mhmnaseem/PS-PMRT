@@ -20,13 +20,13 @@
         <section class="content-header">
             <h1>
 
-                P&D
+                Planning and Design
 
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                 <li><a href="#">Project Details</a></li>
-                <li><a href="#">P&D</a></li>
+                <li><a href="#">Planning and Design</a></li>
 
             </ol>
         </section>
@@ -35,12 +35,15 @@
         <section class="content">
             <!-- general form elements -->
             <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">{{$pd->title}}</h3>
+                </div>
                 <div class="box-body">
                 <!-- /.box-body -->
                         <div class="row">
                             <div class="col-sm-8">
 
-                                <h5><strong>P&D Comment</strong></h5>
+                                <h5><strong>Planning and Design Comment</strong></h5>
                                 <hr>
 
 

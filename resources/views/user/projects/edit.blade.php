@@ -1,10 +1,10 @@
 @extends('user.layout.master')
 
 @section ('header')
-
-
-
 @endsection
+
+
+@section('title', 'Project Update')
 
 @section ('main-content')
 

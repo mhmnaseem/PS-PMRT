@@ -16,13 +16,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Onsite Delivery/Go Live
-
+                Go Live
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                 <li><a href="#">Project</a></li>
-                <li class="active">Onsite Delivery/Go Live Update</li>
+                <li class="active">Go Live Update</li>
             </ol>
         </section>
 
@@ -44,6 +43,23 @@
                             {{csrf_field()}}
                             {{method_field('PUT')}}
                             <div class="box-body">
+
+                                <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
+                                    <label for="title" class="col-md-4 control-label">Title</label>
+
+                                    <div class="col-md-6">
+
+
+                                        <input type="text" id="title" class="form-control" name="title"  value="{{ old('title',$onsiteDeliveryGoLive->title) }}" required autofocus>
+
+                                        @if ($errors->has('title'))
+                                            <span class="help-block">
+                                        <strong>{{ $errors->first('title') }}</strong>
+                                    </span>
+                                        @endif
+                                    </div>
+                                </div>
+
 
                                 <div class="form-group{{ $errors->has('location') ? ' has-error' : '' }}">
                                     <label for="location" class="col-md-4 control-label">Location</label>
@@ -111,7 +127,7 @@
 
                                     <div class="col-md-6">
 
-                                        {!! selectUpdate('status',$onsiteDeliveryGoLive->status) !!}
+                                        {!! selectUpdate('status',$goLive->status) !!}
 
                                         @if ($errors->has('status'))
                                             <span class="help-block">

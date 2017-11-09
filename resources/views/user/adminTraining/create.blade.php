@@ -16,12 +16,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-               Admin Training
+              Training
 
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li><a href="#"> Admin Training</a></li>
+                <li><a href="#">Training</a></li>
                 <li class="active">Create</li>
             </ol>
         </section>
@@ -35,7 +35,7 @@
                     <div class="box box-primary">
 
                         <div class="box-header with-border">
-                            <h3 class="box-title">Create  Admin Training</h3>
+                            <h3 class="box-title">Create Training</h3>
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->

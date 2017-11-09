@@ -16,13 +16,13 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Admin Training Update
+               Training Update
 
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                 <li><a href="#">Project</a></li>
-                <li class="active"> Admin Training Update</li>
+                <li class="active">Training Update</li>
             </ol>
         </section>
 

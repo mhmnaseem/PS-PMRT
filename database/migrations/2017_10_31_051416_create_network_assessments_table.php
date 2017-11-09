@@ -15,6 +15,7 @@ class CreateNetworkAssessmentsTable extends Migration
     {
         Schema::create('network_assessments', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('title')->nullable();
             $table->string('status')->nullable();
             $table->date('date')->nullable();
             $table->text('comment')->nullable();

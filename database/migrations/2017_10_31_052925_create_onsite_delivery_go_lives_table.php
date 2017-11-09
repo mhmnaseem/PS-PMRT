@@ -15,6 +15,7 @@ class CreateOnsiteDeliveryGoLivesTable extends Migration
     {
         Schema::create('onsite_delivery_go_lives', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('title')->nullable();
             $table->string('location')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();

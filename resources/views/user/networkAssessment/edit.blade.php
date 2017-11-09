@@ -16,13 +16,13 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Probe/ Network Assessment Update
+                Network Assessment Update
 
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                 <li><a href="#">Project</a></li>
-                <li class="active">Probe/ Network Assessment Update</li>
+                <li class="active">Network Assessment Update</li>
             </ol>
         </section>
 
@@ -44,6 +44,23 @@
                             {{csrf_field()}}
                             {{method_field('PUT')}}
                             <div class="box-body">
+
+
+                                <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
+                                    <label for="title" class="col-md-4 control-label">Title</label>
+
+                                    <div class="col-md-6">
+
+
+                                        <input type="text" id="title" class="form-control" name="title"  value="{{ old('title',$networkAssessment->title) }}" required autofocus>
+
+                                        @if ($errors->has('title'))
+                                            <span class="help-block">
+                                        <strong>{{ $errors->first('title') }}</strong>
+                                    </span>
+                                        @endif
+                                    </div>
+                                </div>
 
                                 <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
                                     <label for="title" class="col-md-4 control-label">Status</label>

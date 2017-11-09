@@ -20,13 +20,13 @@
         <section class="content-header">
             <h1>
 
-                Onsite Delivery/Go Live
+               Go Live
 
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                 <li><a href="#">Project Details</a></li>
-                <li><a href="{{url('pm/projects/'.$slug.'#onsite-delivery-go-live')}}">Onsite Delivery/Go Live</a></li>
+                <li><a href="{{url('pm/projects/'.$slug.'#onsite-delivery-go-live')}}">Go Live</a></li>
 
             </ol>
         </section>
@@ -36,14 +36,14 @@
             <!-- general form elements -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">{{$onsiteDeliveryGoLive->location}}</h3>
+                    <h3 class="box-title">{{$onsiteDeliveryGoLive->title}}</h3>
                 </div>
                 <div class="box-body">
                     <!-- /.box-body -->
                     <div class="row">
                         <div class="col-sm-8">
 
-                            <h5><strong>Onsite Delivery/Go Live Comment</strong></h5>
+                            <h5><strong>Go Live Comment</strong></h5>
                             <hr>
 
 
@@ -69,6 +69,11 @@
                                     </div>
                                 </div>
                                 <div class="box-body">
+                                    <strong><i class="fa fa-map text-maroon margin-r-5"></i> Location</strong>
+
+                                    <p class="text-muted">{{$onsiteDeliveryGoLive->location}}</p>
+
+                                    <hr>
                                     <strong><i class="fa fa-calendar text-maroon margin-r-5"></i> Start Date</strong>
 
                                     <p class="text-muted">{{$onsiteDeliveryGoLive->start_date->format(config('constants.time.format'))}}</p>

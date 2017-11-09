@@ -15,6 +15,7 @@ class CreateNumberPortingsTable extends Migration
     {
         Schema::create('number_portings', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('title')->nullable();
             $table->string('type')->nullable();
             $table->string('status')->nullable();
             $table->date('date')->nullable();

@@ -43,7 +43,7 @@ class AdminHomeController extends Controller
 
         //Completed Projects
         $completedProjects = Project::where('user_id', '!=', null)
-            ->where('status', '=', 'Complete')
+            ->where('status', '=', 'Completed')
             ->count();
 
         //all in one array
@@ -71,7 +71,7 @@ class AdminHomeController extends Controller
             ->dataset('Pending Projects', Project::where('user_id', '=', null)
                 ->where('status', '=', 'open')->get())
             ->dataset('Completed Projects', Project::where('user_id', '!=', null)
-                ->where('status', '=', 'Complete')->get())
+                ->where('status', '=', 'Completed')->get())
             ->groupByMonth();
 
 

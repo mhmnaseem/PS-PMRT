@@ -20,13 +20,13 @@
         <section class="content-header">
             <h1>
 
-                Admin Training
+                Training
 
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                 <li><a href="#">Project Details</a></li>
-                <li><a href="{{url('pm/projects/'.$slug.'#admin-training')}}">Admin Training</a></li>
+                <li><a href="{{url('pm/projects/'.$slug.'#admin-training')}}">Training</a></li>
 
             </ol>
         </section>
@@ -43,7 +43,7 @@
                         <div class="row">
                             <div class="col-sm-8">
 
-                                <h5><strong>Admin Training Comment</strong></h5>
+                                <h5><strong>Training Comment</strong></h5>
                                 <hr>
 
 

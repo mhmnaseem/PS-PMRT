@@ -47,31 +47,33 @@
 
 
 
-                                <div class="form-group{{ $errors->has('user_upload') ? ' has-error' : '' }}">
-                                    <label for="status" class="col-md-4 control-label">User Upload</label>
+                                <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
+                                    <label for="title" class="col-md-4 control-label">Title</label>
 
                                     <div class="col-md-6">
 
-                                        {!! selectUpdate('user_upload',$backEndBuildOut->user_upload) !!}
 
-                                        @if ($errors->has('user_upload'))
+                                        <input type="text" id="title" class="form-control" name="title"  value="{{ old('title',$backEndBuildOut->title) }}" required autofocus>
+
+                                        @if ($errors->has('title'))
                                             <span class="help-block">
-                                        <strong>{{ $errors->first('user_upload') }}</strong>
+                                        <strong>{{ $errors->first('title') }}</strong>
                                     </span>
                                         @endif
                                     </div>
                                 </div>
 
-                                <div class="form-group{{ $errors->has('call_flows') ? ' has-error' : '' }}">
-                                    <label for="status" class="col-md-4 control-label">Call Flows</label>
+
+                                <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
+                                    <label for="title" class="col-md-4 control-label">Status</label>
 
                                     <div class="col-md-6">
 
-                                        {!! selectUpdate('call_flows',$backEndBuildOut->call_flows) !!}
+                                        {!! selectUpdate('status',$backEndBuildOut->status) !!}
 
-                                        @if ($errors->has('call_flows'))
+                                        @if ($errors->has('status'))
                                             <span class="help-block">
-                                        <strong>{{ $errors->first('call_flows') }}</strong>
+                                        <strong>{{ $errors->first('status') }}</strong>
                                     </span>
                                         @endif
                                     </div>

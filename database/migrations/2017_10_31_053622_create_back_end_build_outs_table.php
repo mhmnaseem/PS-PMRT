@@ -15,6 +15,7 @@ class CreateBackEndBuildOutsTable extends Migration
     {
         Schema::create('back_end_build_outs', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('title')->nullable();
             $table->string('user_upload')->nullable();
             $table->string('call_flows')->nullable();
             $table->text('comment')->nullable();

@@ -63,7 +63,7 @@ Route::group(['namespace'=>'User'],function (){
 
     //projects
     Route::resource('pm/projects', 'ProjectController');
-    Route::post('pm/projects/star', 'ProjectController@star')->name('star');
+    Route::post('pm/projects/snap-shot', 'ProjectController@snapShot')->name('snap.shot');
 
     // project sub tasks
     Route::resource('pm/projects.pd', 'ProjectPdController');

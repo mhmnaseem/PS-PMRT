@@ -45,7 +45,7 @@ class PartnerHomeController extends Controller
         //Completed Projects
         $completedProjects = $partner->projects()
             ->where('user_id', '!=', null)
-            ->where('status', '=', 'Complete')
+            ->where('status', '=', 'Completed')
             ->count();
 
         //all in one array
@@ -73,10 +73,10 @@ class PartnerHomeController extends Controller
             ->dataset('Pending Projects', $partner->projects()->where('user_id', '=', null)
                 ->where('status', '=', 'open')->get())
             ->dataset('Overdue Projects',$partner->projects()
-                ->where('status', '!=', 'Complete')
+                ->where('status', '!=', 'Completed')
                 ->where('due_date', '<', Carbon::now())->get())
             ->dataset('Completed Projects', $partner->projects()->where('user_id', '!=', null)
-                ->where('status', '=', 'Complete')->get())
+                ->where('status', '=', 'Completed')->get())
             ->groupByMonth();
 
         return view('partner.home', compact('total','chart'));
