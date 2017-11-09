@@ -91,7 +91,11 @@
                                                             class="fa fa-fw fa-arrow-circle-o-right"
                                                             aria-hidden="true"></i></a>
 
-
+                                                <a href="#" data-toggle="tooltip" data-placement="top" title="Snap Shot"
+                                                   data-slug="{{$pendingProject->slug}}" data-title="{{$pendingProject->title}}"
+                                                   data-source="{{route('snap.shot')}}"
+                                                   class="open-snap btn btn-default btn-xs"> <i
+                                                            class="fa fa-fw fa-camera"></i></a>
                                                 {{--@if($pendingProject->star==0)--}}
                                                 {{--<a href="#" data-toggle="tooltip" data-placement="top" title="Add to Star" data-slug="{{$pendingProject->slug}}" data-value="1"--}}
                                                 {{--data-source="{{route('star')}}" class="ajax btn btn-default btn-xs"> <i--}}
@@ -131,7 +135,7 @@
                         @if ($overdueProjects->isNotEmpty())
 
 
-                            <table id="example3" class="table table-bordered table-striped">
+                            <table id="example2" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
                                     <th>Option</th>
@@ -198,7 +202,7 @@
 
                         @if ($completedProjects->isNotEmpty())
 
-                            <table id="example4" class="table table-bordered table-striped">
+                            <table id="example3" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
                                     <th>Option</th>
@@ -275,7 +279,7 @@
 
                         @if ($allProjects->isNotEmpty())
 
-                            <table id="example5" class="table table-bordered table-striped">
+                            <table id="example4" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
                                     <th>Option</th>
@@ -352,7 +356,7 @@
                         @if ($assignedProjects->isNotEmpty())
 
 
-                            <table id="example6" class="table table-bordered table-striped">
+                            <table id="example5" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
                                     <th>Option</th>
@@ -467,7 +471,7 @@
     <script src="https://cdn.datatables.net/buttons/1.4.2/js/buttons.print.min.js"></script>
     <script>
         $(function () {
-            $('#example1,#example2,#example3,#example4,#example5,#example6').DataTable({
+            $('#example1,#example2,#example3,#example4,#example5').DataTable({
                 'paging': true,
                 'lengthChange': false,
                 'searching': true,

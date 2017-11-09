@@ -79,6 +79,28 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group{{ $errors->has('date') ? ' has-error' : '' }}">
+                                    <label for="datepicker" class="col-md-4 control-label">Date</label>
+
+                                    <div class="col-md-6">
+
+                                        <div class="input-group date">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input type="text" class="form-control pull-right" id="datepicker" name="date"  value="{{ old('date',$adminTraining->date->format(config('constants.time.format'))) }}" autofocus>
+                                        </div>
+                                        <!-- /.input group -->
+
+
+                                        @if ($errors->has('date'))
+                                            <span class="help-block">
+                                        <strong>{{ $errors->first('date') }}</strong>
+                                    </span>
+                                        @endif
+                                    </div>
+                                </div>
+
                                 <div class="form-group{{ $errors->has('comment') ? ' has-error' : '' }}">
                                     <label for="email" class="col-md-4 control-label">Comment</label>
 

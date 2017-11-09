@@ -94,9 +94,9 @@ class ProjectController extends Controller
 
             foreach ($project->projectPd as $pd){
                 $html .= '<tr>';
-                $html .= '<td>P&D</td>';
+                $html .= '<td>Planning and Design</td>';
                 $html .= '<td>';
-                $html .= 'Task';
+                $html .= $pd->title;
                 $html .= '</td>';
                 $html .= '<td>';
                 $html .= statusColor($pd->status);
@@ -114,9 +114,9 @@ class ProjectController extends Controller
 
             foreach ($project->projectNetworkAssessment as $network){
                 $html .= '<tr>';
-                $html .= '<td>Probe/Network Assessment</td>';
+                $html .= '<td>Network Assessment</td>';
                 $html .= '<td>';
-                $html .= 'Task';
+                $html .= $network->title;
                 $html .= '</td>';
                 $html .= '<td>';
                 $html .= statusColor($network->status);
@@ -129,42 +129,21 @@ class ProjectController extends Controller
 
 
         }
-        //Admin Training
-        if ($project->projectAdminTraining->isNotEmpty()) {
-
-            foreach ($project->projectAdminTraining as $admin){
-                $html .= '<tr>';
-                $html .= '<td>Admin Training</td>';
-                $html .= '<td>';
-                $html .= 'Task';
-                $html .= '</td>';
-                $html .= '<td>';
-                $html .= statusColor($admin->status);
-                $html .= '</td>';
-                $html .= '<td>';
-                $html .= calculateSubTaskProgress($project->projectAdminTraining,$admin->id);
-                $html .= '</td>';
-                $html .='</tr>';
-            }
-
-
-        }
 
         //Back End Build Out
-        if ($project->projectAdminTraining->isNotEmpty()) {
+        if ($project->projectBackEndBuildOut->isNotEmpty()) {
 
             foreach ($project->projectBackEndBuildOut as $backend){
                 $html .= '<tr>';
                 $html .= '<td>Back End Build Out</td>';
                 $html .= '<td>';
-                $html .= 'Task';
+                $html .= $backend->title;
                 $html .= '</td>';
                 $html .= '<td>';
-                $html .= 'User Upload :'. statusColor($backend->user_upload);
-                $html .= '<br> Call Flows :'. statusColor($backend->call_flows);
+                $html .= statusColor($backend->status);
                 $html .= '</td>';
                 $html .= '<td>';
-                $html .= calculateSubTaskProgressBackEnd($project->projectBackEndBuildOut,$backend->id);
+                $html .= calculateSubTaskProgress($project->projectBackEndBuildOut,$backend->id);
                 $html .= '</td>';
                 $html .='</tr>';
             }
@@ -173,13 +152,13 @@ class ProjectController extends Controller
         }
 
         //Number Porting
-        if ($project->projectAdminTraining->isNotEmpty()) {
+        if ($project->projectNumberPorting->isNotEmpty()) {
 
             foreach ($project->projectNumberPorting as $numberPort){
                 $html .= '<tr>';
                 $html .= '<td>Number Porting</td>';
                 $html .= '<td>';
-                $html .= 'Task';
+                $html .= $numberPort->title;
                 $html .= '</td>';
                 $html .= '<td>';
                 $html .= statusColor($numberPort->status);
@@ -193,14 +172,34 @@ class ProjectController extends Controller
 
         }
 
-        //Onsite Delivery/Go Live
+        // Training
+        if ($project->projectAdminTraining->isNotEmpty()) {
+
+            foreach ($project->projectAdminTraining as $admin){
+                $html .= '<tr>';
+                $html .= '<td>Training</td>';
+                $html .= '<td>';
+                $html .= $admin->title;
+                $html .= '</td>';
+                $html .= '<td>';
+                $html .= statusColor($admin->status);
+                $html .= '</td>';
+                $html .= '<td>';
+                $html .= calculateSubTaskProgress($project->projectAdminTraining,$admin->id);
+                $html .= '</td>';
+                $html .='</tr>';
+            }
+
+
+        }
+        //Go Live
         if ($project->projectOnsiteDeliveryGoLive->isNotEmpty()) {
 
-            foreach ($project->projectNumberPorting as $onSiteDelivery){
+            foreach ($project->projectOnsiteDeliveryGoLive as $onSiteDelivery){
                 $html .= '<tr>';
-                $html .= '<td>Onsite Delivery/Go Live</td>';
+                $html .= '<td>Go Live</td>';
                 $html .= '<td>';
-                $html .= 'Task';
+                $html .= $onSiteDelivery->title;
                 $html .= '</td>';
                 $html .= '<td>';
                 $html .= statusColor($onSiteDelivery->status);

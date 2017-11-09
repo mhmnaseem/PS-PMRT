@@ -65,7 +65,7 @@ function getProgress($slug)
     $backEndBuildOutCollects = $project->projectBackEndBuildOut()->get();
     if ($backEndBuildOut >= 1) {
 
-        getProgressByCollection($backEndBuildOutCollects);
+        $backEndBuildOutValue=getProgressByCollection($backEndBuildOutCollects);
 
     } else {
         $backEndBuildOutValue = 0;
@@ -109,10 +109,7 @@ function getProgressByCollection($collection)
     foreach ($progressCollects as $progressCollect) {
         if ($progressCollect->status == "Completed") {
             $progressArray[$progressCollect->id] = ((1 * 100 / 6) / $childCount);
-        } elseif ($progressCollect->status != "Completed") {
-            $progressArray[$progressCollect->id] = ((1 * 100 / 6) / $childCount / 4);
-        }
-        elseif ($progressCollect->status == "Onhold") {
+        }elseif ($progressCollect->status == "Onhold") {
             $progressArray[$progressCollect->id] = ((1 * 100 / 6) / $childCount / 4);
         }
         elseif ($progressCollect->status == "In Progress") {

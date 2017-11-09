@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
-    protected $dates = array('due_date', 'start_date', 'complete_date');
+    protected $fillable=['title','description','slug','status','start_date' ,'due_date','partner_id'];
+
+    protected $dates = ['due_date', 'start_date', 'complete_date'];
 
     public function partner()
     {
@@ -19,14 +21,14 @@ class Project extends Model
         return $this->belongsTo('App\Model\User\User', 'user_id');
     }
 
-    public function setDueDateAttribute($value)
-    {
-        $this->attributes['due_date'] = Carbon::createFromFormat(config('constants.time.format'), $value);
-    }
-
     public function setStartDateAttribute($value)
     {
         $this->attributes['start_date'] = Carbon::createFromFormat(config('constants.time.format'), $value);
+    }
+
+    public function setDueDateAttribute($value)
+    {
+        $this->attributes['due_date'] = Carbon::createFromFormat(config('constants.time.format'), $value);
     }
 
     public function scopeFindBySlug($query, $slug)

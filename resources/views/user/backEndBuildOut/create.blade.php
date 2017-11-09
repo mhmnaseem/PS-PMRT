@@ -61,6 +61,8 @@
                                 </div>
 
 
+
+
                                 <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
                                     <label for="status" class="col-md-4 control-label">Status</label>
 
@@ -71,6 +73,28 @@
                                         @if ($errors->has('status'))
                                             <span class="help-block">
                                         <strong>{{ $errors->first('status') }}</strong>
+                                    </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="form-group{{ $errors->has('date') ? ' has-error' : '' }}">
+                                    <label for="datepicker" class="col-md-4 control-label">Date</label>
+
+                                    <div class="col-md-6">
+
+                                        <div class="input-group date">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input type="text" class="form-control pull-right" id="datepicker" name="date"  value="{{ old('date') }}" required autofocus>
+                                        </div>
+                                        <!-- /.input group -->
+
+
+                                        @if ($errors->has('date'))
+                                            <span class="help-block">
+                                        <strong>{{ $errors->first('date') }}</strong>
                                     </span>
                                         @endif
                                     </div>

@@ -27,9 +27,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $partner=Partner::find(auth()->user()->id);
-        $pms=$partner->pms()->get();
-        return view('partner.userAccount.index',compact('pms'));
+        $partner = Partner::find(auth()->user()->id);
+        $pms = $partner->pms()->get();
+        return view('partner.userAccount.index', compact('pms'));
     }
 
     /**
@@ -45,23 +45,23 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:Users',
             'password' => 'required|string|min:6|confirmed',
         ]);
 
-        $pm=new User();
-        $pm->name=$request['name'];
-        $pm->slug=md5(uniqid());
-        $pm->email=$request['email'];
-        $pm->partner_id=auth()->user()->id;
-        $pm->password=bcrypt($request['password']);
+        $pm = new User();
+        $pm->name = $request['name'];
+        $pm->slug = md5(uniqid());
+        $pm->email = $request['email'];
+        $pm->partner_id = auth()->user()->id;
+        $pm->password = bcrypt($request['password']);
 
         $pm->save();
 
@@ -74,7 +74,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -85,35 +85,35 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($slug)
     {
-        $pm=User::findBySlug($slug)->firstOrFail();
+        $pm = User::findBySlug($slug)->firstOrFail();
         return view('partner.userAccount.edit', compact('pm'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $slug)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:Users,id,'.$request->get('id'),
+            'email' => 'required|string|email|max:255|unique:Users,id,' . $request->get('id'),
             'password' => 'required|string|min:6|confirmed',
         ]);
 
-        $pm=User::findBySlug($slug)->firstOrFail();
+        $pm = User::findBySlug($slug)->firstOrFail();
 
-        $pm->name=$request['name'];
-        $pm->email=$request['email'];
-        $pm->password=bcrypt($request['password']);
+        $pm->name = $request['name'];
+        $pm->email = $request['email'];
+        $pm->password = bcrypt($request['password']);
 
         $pm->save();
 
@@ -125,7 +125,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($slug)

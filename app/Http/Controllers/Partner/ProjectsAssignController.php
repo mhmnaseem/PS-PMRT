@@ -127,7 +127,6 @@ class ProjectsAssignController extends Controller
 
     public function assign(Request $request)
     {
-
         $project = Project::findBySlug($request->slug)->firstorfail();
         $project->user_id = $request->pm;
         $project->save();

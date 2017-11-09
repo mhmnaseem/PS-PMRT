@@ -15,7 +15,7 @@ class CreateAdminTrainingsTable extends Migration
     {
         Schema::create('admin_trainings', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title','100')->nullable();
+            $table->string('title')->nullable();
             $table->string('status')->nullable();
             $table->date('date')->nullable();
             $table->text('comment')->nullable();

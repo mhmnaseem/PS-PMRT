@@ -84,7 +84,7 @@ class PartnerHomeController extends Controller
 
     public function profileEdit()
     {
-        $id = Auth::user()->id;
+        $id = auth()->user()->id;
         $partner = Partner::where('id', $id)->firstOrFail();
         return view('partner.profile.edit', compact('partner'));
     }
@@ -98,7 +98,7 @@ class PartnerHomeController extends Controller
      */
     public function profileUpdate(Request $request)
     {
-        $id = Auth::user()->id;
+        $id = auth()->user()->id;
         $this->validate($request, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:admins,id,' . $id,

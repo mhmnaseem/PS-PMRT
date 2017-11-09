@@ -92,7 +92,7 @@
                                         @if ($project->ProjectPd->isNotEmpty())
                                             @foreach($project->projectPd as $pd)
                                             <tr>
-                                                <td>P&D</td>
+                                                <td>Planning and Design</td>
                                                 <td>{{$pd->title}}</td>
                                                 <td>{!! statusColor($pd->status) !!} </td>
                                                 <td>{!! calculateSubTaskProgress($project->projectPd,$pd->id) !!}</td>
@@ -103,7 +103,7 @@
                                         @if ($project->projectNetworkAssessment->isNotEmpty())
                                             @foreach($project->projectNetworkAssessment as $network)
                                             <tr>
-                                                <td>Probe/Network Assessment</td>
+                                                <td>Network Assessment</td>
                                                 <td>{{$network->title}}</td>
                                                 <td>{!! statusColor($network->status) !!} </td>
                                                 <td>{!! calculateSubTaskProgress($project->projectNetworkAssessment,$network->id) !!}</td>
@@ -111,18 +111,7 @@
                                             @endforeach
                                         @endif
 
-                                        @if ($project->projectAdminTraining->isNotEmpty())
-                                            @foreach($project->projectAdminTraining as $admin)
-                                            <tr>
-                                                <td>Training</td>
-                                                <td>{{$admin->title}}</td>
-                                                <td>{!! statusColor($admin->status) !!}</td>
-                                                <td>{!! calculateSubTaskProgress($project->projectAdminTraining,$admin->id) !!}</td>
-                                            </tr>
-                                            @endforeach
-                                        @endif
-
-                                        @if ($project->projectBackEndBuildOut->isNotEmpty())
+                                       @if ($project->projectBackEndBuildOut->isNotEmpty())
                                             @foreach($project->projectBackEndBuildOut as $backend)
                                             <tr>
                                                 <td>Back End Build Out</td>
@@ -144,10 +133,21 @@
                                             @endforeach
                                         @endif
 
+                                        @if ($project->projectAdminTraining->isNotEmpty())
+                                            @foreach($project->projectAdminTraining as $admin)
+                                                <tr>
+                                                    <td>Training</td>
+                                                    <td>{{$admin->title}}</td>
+                                                    <td>{!! statusColor($admin->status) !!}</td>
+                                                    <td>{!! calculateSubTaskProgress($project->projectAdminTraining,$admin->id) !!}</td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
+
                                         @if ($project->projectOnsiteDeliveryGoLive->isNotEmpty())
                                             @foreach($project->projectOnsiteDeliveryGoLive as $onSiteDelivery)
                                             <tr>
-                                                <td>Onsite Delivery/Go Live</td>
+                                                <td>Go Live</td>
                                                 <td>{{$onSiteDelivery->title}}</td>
                                                 <td>{!! statusColor($onSiteDelivery->status) !!}</td>
                                                 <td>{!! calculateSubTaskProgress($project->projectOnsiteDeliveryGoLive,$onSiteDelivery->id) !!}</td>
@@ -429,7 +429,7 @@
                         @else
 
                             <div class="callout callout-info">
-                                <h4> No Probe/ Network Assessment for this Project !</h4>
+                                <h4> Network Assessment for this Project !</h4>
 
                                 <p>Please Create One..!</p>
                             </div>
@@ -458,6 +458,7 @@
                                     <th>Option</th>
                                     <th>Title</th>
                                     <th>Status</th>
+                                    <th>Date</th>
                                     <th>Comment</th>
 
                                 </tr>
@@ -499,7 +500,7 @@
                                         </td>
                                         <td>{{$backEndBuildOut->title}} </td>
                                         <td>{!! statusColor($backEndBuildOut->status) !!}</td>
-
+                                        <td>{{$backEndBuildOut->date->format(config('constants.time.format'))}}</td>
                                         <td>
                                             {!! htmlspecialchars_decode(str_limit($backEndBuildOut->comment,350)) !!}
                                         </td>
@@ -538,7 +539,6 @@
                                 <tr>
                                     <th>Option</th>
                                     <th>Title</th>
-                                    <th>Type</th>
                                     <th>Status</th>
                                     <th>Port Date</th>
                                     <th>Comment</th>
@@ -581,7 +581,6 @@
                                             </div>
                                         </td>
                                         <td>{{$numberPorting->title}}</td>
-                                        <td>{{$numberPorting->type}}</td>
                                         <td>{!! statusColor($numberPorting->status) !!}</td>
                                         <td>{{$numberPorting->date->format(config('constants.time.format'))}}</td>
                                         <td>
@@ -773,7 +772,7 @@
                         @else
 
                             <div class="callout callout-info">
-                                <h4> No Onsite Delivery/Go Live for this Project !</h4>
+                                <h4> No Go Live for this Project !</h4>
 
                                 <p>Please Create One..!</p>
                             </div>

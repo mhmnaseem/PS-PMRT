@@ -61,20 +61,6 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group{{ $errors->has('type') ? ' has-error' : '' }}">
-                                    <label for="status" class="col-md-4 control-label">Type</label>
-
-                                    <div class="col-md-6">
-
-                                        {!! portCreate('type') !!}
-
-                                        @if ($errors->has('type'))
-                                            <span class="help-block">
-                                        <strong>{{ $errors->first('type') }}</strong>
-                                    </span>
-                                        @endif
-                                    </div>
-                                </div>
 
 
                                 <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">

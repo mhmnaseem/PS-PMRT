@@ -69,14 +69,7 @@
                                         </div>
                                     </div>
                                     <div class="box-body">
-                                        <strong><i class="fa fa-check-circle text-maroon margin-r-5"></i>
-                                            Type</strong>
 
-                                        <p>
-                                            {{$numberPorting->type}}
-                                        </p>
-
-                                        <hr>
                                         <strong><i class="fa fa-check-circle text-maroon margin-r-5"></i>
                                             Status</strong>
 

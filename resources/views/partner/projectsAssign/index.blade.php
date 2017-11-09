@@ -50,11 +50,11 @@
                 <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#pending" data-toggle="tab">
-                                <i class="fa fa-hourglass-half" aria-hidden="true"></i> PM Unassigned
+                                <i class="fa fa-hourglass-half" aria-hidden="true"></i> Unassigned Projects
                                 <span class="badge">{{$total['totalPending']}}</span></a>
                         </li>
                         <li><a href="#assigned" data-toggle="tab">
-                                <i class="fa fa-random" aria-hidden="true"></i> PM Assigned <span
+                                <i class="fa fa-random" aria-hidden="true"></i> Assigned Projects <span
                                         class="badge">{{$total['totalAssigned']}}</span></a>
                         </li>
                         <li><a href="#overdue" data-toggle="tab">
@@ -477,7 +477,7 @@
 
                 $.ajaxSetup({
                     headers: {
-                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 })
                 e.preventDefault();

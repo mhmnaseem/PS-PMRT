@@ -76,8 +76,12 @@
                                             {!! statusColor($backEndBuildOut->status) !!}
                                         </p>
 
+
                                         <hr>
 
+                                        <strong><i class="fa fa-calendar text-maroon margin-r-5"></i> Date</strong>
+
+                                        <p class="text-muted">{{$backEndBuildOut->date->format(config('constants.time.format'))}}</p>
 
                                     </div>
                                     <!-- /.box-body -->
