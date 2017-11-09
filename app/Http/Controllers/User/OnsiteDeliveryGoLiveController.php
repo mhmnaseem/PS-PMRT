@@ -50,6 +50,7 @@ class OnsiteDeliveryGoLiveController extends Controller
         $project=Project::findBySlug($slug)->firstOrFail();
 
         $this->validate($request,[
+            'title' => 'required',
             'location' => 'required',
             'start_date' => 'required|date|after:yesterday',
             'end_date' => 'date|after:start_date|nullable',
@@ -58,6 +59,7 @@ class OnsiteDeliveryGoLiveController extends Controller
         ]);
 
         $onsiteDeliveryGoLive=new OnsiteDeliveryGoLive();
+        $onsiteDeliveryGoLive->title=$request->title;
         $onsiteDeliveryGoLive->location=$request->location;
         $onsiteDeliveryGoLive->start_date=$request->start_date;
         $onsiteDeliveryGoLive->end_date=$request->end_date;
@@ -111,6 +113,7 @@ class OnsiteDeliveryGoLiveController extends Controller
 
 
         $this->validate($request,[
+            'title' => 'required',
             'location' => 'required',
             'start_date' => 'required|date',
             'end_date' => 'date|after:start_date|nullable',
@@ -119,6 +122,7 @@ class OnsiteDeliveryGoLiveController extends Controller
         ]);
 
         $onsiteDeliveryGoLive=$project->projectOnsiteDeliveryGoLive()->where('id',$id)->firstOrFail();
+        $onsiteDeliveryGoLive->title=$request->title;
         $onsiteDeliveryGoLive->location=$request->location;
         $onsiteDeliveryGoLive->start_date=$request->start_date;
         $onsiteDeliveryGoLive->end_date=$request->end_date;

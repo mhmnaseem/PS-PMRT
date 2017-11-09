@@ -50,12 +50,14 @@ class NumberPortingController extends Controller
         $project=Project::findBySlug($slug)->firstOrFail();
 
         $this->validate($request,[
+            'title' => 'required',
             'type' => 'required',
             'status' => 'required',
             'date' => 'required|date|after:yesterday'
         ]);
 
         $numberPorting=new NumberPorting();
+        $numberPorting->title=$request->title;
         $numberPorting->type=$request->type;
         $numberPorting->status=$request->status;
         $numberPorting->date=$request->date;
@@ -108,6 +110,7 @@ class NumberPortingController extends Controller
 
 
         $this->validate($request,[
+            'title' => 'required',
             'type' => 'required',
             'status' => 'required',
             'date' => 'required|date'
@@ -116,6 +119,7 @@ class NumberPortingController extends Controller
         ]);
 
         $numberPorting=$project->projectNumberPorting()->where('id',$id)->firstOrFail();
+        $numberPorting->title=$request->title;
         $numberPorting->type=$request->type;
         $numberPorting->status=$request->status;
         $numberPorting->date=$request->date;

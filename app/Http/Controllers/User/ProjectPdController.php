@@ -52,6 +52,7 @@ class ProjectPdController extends Controller
        $project=Project::findBySlug($slug)->firstOrFail();
 
         $this->validate($request,[
+            'title' => 'required',
             'status' => 'required',
             'date' => 'required|date|after:yesterday'
 
@@ -59,6 +60,7 @@ class ProjectPdController extends Controller
 
 
         $pd=new Pd();
+        $pd->title=$request->title;
         $pd->status=$request->status;
         $pd->date=$request->date;
         $pd->comment=$request->comment;
@@ -111,13 +113,14 @@ class ProjectPdController extends Controller
 
 
         $this->validate($request,[
+            'title' => 'required',
             'status' => 'required',
             'date' => 'required|date'
 
         ]);
 
         $pd=$project->projectPd()->where('id',$id)->firstOrFail();
-
+        $pd->title=$request->title;
         $pd->status=$request->status;
         $pd->date=$request->date;
         $pd->comment=$request->comment;

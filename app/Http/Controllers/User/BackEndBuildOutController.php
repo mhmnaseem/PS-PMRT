@@ -49,13 +49,14 @@ class BackEndBuildOutController extends Controller
         $project=Project::findBySlug($slug)->firstOrFail();
 
         $this->validate($request,[
-            'user_upload' => 'required',
-            'call_flows' => 'required'
+            'title'=>'required',
+            'status' => 'required'
+
         ]);
 
         $backEndBuildOut=new BackEndBuildOut();
-        $backEndBuildOut->user_upload=$request->user_upload;
-        $backEndBuildOut->call_flows=$request->call_flows;
+        $backEndBuildOut->title=$request->title;
+        $backEndBuildOut->status=$request->status;
         $backEndBuildOut->comment=$request->comment;
         $backEndBuildOut->project_id=$project->id;
         $backEndBuildOut->save();
@@ -105,15 +106,15 @@ class BackEndBuildOutController extends Controller
 
 
         $this->validate($request,[
-            'user_upload' => 'required',
-            'call_flows' => 'required'
+            'status' => 'required',
+            'title' => 'required'
 
 
         ]);
 
         $backEndBuildOut=$project->projectBackEndBuildOut()->where('id',$id)->firstOrFail();
-        $backEndBuildOut->user_upload=$request->user_upload;
-        $backEndBuildOut->call_flows=$request->call_flows;
+        $backEndBuildOut->title=$request->title;
+        $backEndBuildOut->status=$request->status;
         $backEndBuildOut->comment=$request->comment;
         $backEndBuildOut->save();
 

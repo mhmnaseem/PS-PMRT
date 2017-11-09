@@ -49,12 +49,14 @@ class NetworkAssessmentController extends Controller
         $project=Project::findBySlug($slug)->firstOrFail();
 
         $this->validate($request,[
+            'title' => 'required',
             'status' => 'required',
             'date' => 'required|date|after:yesterday'
 
         ]);
 
         $networkAssessment=new NetworkAssessment();
+        $networkAssessment->title=$request->title;
         $networkAssessment->status=$request->status;
         $networkAssessment->date=$request->date;
         $networkAssessment->comment=$request->comment;
@@ -106,12 +108,14 @@ class NetworkAssessmentController extends Controller
 
 
         $this->validate($request,[
+             'title' => 'required',
             'status' => 'required',
             'date' => 'required|date'
 
         ]);
 
         $networkAssessment=$project->projectNetworkAssessment()->where('id',$id)->firstOrFail();
+        $networkAssessment->title=$request->title;
         $networkAssessment->status=$request->status;
         $networkAssessment->date=$request->date;
         $networkAssessment->comment=$request->comment;
