@@ -59,6 +59,8 @@ class NetworkAssessmentController extends Controller
         $networkAssessment->title=$request->title;
         $networkAssessment->status=$request->status;
         $networkAssessment->date=$request->date;
+        $networkAssessment->day=$request->day;
+        $networkAssessment->hour=$request->hour;
         $networkAssessment->comment=$request->comment;
         $networkAssessment->project_id=$project->id;
         $networkAssessment->save();
@@ -118,6 +120,8 @@ class NetworkAssessmentController extends Controller
         $networkAssessment->title=$request->title;
         $networkAssessment->status=$request->status;
         $networkAssessment->date=$request->date;
+        $networkAssessment->day=$request->day;
+        $networkAssessment->hour=$request->hour;
         $networkAssessment->comment=$request->comment;
         $networkAssessment->save();
 

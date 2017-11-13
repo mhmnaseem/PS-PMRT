@@ -51,7 +51,13 @@
                                     <div class="col-md-6">
 
 
-                                        <input type="text" id="title" class="form-control" name="title"  value="{{ old('title',$pd->title) }}" required autofocus>
+                                        <input type="text" list="title_hint" id="title" class="form-control" name="title"  value="{{ old('title',$pd->title) }}" required autofocus>
+
+                                        <datalist id="title_hint">
+                                            <option value="On site visit">
+                                            <option value="Remote session">
+                                            <option value="Other">
+                                        </datalist>
 
                                         @if ($errors->has('title'))
                                             <span class="help-block">
@@ -96,6 +102,59 @@
                                         <strong>{{ $errors->first('date') }}</strong>
                                     </span>
                                         @endif
+                                    </div>
+                                </div>
+
+                                <div class="form-group{{ $errors->has('time_spent') ? ' has-error' : '' }}">
+                                    <label for="name" class="col-md-4 control-label">Time Spent</label>
+
+                                    <div class="col-md-3">
+                                        <div class="row">
+
+                                            <div class="col-md-4">
+                                                <label for="name" class="col-md-4 control-label">Day/s</label>
+                                            </div>
+
+                                            <div class="col-md-8">
+                                                <select class="form-control" name="day" autofocus>
+
+                                                    @for ($i = 0; $i <= 100; $i++)
+                                                        <option value="{{$i}}" @if(old('day',$pd->day) == $i) {{ 'selected' }} @endif>{{ $i }}</option>
+                                                    @endfor
+
+                                                </select>
+                                            </div>
+
+                                            @if ($errors->has('day'))
+                                                <span class="help-block">
+                                        <strong>{{ $errors->first('day') }}</strong>
+                                    </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label for="name" class="col-md-4 control-label">Hour/s</label>
+                                            </div>
+
+                                            <div class="col-md-8">
+                                                <select class="form-control" name="hour" autofocus>
+
+
+                                                    @for ($i = 0; $i <= 23; $i++)
+                                                        <option value="{{$i}}" @if(old('hour',$pd->hour) == $i) {{ 'selected' }} @endif>{{ $i }}</option>
+                                                    @endfor
+
+
+                                                </select>
+                                            </div>
+                                            @if ($errors->has('hour'))
+                                                <span class="help-block">
+                                        <strong>{{ $errors->first('hour') }}</strong>
+                                    </span>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
 

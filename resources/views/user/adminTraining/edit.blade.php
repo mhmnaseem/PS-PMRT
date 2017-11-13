@@ -51,7 +51,18 @@
                                     <div class="col-md-6">
 
 
-                                        <input type="text" id="title" class="form-control" name="title"  value="{{ old('title',$adminTraining->title) }}" required autofocus>
+                                        <input type="text" list="title_hint" id="title" class="form-control" name="title"  value="{{ old('title',$adminTraining->title) }}" required autofocus>
+
+                                        <datalist id="title_hint">
+                                            <option value="Admin Training I">
+                                            <option value="Admin Training II">
+                                            <option value="Admin Training III">
+                                            <option value="End User Training I">
+                                            <option value="End User Training II">
+                                            <option value="End User Training III">
+                                            <option value="Other">
+                                        </datalist>
+
 
                                         @if ($errors->has('title'))
                                             <span class="help-block">

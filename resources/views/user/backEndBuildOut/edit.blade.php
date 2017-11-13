@@ -53,7 +53,15 @@
                                     <div class="col-md-6">
 
 
-                                        <input type="text" id="title" class="form-control" name="title"  value="{{ old('title',$backEndBuildOut->title) }}" required autofocus>
+                                        <input type="text" list="title_hint" id="title" class="form-control" name="title"  value="{{ old('title',$backEndBuildOut->title) }}" required autofocus>
+
+                                        <datalist id="title_hint">
+                                            <option value="User Upload">
+                                            <option value="Call Flows">
+                                            <option value="Other">
+                                        </datalist>
+
+
 
                                         @if ($errors->has('title'))
                                             <span class="help-block">
@@ -88,7 +96,7 @@
                                             <div class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </div>
-                                            <input type="text" class="form-control pull-right" id="datepicker" name="date"  value="{{ old('date',$adminTraining->date->format(config('constants.time.format'))) }}" autofocus>
+                                            <input type="text" class="form-control pull-right" id="datepicker" name="date"  value="{{ old('date',$backEndBuildOut->date->format(config('constants.time.format'))) }}" autofocus>
                                         </div>
                                         <!-- /.input group -->
 

@@ -52,7 +52,7 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:Users',
+            'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
 
@@ -105,7 +105,7 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:Users,id,' . $request->get('id'),
+            'email' => 'required|string|email|max:255|unique:users,id,' . $request->get('id'),
             'password' => 'required|string|min:6|confirmed',
         ]);
 

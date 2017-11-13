@@ -59,6 +59,8 @@ class NumberPortingController extends Controller
         $numberPorting->title=$request->title;
         $numberPorting->status=$request->status;
         $numberPorting->date=$request->date;
+        $numberPorting->day=$request->day;
+        $numberPorting->hour=$request->hour;
         $numberPorting->comment=$request->comment;
         $numberPorting->project_id=$project->id;
         $numberPorting->save();
@@ -119,6 +121,8 @@ class NumberPortingController extends Controller
         $numberPorting->title=$request->title;
         $numberPorting->status=$request->status;
         $numberPorting->date=$request->date;
+        $numberPorting->day=$request->day;
+        $numberPorting->hour=$request->hour;
         $numberPorting->comment=$request->comment;
         $numberPorting->save();
 

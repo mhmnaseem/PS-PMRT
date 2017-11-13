@@ -59,6 +59,8 @@ class AdminTrainingController extends Controller
         $adminTraining->title=$request->title;
         $adminTraining->status=$request->status;
         $adminTraining->date=$request->date;
+        $adminTraining->day=$request->day;
+        $adminTraining->hour=$request->hour;
         $adminTraining->comment=$request->comment;
         $adminTraining->project_id=$project->id;
         $adminTraining->save();
@@ -118,6 +120,8 @@ class AdminTrainingController extends Controller
         $adminTraining->title=$request->title;
         $adminTraining->status=$request->status;
         $adminTraining->date=$request->date;
+        $adminTraining->day=$request->day;
+        $adminTraining->hour=$request->hour;
         $adminTraining->comment=$request->comment;
         $adminTraining->save();
 

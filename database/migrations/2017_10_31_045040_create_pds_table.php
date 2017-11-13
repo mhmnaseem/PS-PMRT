@@ -18,6 +18,8 @@ class CreatePdsTable extends Migration
             $table->string('title')->nullable();
             $table->string('status')->nullable();
             $table->date('date')->nullable();
+            $table->integer('day')->nullable();
+            $table->integer('hour')->nullable();
             $table->text('comment')->nullable();
             $table->integer('project_id')->unsigned()->nullable();
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');

@@ -63,6 +63,8 @@ class ProjectPdController extends Controller
         $pd->title=$request->title;
         $pd->status=$request->status;
         $pd->date=$request->date;
+        $pd->day=$request->day;
+        $pd->hour=$request->hour;
         $pd->comment=$request->comment;
         $pd->project_id=$project->id;
         $pd->save();
@@ -123,6 +125,8 @@ class ProjectPdController extends Controller
         $pd->title=$request->title;
         $pd->status=$request->status;
         $pd->date=$request->date;
+        $pd->day=$request->day;
+        $pd->hour=$request->hour;
         $pd->comment=$request->comment;
         $pd->save();
 

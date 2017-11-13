@@ -64,6 +64,8 @@ class OnsiteDeliveryGoLiveController extends Controller
         $onsiteDeliveryGoLive->start_date=$request->start_date;
         $onsiteDeliveryGoLive->end_date=$request->end_date;
         $onsiteDeliveryGoLive->status=$request->status;
+        $onsiteDeliveryGoLive->day=$request->day;
+        $onsiteDeliveryGoLive->hour=$request->hour;
         $onsiteDeliveryGoLive->comment=$request->comment;
         $onsiteDeliveryGoLive->project_id=$project->id;
         $onsiteDeliveryGoLive->save();
@@ -127,6 +129,8 @@ class OnsiteDeliveryGoLiveController extends Controller
         $onsiteDeliveryGoLive->start_date=$request->start_date;
         $onsiteDeliveryGoLive->end_date=$request->end_date;
         $onsiteDeliveryGoLive->status=$request->status;
+        $onsiteDeliveryGoLive->day=$request->day;
+        $onsiteDeliveryGoLive->hour=$request->hour;
         $onsiteDeliveryGoLive->comment=$request->comment;
         $onsiteDeliveryGoLive->save();
 

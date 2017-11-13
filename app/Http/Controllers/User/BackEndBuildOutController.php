@@ -57,6 +57,8 @@ class BackEndBuildOutController extends Controller
         $backEndBuildOut=new BackEndBuildOut();
         $backEndBuildOut->title=$request->title;
         $backEndBuildOut->status=$request->status;
+        $backEndBuildOut->day=$request->day;
+        $backEndBuildOut->hour=$request->hour;
         $backEndBuildOut->comment=$request->comment;
         $backEndBuildOut->project_id=$project->id;
         $backEndBuildOut->save();
@@ -115,6 +117,8 @@ class BackEndBuildOutController extends Controller
         $backEndBuildOut=$project->projectBackEndBuildOut()->where('id',$id)->firstOrFail();
         $backEndBuildOut->title=$request->title;
         $backEndBuildOut->status=$request->status;
+        $backEndBuildOut->day=$request->day;
+        $backEndBuildOut->hour=$request->hour;
         $backEndBuildOut->comment=$request->comment;
         $backEndBuildOut->save();
 

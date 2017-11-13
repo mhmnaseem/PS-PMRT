@@ -110,58 +110,8 @@ class ProjectsAssignController extends Controller
         $project->due_date = $request['due_date'];
         $project->partner_id = $request['partner'];
         $project->save();
-        $lastInsertId = $project->id;
 
-        $now = Carbon::now()->toDateTimeString();
 
-        // pd Dump
-        Pd::insert([
-            ['title' => 'On site visit', 'status' => "Open", 'date' => $now, 'project_id' => $lastInsertId, 'created_at' => $now, 'updated_at' => $now],
-            ['title' => 'Remote session', 'status' => "Open", 'date' => $now, 'project_id' => $lastInsertId, 'created_at' => $now, 'updated_at' => $now],
-            ['title' => 'Other', 'status' => "Open", 'date' => $now, 'project_id' => $lastInsertId, 'created_at' => $now, 'updated_at' => $now]
-
-        ]);
-
-        // NetworkAssessment Dump
-        NetworkAssessment::insert([
-            ['title' => 'Network assessment Call', 'status' => "Open", 'date' => $now, 'project_id' => $lastInsertId, 'created_at' => $now, 'updated_at' => $now],
-            ['title' => 'Other', 'status' => "Open", 'date' => $now, 'project_id' => $lastInsertId, 'created_at' => $now, 'updated_at' => $now]
-        ]);
-
-        // Backend Build Dump
-        BackEndBuildOut::insert([
-            ['title' => 'User Upload', 'status' => "Open", 'date' => $now, 'project_id' => $lastInsertId, 'created_at' => $now, 'updated_at' => $now],
-            ['title' => 'Call Flows', 'status' => "Open", 'date' => $now, 'project_id' => $lastInsertId, 'created_at' => $now, 'updated_at' => $now],
-            ['title' => 'Other', 'status' => "Open", 'date' => $now, 'project_id' => $lastInsertId, 'created_at' => $now, 'updated_at' => $now]
-
-        ]);
-
-        // Number Porting
-        NumberPorting::insert([
-            ['title' => 'Regular Port', 'status' => "Open", 'date' => $now, 'project_id' => $lastInsertId, 'created_at' => $now, 'updated_at' => $now],
-            ['title' => 'Project Port', 'status' => "Open", 'date' => $now, 'project_id' => $lastInsertId, 'created_at' => $now, 'updated_at' => $now],
-            ['title' => 'Other', 'status' => "Open", 'date' => $now, 'project_id' => $lastInsertId, 'created_at' => $now, 'updated_at' => $now]
-
-        ]);
-
-        // Training
-        AdminTraining::insert([
-            ['title' => 'Admin Training I', 'status' => "Open", 'date' => $now, 'project_id' => $lastInsertId, 'created_at' => $now, 'updated_at' => $now],
-            ['title' => 'Admin Training II', 'status' => "Open", 'date' => $now, 'project_id' => $lastInsertId, 'created_at' => $now, 'updated_at' => $now],
-            ['title' => 'Admin Training III', 'status' => "Open", 'date' => $now, 'project_id' => $lastInsertId, 'created_at' => $now, 'updated_at' => $now],
-            ['title' => 'End User Training  I', 'status' => "Open", 'date' => $now, 'project_id' => $lastInsertId, 'created_at' => $now, 'updated_at' => $now],
-            ['title' => 'End User Training II', 'status' => "Open", 'date' => $now, 'project_id' => $lastInsertId, 'created_at' => $now, 'updated_at' => $now],
-            ['title' => 'End User Training III', 'status' => "Open", 'date' => $now, 'project_id' => $lastInsertId, 'created_at' => $now, 'updated_at' => $now],
-
-        ]);
-
-        // Go Live
-        OnsiteDeliveryGoLive::insert([
-            ['title' => 'On site Visit', 'location' => '', 'start_date' => $now, 'end_date' => $now, 'status' => "Open", 'project_id' => $lastInsertId, 'created_at' => $now, 'updated_at' => $now],
-            ['title' => 'Remote Support', 'location' => '', 'start_date' => $now, 'end_date' => $now, 'status' => "Open", 'project_id' => $lastInsertId, 'created_at' => $now, 'updated_at' => $now],
-            ['title' => 'Other', 'location' => '', 'start_date' => $now, 'end_date' => $now, 'status' => "Open", 'project_id' => $lastInsertId, 'created_at' => $now, 'updated_at' => $now]
-
-        ]);
 
 
         return redirect()->route('admin-project-assign.index');
