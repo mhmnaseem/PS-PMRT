@@ -316,34 +316,23 @@ function selectUpdate($name, $value)
 
 }
 
-function portCreate($name)
-{
-    $key = "\'.$name.\'";
-
-    $html = '<select id="' . $name . '" class="form-control" name="' . $name . '" required>';
-    $html .= '<option value="N/A" ' . ((old($key) == 'N/A') ? "selected" : "") . '>N/A</option>';
-    $html .= '<option value="Regular" ' . ((old($key) == "Regular") ? " selected" : "") . '>Regular</option>';
-    $html .= '<option value="Project" ' . ((old($key) == "Project") ? " selected" : "") . '>Project</option>';
-
-    $html .= '</select>';
+function timeSpent($startDate,$endDate){
 
 
-    return $html;
+    return sprintf('%s %s %s',
+        formatDateInterval('%d', 'day', $startDate,$endDate),
+        formatDateInterval('%h', 'hour', $startDate,$endDate),
+        formatDateInterval('%i', 'minute', $startDate,$endDate)
+    );
+
+
 }
 
-function portUpdate($name, $value)
+function formatDateInterval($format, $interval, $startDate,$endDate)
 {
-    $key = $name;
+    $count = $startDate->diff($endDate)->format($format);
 
-    $html = '<select id="' . $name . '" class="form-control" name="' . $name . '" required>';
-    $html .= '<option value="N/A" ' . ((old($key, $value) == 'N/A') ? "selected" : "") . '>N/A</option>';
-    $html .= '<option value="Regular" ' . ((old($key, $value) == "Regular") ? " selected" : "") . '>Regular</option>';
-    $html .= '<option value="Project" ' . ((old($key, $value) == "Project") ? " selected" : "") . '>Project</option>';
-
-    $html .= '</select>';
-
-
-    return $html;
+    return sprintf('%s %s', $count, str_plural($interval, $count));
 }
 
 

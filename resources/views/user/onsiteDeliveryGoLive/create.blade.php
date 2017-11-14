@@ -2,8 +2,6 @@
 
 @section ('header')
 
-    <link rel="stylesheet" href="{{asset('admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
-
 @endsection
 
 
@@ -16,12 +14,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Onsite Delivery/Go Live
+               Go Live
 
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li><a href="#">Onsite Delivery/Go Live</a></li>
+                <li><a href="#">Go Live</a></li>
                 <li class="active">Create</li>
             </ol>
         </section>
@@ -35,10 +33,13 @@
                     <div class="box box-primary">
 
                         <div class="box-header with-border">
-                            <h3 class="box-title">Create Onsite Delivery/Go Live</h3>
+                            <h3 class="box-title">Go Live</h3>
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
+
+                        <input type="hidden" id="ajax-url"  data-set-value="0"  value="{{ route('time.spent') }}">
+
                         <form class="form-horizontal" role="form" method="post"
                               action="{{route('projects.onsite-delivery-go-live.store',$slug)}}">
                             {{csrf_field()}}
@@ -127,6 +128,12 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Time Spent</label>
+                                    <div class="col-md-6">
+                                        <label id="time_spent" class="control-label text-orange"></label>
+                                    </div>
+                                </div>
 
                                 <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
                                     <label for="status" class="col-md-4 control-label">Status</label>
@@ -185,22 +192,5 @@
 @endsection
 
 @section('footer')
-
-
-    <script src="{{asset('admin/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
-    <script src="{{asset('admin/bower_components/ckeditor/ckeditor.js')}}"></script>
-
-    <script>
-        $(function () {
-            //Date picker
-            $('#datepicker,#datepicker1').datepicker({
-                format: '{{config('constants.time.date_picker')}}',
-                autoclose: true,
-                todayHighlight: true
-            });
-
-            CKEDITOR.replace('editor1');
-        });
-    </script>
 
 @endsection

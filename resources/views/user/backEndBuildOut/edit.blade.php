@@ -40,6 +40,9 @@
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
+
+                        <input type="hidden" id="ajax-url"  data-set-value="1"  value="{{ route('time.spent') }}">
+
                         <form class="form-horizontal" role="form" method="post" action="{{url('pm/projects/'.$slug.'/back-end-build-out/'.$backEndBuildOut->id)}}">
                             {{csrf_field()}}
                             {{method_field('PUT')}}
@@ -87,8 +90,8 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group{{ $errors->has('date') ? ' has-error' : '' }}">
-                                    <label for="datepicker" class="col-md-4 control-label">Date</label>
+                                <div class="form-group{{ $errors->has('start_date') ? ' has-error' : '' }}">
+                                    <label for="datepicker" class="col-md-4 control-label">Start Date</label>
 
                                     <div class="col-md-6">
 
@@ -96,16 +99,45 @@
                                             <div class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </div>
-                                            <input type="text" class="form-control pull-right" id="datepicker" name="date"  value="{{ old('date',$backEndBuildOut->date->format(config('constants.time.format'))) }}" autofocus>
+                                            <input type="text" class="form-control pull-right" id="datepicker" name="start_date" data-start-date="{{$backEndBuildOut->start_date}}"  value="{{ old('start_date',$backEndBuildOut->start_date) }}" required autofocus>
                                         </div>
                                         <!-- /.input group -->
 
 
-                                        @if ($errors->has('date'))
+                                        @if ($errors->has('start_date'))
                                             <span class="help-block">
-                                        <strong>{{ $errors->first('date') }}</strong>
+                                        <strong>{{ $errors->first('start_date') }}</strong>
                                     </span>
                                         @endif
+                                    </div>
+                                </div>
+
+                                <div class="form-group{{ $errors->has('end_date') ? ' has-error' : '' }}">
+                                    <label for="datepicker1" class="col-md-4 control-label">End Date</label>
+
+                                    <div class="col-md-6">
+
+                                        <div class="input-group date">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input type="text" class="form-control pull-right" id="datepicker1" name="end_date" data-end-date="{{$backEndBuildOut->end_date}}"  value="{{ old('end_date',$backEndBuildOut->end_date) }}" autofocus>
+                                        </div>
+                                        <!-- /.input group -->
+
+
+                                        @if ($errors->has('end_date'))
+                                            <span class="help-block">
+                                        <strong>{{ $errors->first('end_date') }}</strong>
+                                    </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Time Spent</label>
+                                    <div class="col-md-6">
+                                        <label id="time_spent" class="control-label text-orange"></label>
                                     </div>
                                 </div>
 

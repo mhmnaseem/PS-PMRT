@@ -39,6 +39,9 @@
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
+
+                        <input type="hidden" id="ajax-url"  data-set-value="0"  value="{{ route('time.spent') }}">
+
                         <form class="form-horizontal" role="form" method="post"
                               action="{{route('projects.admin-training.store',$slug)}}">
                             {{csrf_field()}}
@@ -88,8 +91,8 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group{{ $errors->has('date') ? ' has-error' : '' }}">
-                                    <label for="datepicker" class="col-md-4 control-label">Date</label>
+                                <div class="form-group{{ $errors->has('start_date') ? ' has-error' : '' }}">
+                                    <label for="datepicker" class="col-md-4 control-label">Start Date</label>
 
                                     <div class="col-md-6">
 
@@ -97,16 +100,45 @@
                                             <div class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </div>
-                                            <input type="text" class="form-control pull-right" id="datepicker" name="date"  value="{{ old('date') }}" required autofocus>
+                                            <input type="text" class="form-control pull-right" id="datepicker" name="start_date"  value="{{ old('start_date') }}" required autofocus>
                                         </div>
                                         <!-- /.input group -->
 
 
-                                        @if ($errors->has('date'))
+                                        @if ($errors->has('start_date'))
                                             <span class="help-block">
-                                        <strong>{{ $errors->first('date') }}</strong>
+                                        <strong>{{ $errors->first('start_date') }}</strong>
                                     </span>
                                         @endif
+                                    </div>
+                                </div>
+
+                                <div class="form-group{{ $errors->has('end_date') ? ' has-error' : '' }}">
+                                    <label for="datepicker1" class="col-md-4 control-label">End Date</label>
+
+                                    <div class="col-md-6">
+
+                                        <div class="input-group date">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input type="text" class="form-control pull-right" id="datepicker1" name="end_date"  value="{{ old('end_date') }}" autofocus>
+                                        </div>
+                                        <!-- /.input group -->
+
+
+                                        @if ($errors->has('end_date'))
+                                            <span class="help-block">
+                                        <strong>{{ $errors->first('end_date') }}</strong>
+                                    </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Time Spent</label>
+                                    <div class="col-md-6">
+                                        <label id="time_spent" class="control-label text-orange"></label>
                                     </div>
                                 </div>
 
@@ -151,21 +183,6 @@
 
 @section('footer')
 
-
-    <script src="{{asset('admin/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
-    <script src="{{asset('admin/bower_components/ckeditor/ckeditor.js')}}"></script>
-
-    <script>
-        $(function () {
-            //Date picker
-            $('#datepicker').datepicker({
-                format: '{{config('constants.time.date_picker')}}',
-                autoclose: true,
-                todayHighlight: true
-            });
-
-            CKEDITOR.replace('editor1');
-        });
-    </script>
+   
 
 @endsection

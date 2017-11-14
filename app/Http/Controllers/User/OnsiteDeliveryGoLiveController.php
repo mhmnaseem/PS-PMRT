@@ -61,16 +61,14 @@ class OnsiteDeliveryGoLiveController extends Controller
         $onsiteDeliveryGoLive=new OnsiteDeliveryGoLive();
         $onsiteDeliveryGoLive->title=$request->title;
         $onsiteDeliveryGoLive->location=$request->location;
+        $onsiteDeliveryGoLive->status=$request->status;
         $onsiteDeliveryGoLive->start_date=$request->start_date;
         $onsiteDeliveryGoLive->end_date=$request->end_date;
-        $onsiteDeliveryGoLive->status=$request->status;
-        $onsiteDeliveryGoLive->day=$request->day;
-        $onsiteDeliveryGoLive->hour=$request->hour;
         $onsiteDeliveryGoLive->comment=$request->comment;
         $onsiteDeliveryGoLive->project_id=$project->id;
         $onsiteDeliveryGoLive->save();
 
-        flash('Onsite Delivery/Go Live Created Successfully..!')->success();
+        flash('Go Live Created Successfully..!')->success();
 
 
         return redirect('pm/projects/'.$slug.'#onsite-delivery-go-live');
@@ -126,15 +124,13 @@ class OnsiteDeliveryGoLiveController extends Controller
         $onsiteDeliveryGoLive=$project->projectOnsiteDeliveryGoLive()->where('id',$id)->firstOrFail();
         $onsiteDeliveryGoLive->title=$request->title;
         $onsiteDeliveryGoLive->location=$request->location;
+        $onsiteDeliveryGoLive->status=$request->status;
         $onsiteDeliveryGoLive->start_date=$request->start_date;
         $onsiteDeliveryGoLive->end_date=$request->end_date;
-        $onsiteDeliveryGoLive->status=$request->status;
-        $onsiteDeliveryGoLive->day=$request->day;
-        $onsiteDeliveryGoLive->hour=$request->hour;
         $onsiteDeliveryGoLive->comment=$request->comment;
         $onsiteDeliveryGoLive->save();
 
-        flash('Onsite Delivery/Go Live Updated Successfully..!')->success();
+        flash('Go Live Updated Successfully..!')->success();
 
         return redirect('pm/projects/'.$slug.'#onsite-delivery-go-live');
     }
@@ -149,7 +145,7 @@ class OnsiteDeliveryGoLiveController extends Controller
     {
         $project=Project::findBySlug($slug)->firstOrFail();
         $project->projectOnsiteDeliveryGoLive()->where('id',$id)->firstOrFail()->delete();
-        flash('Onsite Delivery/Go Live Deleted Successfully..!')->success();
+        flash('Go Live Deleted Successfully..!')->success();
         return redirect('pm/projects/'.$slug.'#onsite-delivery-go-live');
     }
 }

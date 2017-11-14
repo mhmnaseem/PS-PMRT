@@ -76,6 +76,9 @@ Route::group(['namespace'=>'User'],function (){
     Route::get('pm/projects/{project}/attachment/{attachment}', 'AttachmentController@download');
     Route::resource('pm/projects.note', 'NoteController');
 
+    Route::post('pm/projects/time-spent', 'ProjectController@timeSpent')->name('time.spent');
+
+
     Route::get('cron-jobs/complete-project','CronJobsController@completeProject');
 
     Route::get('/home', 'HomeController@index')->name('home');

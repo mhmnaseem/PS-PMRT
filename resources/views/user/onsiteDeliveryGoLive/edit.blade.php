@@ -2,7 +2,7 @@
 
 @section ('header')
 
-    <link rel="stylesheet" href="{{asset('admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
+
 
 @endsection
 
@@ -39,6 +39,8 @@
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
+                        <input type="hidden" id="ajax-url"  data-set-value="1"  value="{{ route('time.spent') }}">
+
                         <form class="form-horizontal" role="form" method="post" action="{{url('pm/projects/'.$slug.'/onsite-delivery-go-live/'.$onsiteDeliveryGoLive->id)}}">
                             {{csrf_field()}}
                             {{method_field('PUT')}}
@@ -92,7 +94,7 @@
                                             <div class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </div>
-                                            <input type="text" class="form-control pull-right" id="datepicker" name="start_date"  value="{{ old('start_date',$onsiteDeliveryGoLive->start_date->format(config('constants.time.format'))) }}" autofocus>
+                                            <input type="text" class="form-control pull-right" id="datepicker" name="start_date" data-start-date="{{$onsiteDeliveryGoLive->start_date}}"  value="{{ old('start_date',$onsiteDeliveryGoLive->start_date) }}" required autofocus>
                                         </div>
                                         <!-- /.input group -->
 
@@ -114,7 +116,7 @@
                                             <div class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </div>
-                                            <input type="text" class="form-control pull-right" id="datepicker1" name="end_date"  value="{{ old('end_date',($onsiteDeliveryGoLive->end_date !="")?$onsiteDeliveryGoLive->end_date->format(config('constants.time.format')):"") }}" autofocus>
+                                            <input type="text" class="form-control pull-right" id="datepicker1" name="end_date" data-end-date="{{$onsiteDeliveryGoLive->end_date}}"  value="{{ old('end_date',$onsiteDeliveryGoLive->end_date) }}" autofocus>
                                         </div>
                                         <!-- /.input group -->
 
@@ -127,6 +129,12 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Time Spent</label>
+                                    <div class="col-md-6">
+                                        <label id="time_spent" class="control-label text-orange"></label>
+                                    </div>
+                                </div>
 
                                 <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
                                     <label for="title" class="col-md-4 control-label">Status</label>
@@ -187,23 +195,5 @@
 @endsection
 
 @section('footer')
-
-
-    <script src="{{asset('admin/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
-    <script src="{{asset('admin/bower_components/ckeditor/ckeditor.js')}}"></script>
-
-    <script>
-        $(function () {
-            //Date picker
-            $('#datepicker,#datepicker1').datepicker({
-                format: '{{config('constants.time.date_picker')}}',
-                autoclose: true,
-                todayHighlight: true
-            });
-
-
-            CKEDITOR.replace('editor1');
-        });
-    </script>
 
 @endsection

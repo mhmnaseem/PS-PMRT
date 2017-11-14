@@ -71,6 +71,19 @@ class ProjectController extends Controller
         return view('user.projects.index', compact('pendingProjects', 'overdueProjects', 'completedProjects', 'allProjects','assignedProjects', 'total'));
     }
 
+    public function timeSpent(Request $request)
+    {
+
+        $startDate=Carbon::parse($request->start_date);
+        $endDate =Carbon::parse($request->end_date);
+        $diff=timeSpent($startDate,$endDate);
+        return response()->json(
+            [
+                'success' => true,
+                'html'=>$diff,
+            ], 200
+        );
+    }
 
     public function snapShot(Request $request)
     {

@@ -11,13 +11,17 @@ class OnsiteDeliveryGoLive extends Model
 
     public function setStartDateAttribute($value)
     {
-        $this->attributes['start_date'] = Carbon::createFromFormat(config('constants.time.format'), $value);
+        if (strlen($value)) {
+            $this->attributes['start_date'] = Carbon::parse($value);
+        } else {
+            $this->attributes['start_date'] = null;
+        }
     }
 
     public function setEndDateAttribute($value)
     {
         if (strlen($value)) {
-            $this->attributes['end_date'] = Carbon::createFromFormat(config('constants.time.format'), $value);
+            $this->attributes['end_date'] = Carbon::parse($value);
         } else {
             $this->attributes['end_date'] = null;
         }

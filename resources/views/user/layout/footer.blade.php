@@ -17,29 +17,20 @@
 </script>
 <!-- Bootstrap 3.3.7 -->
 <script src="{{asset('admin/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
-<!-- Morris.js charts -->
-<script src="{{asset('admin/bower_components/raphael/raphael.min.js')}}"></script>
-<script src="{{asset('admin/bower_components/morris.js/morris.min.js')}}"></script>
-<!-- Sparkline -->
-<script src="{{asset('admin/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js')}}"></script>
-<!-- jvectormap -->
-<script src="{{asset('admin/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js')}}"></script>
-<script src="{{asset('admin/plugins/jvectormap/jquery-jvectormap-world-mill-en.js')}}"></script>
-<!-- jQuery Knob Chart -->
-<script src="{{asset('admin/bower_components/jquery-knob/dist/jquery.knob.min.js')}}"></script>
-<!-- daterangepicker -->
+
+<!-- moment -->
 <script src="{{asset('admin/bower_components/moment/min/moment.min.js')}}"></script>
-<script src="{{asset('admin/bower_components/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
-<!-- datepicker -->
-<script src="{{asset('admin/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
-<!-- Bootstrap WYSIHTML5 -->
-<script src="{{asset('admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js')}}"></script>
-
-
+<!-- date time picker-->
+<script src="{{asset('admin/bower_components/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js')}}"></script>
 <!-- SlimScroll -->
 <script src="{{asset('admin/bower_components/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
 <!-- FastClick -->
 <script src="{{asset('admin/bower_components/fastclick/lib/fastclick.js')}}"></script>
+<!-- ck editor -->
+<script src="{{asset('admin/bower_components/ckeditor/ckeditor.js')}}"></script>
+
+<script src="{{asset('admin/dist/js/custom.js')}}"></script>
+
 <!-- AdminLTE App -->
 <script src="{{asset('admin/dist/js/adminlte.min.js')}}"></script>
 {{--<!-- AdminLTE dashboard demo (This is only for demo purposes) -->--}}
@@ -49,21 +40,4 @@
 
 @section('footer')
 @show
-<script>
-    $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();
-        $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
-    });
-    $(function () {
-        var hash = window.location.hash;
-        hash && $('ul.nav a[href="' + hash + '"]').tab('show');
 
-        $('.nav-tabs a').click(function (e) {
-            $(this).tab('show');
-            var scrollmem = $('body').scrollTop();
-            window.location.hash = this.hash;
-            $('html,body').scrollTop(scrollmem);
-        });
-    });
-
-</script>

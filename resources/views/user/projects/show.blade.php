@@ -287,7 +287,9 @@
                                     <th>Option</th>
                                     <th>Title</th>
                                     <th>Status</th>
-                                    <th>date</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Time Spent</th>
                                     <th>Comment</th>
 
 
@@ -332,6 +334,10 @@
                                         <td>{!! statusColor($pd->status) !!}</td>
                                         <td>{{$pd->date->format(config('constants.time.format'))}}</td>
                                         <td>
+                                            {{--{!! timeSpent($pd->start_date,$pd->end_date) !!}</td>--}}
+                                        </td>
+
+                                        <td>
                                             {!! htmlspecialchars_decode(str_limit($pd->comment,350)) !!}
                                         </td>
 
@@ -372,7 +378,7 @@
                                     <th>Option</th>
                                     <th>Title</th>
                                     <th>Status</th>
-                                    <th>date</th>
+                                    <th>Date</th>
                                     <th>Comment</th>
 
 
@@ -540,7 +546,7 @@
                                     <th>Option</th>
                                     <th>Title</th>
                                     <th>Status</th>
-                                    <th>Port Date</th>
+                                    <th>Date</th>
                                     <th>Comment</th>
 
                                 </tr>
@@ -623,7 +629,7 @@
                                     <th>Option</th>
                                     <th>Title</th>
                                     <th>Status</th>
-                                    <th>date</th>
+                                    <th>Date</th>
                                     <th>Comment</th>
 
 
