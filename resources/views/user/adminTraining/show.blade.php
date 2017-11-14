@@ -69,6 +69,30 @@
                                         </div>
                                     </div>
                                     <div class="box-body">
+
+                                        <strong><i class="fa fa-calendar text-maroon margin-r-5"></i> Start Date</strong>
+
+                                        <p class="text-muted">{{$adminTraining->start_date->format(config('constants.time.format'))}}</p>
+
+                                        <hr>
+
+                                        <strong><i class="fa fa-calendar text-maroon margin-r-5"></i> End Date</strong>
+
+                                        <p class="text-muted">
+                                            @if($adminTraining->end_date != '')
+                                                {{$adminTraining->end_date->format(config('constants.time.format'))}}
+                                            @endif
+                                        </p>
+
+                                        <hr>
+                                        <strong><i class="fa fa-clock-o text-maroon margin-r-5"></i> Time Spent</strong>
+
+                                        <p class="text-muted">
+                                            {!! timeSpent($adminTraining->start_date,$adminTraining->end_date) !!}
+                                        </p>
+
+                                        <hr>
+
                                         <strong><i class="fa fa-check-circle text-maroon margin-r-5"></i>
                                             Status</strong>
 
@@ -76,11 +100,7 @@
                                             {!! statusColor($adminTraining->status) !!}
                                         </p>
 
-                                        <hr>
 
-                                        <strong><i class="fa fa-calendar text-maroon margin-r-5"></i> Date</strong>
-
-                                        <p class="text-muted">{{$adminTraining->date->format(config('constants.time.format'))}}</p>
 
                                     </div>
                                     <!-- /.box-body -->

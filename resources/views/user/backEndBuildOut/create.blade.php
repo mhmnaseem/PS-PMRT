@@ -2,7 +2,6 @@
 
 @section ('header')
 
-    <link rel="stylesheet" href="{{asset('admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
 
 @endsection
 
@@ -40,7 +39,7 @@
                         <!-- /.box-header -->
                         <!-- form start -->
 
-                        <input type="hidden" id="ajax-url"  data-set-value="0"  value="{{ route('time.spent') }}">
+                        <input type="hidden" id="ajax_url"  data-set-value="0"  value="{{ route('time.spent') }}">
 
                         <form class="form-horizontal" role="form" method="post"
                               action="{{route('projects.back-end-build-out.store',$slug)}}">

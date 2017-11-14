@@ -2,7 +2,7 @@
 
 @section ('header')
 
-    <link rel="stylesheet" href="{{asset('admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
+
 
 @endsection
 
@@ -41,7 +41,7 @@
                         <!-- /.box-header -->
                         <!-- form start -->
 
-                        <input type="hidden" id="ajax-url"  data-set-value="1"  value="{{ route('time.spent') }}">
+                        <input type="hidden" id="ajax_url"  data-set-value="1"  value="{{ route('time.spent') }}">
 
                         <form class="form-horizontal" role="form" method="post" action="{{url('pm/projects/'.$slug.'/pd/'.$pd->id)}}">
                             {{csrf_field()}}
@@ -182,25 +182,6 @@
 @section('footer')
 
 
-    <script src="{{asset('admin/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
-    <script src="{{asset('admin/bower_components/ckeditor/ckeditor.js')}}"></script>
 
-    <script>
-        $(function () {
-            //Date picker
-            $('#datepicker').datepicker({
-                format: '{{config('constants.time.date_picker')}}',
-                autoclose: true,
-                todayHighlight: true
-            });
-            $('#datepicker1').datepicker({
-                format: '{{config('constants.time.date_picker')}}',
-                autoclose: true,
-                todayHighlight: true
-            });
-
-            CKEDITOR.replace('editor1');
-        });
-    </script>
 
 @endsection

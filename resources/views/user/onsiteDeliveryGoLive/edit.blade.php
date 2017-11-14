@@ -39,7 +39,7 @@
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
-                        <input type="hidden" id="ajax-url"  data-set-value="1"  value="{{ route('time.spent') }}">
+                        <input type="hidden" id="ajax_url"  data-set-value="1"  value="{{ route('time.spent') }}">
 
                         <form class="form-horizontal" role="form" method="post" action="{{url('pm/projects/'.$slug.'/onsite-delivery-go-live/'.$onsiteDeliveryGoLive->id)}}">
                             {{csrf_field()}}

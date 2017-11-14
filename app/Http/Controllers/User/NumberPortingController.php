@@ -52,15 +52,15 @@ class NumberPortingController extends Controller
         $this->validate($request,[
             'title' => 'required',
             'status' => 'required',
-            'date' => 'required|date|after:yesterday'
+            'start_date' => 'required|date|after:yesterday',
+            'end_date' => 'date|after:start_date|nullable',
         ]);
 
         $numberPorting=new NumberPorting();
         $numberPorting->title=$request->title;
         $numberPorting->status=$request->status;
-        $numberPorting->date=$request->date;
-        $numberPorting->day=$request->day;
-        $numberPorting->hour=$request->hour;
+        $numberPorting->start_date=$request->start_date;
+        $numberPorting->end_date=$request->end_date;
         $numberPorting->comment=$request->comment;
         $numberPorting->project_id=$project->id;
         $numberPorting->save();
@@ -112,7 +112,8 @@ class NumberPortingController extends Controller
         $this->validate($request,[
             'title' => 'required',
             'status' => 'required',
-            'date' => 'required|date'
+            'start_date' => 'required|date',
+            'end_date' => 'date|after:start_date|nullable',
 
 
         ]);
@@ -120,9 +121,8 @@ class NumberPortingController extends Controller
         $numberPorting=$project->projectNumberPorting()->where('id',$id)->firstOrFail();
         $numberPorting->title=$request->title;
         $numberPorting->status=$request->status;
-        $numberPorting->date=$request->date;
-        $numberPorting->day=$request->day;
-        $numberPorting->hour=$request->hour;
+        $numberPorting->start_date=$request->start_date;
+        $numberPorting->end_date=$request->end_date;
         $numberPorting->comment=$request->comment;
         $numberPorting->save();
 

@@ -318,6 +318,9 @@ function selectUpdate($name, $value)
 
 function timeSpent($startDate,$endDate){
 
+    if(!strlen($endDate)){
+        $endDate=Carbon::now();
+    }
 
     return sprintf('%s %s %s',
         formatDateInterval('%d', 'day', $startDate,$endDate),

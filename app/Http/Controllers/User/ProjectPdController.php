@@ -54,7 +54,8 @@ class ProjectPdController extends Controller
         $this->validate($request,[
             'title' => 'required',
             'status' => 'required',
-            'date' => 'required|date|after:yesterday'
+            'start_date' => 'required|date|after:yesterday',
+            'end_date' => 'date|after:start_date|nullable',
 
         ]);
 
@@ -62,9 +63,8 @@ class ProjectPdController extends Controller
         $pd=new Pd();
         $pd->title=$request->title;
         $pd->status=$request->status;
-        $pd->date=$request->date;
-        $pd->day=$request->day;
-        $pd->hour=$request->hour;
+        $pd->start_date=$request->start_date;
+        $pd->end_date=$request->end_date;
         $pd->comment=$request->comment;
         $pd->project_id=$project->id;
         $pd->save();
@@ -117,16 +117,16 @@ class ProjectPdController extends Controller
         $this->validate($request,[
             'title' => 'required',
             'status' => 'required',
-            'date' => 'required|date'
+            'start_date' => 'required|date',
+            'end_date' => 'date|after:start_date|nullable',
 
         ]);
 
         $pd=$project->projectPd()->where('id',$id)->firstOrFail();
         $pd->title=$request->title;
         $pd->status=$request->status;
-        $pd->date=$request->date;
-        $pd->day=$request->day;
-        $pd->hour=$request->hour;
+        $pd->start_date=$request->start_date;
+        $pd->end_date=$request->end_date;
         $pd->comment=$request->comment;
         $pd->save();
 

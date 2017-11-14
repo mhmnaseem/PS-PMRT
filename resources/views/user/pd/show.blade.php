@@ -69,6 +69,29 @@
                                     </div>
                                 </div>
                                 <div class="box-body">
+
+                                    <strong><i class="fa fa-calendar text-maroon margin-r-5"></i> Start Date</strong>
+
+                                    <p class="text-muted">{{$pd->start_date->format(config('constants.time.format'))}}</p>
+
+                                    <hr>
+
+                                    <strong><i class="fa fa-calendar text-maroon margin-r-5"></i> End Date</strong>
+
+                                    <p class="text-muted">
+                                        @if($pd->end_date != '')
+                                            {{$pd->end_date->format(config('constants.time.format'))}}
+                                        @endif
+                                    </p>
+
+                                    <hr>
+                                    <strong><i class="fa fa-clock-o text-maroon margin-r-5"></i> Time Spent</strong>
+
+                                    <p class="text-muted">
+                                        {!! timeSpent($pd->start_date,$pd->end_date) !!}
+                                    </p>
+
+                                    <hr>
                                     <strong><i class="fa fa-check-circle text-maroon margin-r-5"></i>
                                         Status</strong>
 
@@ -76,21 +99,6 @@
                                         {!! statusColor($pd->status) !!}
                                     </p>
 
-                                    <hr>
-
-                                    <strong><i class="fa fa-calendar text-maroon margin-r-5"></i> Date</strong>
-
-                                    <p class="text-muted">{{$pd->date->format(config('constants.time.format'))}}</p>
-                                    <hr>
-                                    <strong><i class="fa fa-clock-o text-maroon margin-r-5"></i> Time Spent</strong>
-
-                                    <p class="text-muted">
-                                        @if ($pd->day !=""){{$pd->day. str_plural('Day', $pd->day)}}
-                                        @endif
-
-                                        @if ($pd->hour !="") {{$pd->hour. str_plural('Hour', $pd->hour)}}
-                                        @endif
-                                    </p>
 
                                 </div>
                                 <!-- /.box-body -->

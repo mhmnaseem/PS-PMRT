@@ -20,7 +20,7 @@
         <section class="content-header">
             <h1>
 
-               Go Live
+                Go Live
 
             </h1>
             <ol class="breadcrumb">
@@ -86,6 +86,13 @@
                                         @if($onsiteDeliveryGoLive->end_date != '')
                                             {{$onsiteDeliveryGoLive->end_date->format(config('constants.time.format'))}}
                                         @endif
+                                    </p>
+
+                                    <hr>
+                                    <strong><i class="fa fa-clock-o text-maroon margin-r-5"></i> Time Spent</strong>
+
+                                    <p class="text-muted">
+                                        {!! timeSpent($onsiteDeliveryGoLive->start_date,$onsiteDeliveryGoLive->end_date) !!}
                                     </p>
 
                                     <hr>

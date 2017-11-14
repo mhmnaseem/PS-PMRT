@@ -50,6 +50,8 @@ class BackEndBuildOutController extends Controller
 
         $this->validate($request,[
             'title'=>'required',
+            'start_date' => 'required|date|after:yesterday',
+            'end_date' => 'date|after:start_date|nullable',
             'status' => 'required'
 
         ]);
@@ -57,8 +59,8 @@ class BackEndBuildOutController extends Controller
         $backEndBuildOut=new BackEndBuildOut();
         $backEndBuildOut->title=$request->title;
         $backEndBuildOut->status=$request->status;
-        $backEndBuildOut->day=$request->day;
-        $backEndBuildOut->hour=$request->hour;
+        $backEndBuildOut->start_date=$request->start_date;
+        $backEndBuildOut->end_date=$request->end_date;
         $backEndBuildOut->comment=$request->comment;
         $backEndBuildOut->project_id=$project->id;
         $backEndBuildOut->save();
@@ -109,7 +111,9 @@ class BackEndBuildOutController extends Controller
 
         $this->validate($request,[
             'status' => 'required',
-            'title' => 'required'
+            'title' => 'required',
+            'start_date' => 'required|date',
+            'end_date' => 'date|after:start_date|nullable',
 
 
         ]);
@@ -117,8 +121,8 @@ class BackEndBuildOutController extends Controller
         $backEndBuildOut=$project->projectBackEndBuildOut()->where('id',$id)->firstOrFail();
         $backEndBuildOut->title=$request->title;
         $backEndBuildOut->status=$request->status;
-        $backEndBuildOut->day=$request->day;
-        $backEndBuildOut->hour=$request->hour;
+        $backEndBuildOut->start_date=$request->start_date;
+        $backEndBuildOut->end_date=$request->end_date;
         $backEndBuildOut->comment=$request->comment;
         $backEndBuildOut->save();
 

@@ -7,9 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pd extends Model
 {
-    protected $dates = array('date');
-    public function setDateAttribute($value)
+    protected $dates = array('start_date', 'end_date');
+
+    public function setStartDateAttribute($value)
     {
-        $this->attributes['date'] = Carbon::createFromFormat(config('constants.time.format'), $value);
+        if (strlen($value)) {
+            $this->attributes['start_date'] = Carbon::parse($value);
+        } else {
+            $this->attributes['start_date'] = null;
+        }
+    }
+
+    public function setEndDateAttribute($value)
+    {
+        if (strlen($value)) {
+            $this->attributes['end_date'] = Carbon::parse($value);
+        } else {
+            $this->attributes['end_date'] = null;
+        }
     }
 }

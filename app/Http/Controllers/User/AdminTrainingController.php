@@ -51,21 +51,21 @@ class AdminTrainingController extends Controller
         $this->validate($request,[
             'title' => 'required',
             'status' => 'required',
-            'date' => 'required|date|after:yesterday'
+            'start_date' => 'required|date|after:yesterday',
+            'end_date' => 'date|after:start_date|nullable'
 
         ]);
 
         $adminTraining=new AdminTraining();
         $adminTraining->title=$request->title;
         $adminTraining->status=$request->status;
-        $adminTraining->date=$request->date;
-        $adminTraining->day=$request->day;
-        $adminTraining->hour=$request->hour;
+        $adminTraining->start_date=$request->start_date;
+        $adminTraining->end_date=$request->end_date;
         $adminTraining->comment=$request->comment;
         $adminTraining->project_id=$project->id;
         $adminTraining->save();
 
-        flash('Admin Training Created Successfully..!')->success();
+        flash('Training Created Successfully..!')->success();
 
 
         return redirect('pm/projects/'.$slug.'#admin-training');
@@ -112,20 +112,20 @@ class AdminTrainingController extends Controller
         $this->validate($request,[
             'title' => 'required',
             'status' => 'required',
-            'date' => 'required|date'
+            'start_date' => 'required|date',
+            'end_date' => 'date|after:start_date|nullable',
 
         ]);
 
         $adminTraining=$project->projectAdminTraining()->where('id',$id)->firstOrFail();
         $adminTraining->title=$request->title;
         $adminTraining->status=$request->status;
-        $adminTraining->date=$request->date;
-        $adminTraining->day=$request->day;
-        $adminTraining->hour=$request->hour;
+        $adminTraining->start_date=$request->start_date;
+        $adminTraining->end_date=$request->end_date;
         $adminTraining->comment=$request->comment;
         $adminTraining->save();
 
-        flash('Admin Training Updated Successfully..!')->success();
+        flash('Training Updated Successfully..!')->success();
 
         return redirect('pm/projects/'.$slug.'#admin-training');
     }
@@ -140,7 +140,7 @@ class AdminTrainingController extends Controller
     {
         $project=Project::findBySlug($slug)->firstOrFail();
         $project->projectAdminTraining()->where('id',$id)->firstOrFail()->delete();
-        flash('Admin Training Deleted Successfully..!')->success();
+        flash('Training Deleted Successfully..!')->success();
         return redirect('pm/projects/'.$slug.'#admin-training');
     }
 }

@@ -69,6 +69,30 @@
                                         </div>
                                     </div>
                                     <div class="box-body">
+
+                                        <strong><i class="fa fa-calendar text-maroon margin-r-5"></i> Start Date</strong>
+
+                                        <p class="text-muted">{{$networkAssessment->start_date->format(config('constants.time.format'))}}</p>
+
+                                        <hr>
+
+                                        <strong><i class="fa fa-calendar text-maroon margin-r-5"></i> End Date</strong>
+
+                                        <p class="text-muted">
+                                            @if($networkAssessment->end_date != '')
+                                                {{$networkAssessment->end_date->format(config('constants.time.format'))}}
+                                            @endif
+                                        </p>
+
+                                        <hr>
+                                        <strong><i class="fa fa-clock-o text-maroon margin-r-5"></i> Time Spent</strong>
+
+                                        <p class="text-muted">
+                                            {!! timeSpent($networkAssessment->start_date,$networkAssessment->end_date) !!}
+                                        </p>
+
+                                        <hr>
+
                                         <strong><i class="fa fa-check-circle text-maroon margin-r-5"></i>
                                             Status</strong>
 
@@ -76,11 +100,8 @@
                                             {!! statusColor($networkAssessment->status) !!}
                                         </p>
 
-                                        <hr>
 
-                                        <strong><i class="fa fa-calendar text-maroon margin-r-5"></i> Date</strong>
 
-                                        <p class="text-muted">{{$networkAssessment->date->format(config('constants.time.format'))}}</p>
 
                                     </div>
                                     <!-- /.box-body -->

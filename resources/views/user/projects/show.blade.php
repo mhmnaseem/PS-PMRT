@@ -332,11 +332,12 @@
                                         </td>
                                         <td>{{$pd->title}}</td>
                                         <td>{!! statusColor($pd->status) !!}</td>
-                                        <td>{{$pd->date->format(config('constants.time.format'))}}</td>
-                                        <td>
-                                            {{--{!! timeSpent($pd->start_date,$pd->end_date) !!}</td>--}}
+                                        <td>{{$pd->start_date->format(config('constants.time.format'))}}</td>
+                                        <td>@if($pd->end_date!="")
+                                                {{$pd->end_date->format(config('constants.time.format'))}}
+                                            @endif
                                         </td>
-
+                                        <td>{!! timeSpent($pd->start_date,$pd->end_date) !!}</td>
                                         <td>
                                             {!! htmlspecialchars_decode(str_limit($pd->comment,350)) !!}
                                         </td>
@@ -378,7 +379,9 @@
                                     <th>Option</th>
                                     <th>Title</th>
                                     <th>Status</th>
-                                    <th>Date</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Time Spent</th>
                                     <th>Comment</th>
 
 
@@ -421,7 +424,12 @@
                                         </td>
                                         <td>{{$networkAssessment->title}}</td>
                                         <td>{!! statusColor($networkAssessment->status) !!}</td>
-                                        <td>{{$networkAssessment->date->format(config('constants.time.format'))}}</td>
+                                        <td>{{$networkAssessment->start_date->format(config('constants.time.format'))}}</td>
+                                        <td>@if($networkAssessment->end_date!="")
+                                                {{$networkAssessment->end_date->format(config('constants.time.format'))}}
+                                            @endif
+                                        </td>
+                                        <td>{!! timeSpent($networkAssessment->start_date,$networkAssessment->end_date) !!}</td>
                                         <td>
                                             {!! htmlspecialchars_decode(str_limit($networkAssessment->comment,350)) !!}
                                         </td>
@@ -464,7 +472,9 @@
                                     <th>Option</th>
                                     <th>Title</th>
                                     <th>Status</th>
-                                    <th>Date</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Time Spent</th>
                                     <th>Comment</th>
 
                                 </tr>
@@ -506,7 +516,12 @@
                                         </td>
                                         <td>{{$backEndBuildOut->title}} </td>
                                         <td>{!! statusColor($backEndBuildOut->status) !!}</td>
-                                        <td>{{$backEndBuildOut->date->format(config('constants.time.format'))}}</td>
+                                        <td>{{$backEndBuildOut->start_date->format(config('constants.time.format'))}}</td>
+                                        <td>@if($backEndBuildOut->end_date!="")
+                                                {{$backEndBuildOut->end_date->format(config('constants.time.format'))}}
+                                            @endif
+                                        </td>
+                                        <td>{!! timeSpent($backEndBuildOut->start_date,$backEndBuildOut->end_date) !!}</td>
                                         <td>
                                             {!! htmlspecialchars_decode(str_limit($backEndBuildOut->comment,350)) !!}
                                         </td>
@@ -546,7 +561,9 @@
                                     <th>Option</th>
                                     <th>Title</th>
                                     <th>Status</th>
-                                    <th>Date</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Time Spent</th>
                                     <th>Comment</th>
 
                                 </tr>
@@ -588,7 +605,12 @@
                                         </td>
                                         <td>{{$numberPorting->title}}</td>
                                         <td>{!! statusColor($numberPorting->status) !!}</td>
-                                        <td>{{$numberPorting->date->format(config('constants.time.format'))}}</td>
+                                        <td>{{$numberPorting->start_date->format(config('constants.time.format'))}}</td>
+                                        <td>@if($numberPorting->end_date!="")
+                                                {{$numberPorting->end_date->format(config('constants.time.format'))}}
+                                            @endif
+                                        </td>
+                                        <td>{!! timeSpent($numberPorting->start_date,$numberPorting->end_date) !!}</td>
                                         <td>
                                             {!! htmlspecialchars_decode(str_limit($numberPorting->comment,350)) !!}
                                         </td>
@@ -629,7 +651,9 @@
                                     <th>Option</th>
                                     <th>Title</th>
                                     <th>Status</th>
-                                    <th>Date</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Time Spent</th>
                                     <th>Comment</th>
 
 
@@ -672,9 +696,12 @@
                                         </td>
                                         <td>{{$adminTraining->title}}</td>
                                         <td>{!! statusColor($adminTraining->status) !!}</td>
-                                        <td>@if($adminTraining->date!="")
-                                                {{$adminTraining->date->format(config('constants.time.format'))}}
-                                            @endif</td>
+                                        <td>{{$adminTraining->start_date->format(config('constants.time.format'))}}</td>
+                                        <td>@if($adminTraining->end_date!="")
+                                                {{$adminTraining->end_date->format(config('constants.time.format'))}}
+                                            @endif
+                                        </td>
+                                        <td>{!! timeSpent($adminTraining->start_date,$adminTraining->end_date) !!}</td>
                                         <td>
                                             {!! htmlspecialchars_decode(str_limit($adminTraining->comment,350)) !!}
                                         </td>
@@ -717,6 +744,7 @@
                                     <th>Location</th>
                                     <th>Start Date</th>
                                     <th>End Date</th>
+                                    <th>Time Spent</th>
                                     <th>Status</th>
                                     <th>Comment</th>
 
@@ -764,6 +792,7 @@
                                                 {{$onsiteDeliveryGoLive->end_date->format(config('constants.time.format'))}}
                                             @endif
                                         </td>
+                                        <td>{!! timeSpent($onsiteDeliveryGoLive->start_date,$onsiteDeliveryGoLive->end_date) !!}</td>
                                         <td>{!! statusColor($onsiteDeliveryGoLive->status) !!}</td>
                                         <td>
                                             {!! htmlspecialchars_decode(str_limit($onsiteDeliveryGoLive->comment,350)) !!}
@@ -913,73 +942,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.4.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.4.2/js/buttons.print.min.js"></script>
-
-
-
-    <script>
-        $(function () {
-            var table =$('#snapshot').DataTable({
-                'paging': true,
-                'lengthChange': false,
-                'searching': false,
-                'info': true,
-                'autoWidth': false,
-
-                "order": [],
-                "columnDefs": [ {
-                    "targets"  : 'no-sort',
-                    "orderable": false,
-                }]
-
-            });
-            var buttons = new $.fn.dataTable.Buttons(table, {
-                buttons: [
-
-                    {extend: 'pdf', className: 'btn btn-default '},
-                    {extend: 'copy', className: 'btn btn-default'}
-
-                ],
-            }).container().appendTo($('#buttons'));
-        });
-
-
-
-
-        $(document).ready(function () {
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            $('.ajax').click(function () {
-                var t = $(this);
-
-
-                var data = {
-                    'slug': $(t).attr("data-slug"),
-                    'value': $(t).attr("data-value")
-                };
-
-
-                $.ajax({
-                    url: $(t).attr("data-source"),
-                    data: data,
-                    dataType: "json",
-                    type: "post",
-                    success: function (data) {
-                        console.log(data);
-                        if (data.success = 'true') {
-                            location.reload();
-                        }
-
-                    }
-                })
-            });
-        });
-
-
-    </script>
 
 @endsection

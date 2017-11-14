@@ -69,7 +69,28 @@
                                         </div>
                                     </div>
                                     <div class="box-body">
+                                        <strong><i class="fa fa-calendar text-maroon margin-r-5"></i> Start Date</strong>
 
+                                        <p class="text-muted">{{$numberPorting->start_date->format(config('constants.time.format'))}}</p>
+
+                                        <hr>
+
+                                        <strong><i class="fa fa-calendar text-maroon margin-r-5"></i> End Date</strong>
+
+                                        <p class="text-muted">
+                                            @if($numberPorting->end_date != '')
+                                                {{$numberPorting->end_date->format(config('constants.time.format'))}}
+                                            @endif
+                                        </p>
+
+                                        <hr>
+                                        <strong><i class="fa fa-clock-o text-maroon margin-r-5"></i> Time Spent</strong>
+
+                                        <p class="text-muted">
+                                            {!! timeSpent($numberPorting->start_date,$numberPorting->end_date) !!}
+                                        </p>
+
+                                        <hr>
                                         <strong><i class="fa fa-check-circle text-maroon margin-r-5"></i>
                                             Status</strong>
 
@@ -77,11 +98,7 @@
                                             {!! statusColor($numberPorting->status) !!}
                                         </p>
 
-                                        <hr>
 
-                                        <strong><i class="fa fa-calendar text-maroon margin-r-5"></i> Port Date</strong>
-
-                                        <p class="text-muted">{{$numberPorting->date->format(config('constants.time.format'))}}</p>
 
                                     </div>
                                     <!-- /.box-body -->

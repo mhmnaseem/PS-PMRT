@@ -51,16 +51,16 @@ class NetworkAssessmentController extends Controller
         $this->validate($request,[
             'title' => 'required',
             'status' => 'required',
-            'date' => 'required|date|after:yesterday'
+            'start_date' => 'required|date|after:yesterday',
+            'end_date' => 'date|after:start_date|nullable',
 
         ]);
 
         $networkAssessment=new NetworkAssessment();
         $networkAssessment->title=$request->title;
         $networkAssessment->status=$request->status;
-        $networkAssessment->date=$request->date;
-        $networkAssessment->day=$request->day;
-        $networkAssessment->hour=$request->hour;
+        $networkAssessment->start_date=$request->start_date;
+        $networkAssessment->end_date=$request->end_date;
         $networkAssessment->comment=$request->comment;
         $networkAssessment->project_id=$project->id;
         $networkAssessment->save();
@@ -112,16 +112,16 @@ class NetworkAssessmentController extends Controller
         $this->validate($request,[
              'title' => 'required',
             'status' => 'required',
-            'date' => 'required|date'
+            'start_date' => 'required|date',
+            'end_date' => 'date|after:start_date|nullable',
 
         ]);
 
         $networkAssessment=$project->projectNetworkAssessment()->where('id',$id)->firstOrFail();
         $networkAssessment->title=$request->title;
         $networkAssessment->status=$request->status;
-        $networkAssessment->date=$request->date;
-        $networkAssessment->day=$request->day;
-        $networkAssessment->hour=$request->hour;
+        $networkAssessment->start_date=$request->start_date;
+        $networkAssessment->end_date=$request->end_date;
         $networkAssessment->comment=$request->comment;
         $networkAssessment->save();
 

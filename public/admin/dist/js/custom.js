@@ -23,7 +23,7 @@ $(document).ready(function () {
         CKEDITOR.replace('editor1');
     }
 
-    var setValue = $('#ajax-url').attr("data-set-value");
+    var setValue = $('#ajax_url').attr("data-set-value");
 
     if (setValue == 1) {
 
@@ -50,6 +50,34 @@ $(document).ready(function () {
     $("#datepicker1").on("dp.change", function (e) {
         ajax();
     });
+
+
+    // //
+    // $('.ajax').click(function () {
+    //     var t = $(this);
+    //
+    //
+    //     var data = {
+    //         'slug': $(t).attr("data-slug"),
+    //         'value': $(t).attr("data-value")
+    //     };
+    //
+    //
+    //     $.ajax({
+    //         url: $(t).attr("data-source"),
+    //         data: data,
+    //         dataType: "json",
+    //         type: "post",
+    //         success: function (data) {
+    //             console.log(data);
+    //             if (data.success = 'true') {
+    //                 location.reload();
+    //             }
+    //
+    //         }
+    //     })
+    // });
+
 
     function ajax() {
         var ajax_url = $('#ajax_url').val();
@@ -93,3 +121,30 @@ $(function () {
     });
 });
 
+
+// snap shot data table
+
+$(function () {
+    var table =$('#snapshot').DataTable({
+        'paging': true,
+        'lengthChange': false,
+        'searching': false,
+        'info': true,
+        'autoWidth': false,
+
+        "order": [],
+        "columnDefs": [ {
+            "targets"  : 'no-sort',
+            "orderable": false,
+        }]
+
+    });
+    var buttons = new $.fn.dataTable.Buttons(table, {
+        buttons: [
+
+            {extend: 'pdf', className: 'btn btn-default '},
+            {extend: 'copy', className: 'btn btn-default'}
+
+        ],
+    }).container().appendTo($('#buttons'));
+});
