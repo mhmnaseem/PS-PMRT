@@ -91,7 +91,6 @@ class ProjectController extends Controller
         $project = Project::findBySlug($request->slug)->firstOrFail();
 
 
-
         $html ='<table id="snapshot" class="table table-bordered table-striped">';
         $html .='<thead>';
         $html .='<tr>';
@@ -242,6 +241,7 @@ class ProjectController extends Controller
                 'html'=>$html
             ], 200
         );
+
 
     }
 

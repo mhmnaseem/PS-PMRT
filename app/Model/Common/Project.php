@@ -75,6 +75,15 @@ class Project extends Model
     {
         return $this->hasOne('App\Model\User\Note');
     }
+    public function projectExpenses()
+    {
+        return $this->hasMany('App\Model\User\Expense');
+    }
+    public function projectExpenseAttachments()
+    {
+        return $this->hasMany('App\Model\User\ExpenseAttachment','project_id');
+    }
+
 
 
 

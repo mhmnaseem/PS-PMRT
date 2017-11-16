@@ -30,6 +30,32 @@
     padding: 20px;
     margin-bottom: 20px;
 }
+#expense_export {
+    background-color: #5f5b5b;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.attachment-title{
+    height: 15px;
+    overflow: hidden;
+}
+
 div.dt-buttons{
     float:none !important;
+}
+
+.dropzone {
+    border: 2px dashed #0087F7 !important;
+    border-radius: 5px;
+}
+
+tr.group,
+tr.group:hover {
+    background-color: #ddd !important;
+}
+
+.img-box{
+    height:200px;
+    overflow: hidden;
 }

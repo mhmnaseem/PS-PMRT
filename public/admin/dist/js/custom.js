@@ -122,29 +122,3 @@ $(function () {
 });
 
 
-// snap shot data table
-
-$(function () {
-    var table =$('#snapshot').DataTable({
-        'paging': true,
-        'lengthChange': false,
-        'searching': false,
-        'info': true,
-        'autoWidth': false,
-
-        "order": [],
-        "columnDefs": [ {
-            "targets"  : 'no-sort',
-            "orderable": false,
-        }]
-
-    });
-    var buttons = new $.fn.dataTable.Buttons(table, {
-        buttons: [
-
-            {extend: 'pdf', className: 'btn btn-default '},
-            {extend: 'copy', className: 'btn btn-default'}
-
-        ],
-    }).container().appendTo($('#buttons'));
-});

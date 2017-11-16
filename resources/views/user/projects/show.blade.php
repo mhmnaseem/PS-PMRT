@@ -3,9 +3,7 @@
 @section ('header')
 
     <link rel="stylesheet"
-          href="{{asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
-    <link rel="stylesheet"
-          href="https://cdn.datatables.net/buttons/1.4.2/css/buttons.dataTables.min.css">
+          href="{{asset('admin/dist/css/lightbox.min.css')}}">
 
 
 @endsection
@@ -68,6 +66,9 @@
                     <li><a href="#attachments" data-toggle="tab">
                             <i class="fa fa-paperclip text-red" aria-hidden="true"></i> Attachments</a>
                     </li>
+                    <li><a href="#expenses" data-toggle="tab">
+                            <i class="fa fa-credit-card text-yellow" aria-hidden="true"></i> Expenses</a>
+                    </li>
 
                 </ul>
                 <div class="tab-content">
@@ -86,50 +87,55 @@
                                             <th class="no-sort">Task Name</th>
                                             <th class="no-sort">Task Status</th>
                                             <th class="no-sort">Task Progress</th>
+                                            <th class="no-sort">Task Time Spent</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         @if ($project->ProjectPd->isNotEmpty())
                                             @foreach($project->projectPd as $pd)
-                                            <tr>
-                                                <td>Planning and Design</td>
-                                                <td>{{$pd->title}}</td>
-                                                <td>{!! statusColor($pd->status) !!} </td>
-                                                <td>{!! calculateSubTaskProgress($project->projectPd,$pd->id) !!}</td>
-                                            </tr>
+                                                <tr>
+                                                    <td>Planning and Design</td>
+                                                    <td>{{$pd->title}}</td>
+                                                    <td>{!! statusColor($pd->status) !!} </td>
+                                                    <td>{!! calculateSubTaskProgress($project->projectPd,$pd->id) !!}</td>
+                                                    <td>{!! timeSpent($pd->start_date,$pd->end_date) !!}</td>
+                                                </tr>
                                             @endforeach
                                         @endif
 
                                         @if ($project->projectNetworkAssessment->isNotEmpty())
                                             @foreach($project->projectNetworkAssessment as $network)
-                                            <tr>
-                                                <td>Network Assessment</td>
-                                                <td>{{$network->title}}</td>
-                                                <td>{!! statusColor($network->status) !!} </td>
-                                                <td>{!! calculateSubTaskProgress($project->projectNetworkAssessment,$network->id) !!}</td>
-                                            </tr>
+                                                <tr>
+                                                    <td>Network Assessment</td>
+                                                    <td>{{$network->title}}</td>
+                                                    <td>{!! statusColor($network->status) !!} </td>
+                                                    <td>{!! calculateSubTaskProgress($project->projectNetworkAssessment,$network->id) !!}</td>
+                                                    <td>{!! timeSpent($network->start_date,$network->end_date) !!}</td>
+                                                </tr>
                                             @endforeach
                                         @endif
 
-                                       @if ($project->projectBackEndBuildOut->isNotEmpty())
+                                        @if ($project->projectBackEndBuildOut->isNotEmpty())
                                             @foreach($project->projectBackEndBuildOut as $backend)
-                                            <tr>
-                                                <td>Back End Build Out</td>
-                                                <td>{{$backend->title}}</td>
-                                                <td>{!! statusColor($backend->status) !!}</td>
-                                                <td>{!! calculateSubTaskProgress($project->projectBackEndBuildOut,$backend->id) !!}</td>
-                                            </tr>
+                                                <tr>
+                                                    <td>Back End Build Out</td>
+                                                    <td>{{$backend->title}}</td>
+                                                    <td>{!! statusColor($backend->status) !!}</td>
+                                                    <td>{!! calculateSubTaskProgress($project->projectBackEndBuildOut,$backend->id) !!}</td>
+                                                    <td>{!! timeSpent($backend->start_date,$backend->end_date) !!}</td>
+                                                </tr>
                                             @endforeach
                                         @endif
 
                                         @if ($project->projectNumberPorting->isNotEmpty())
                                             @foreach($project->projectNumberPorting as $numberPort)
-                                            <tr>
-                                                <td>Number Porting</td>
-                                                <td>{{$numberPort->title}}</td>
-                                                <td>{!! statusColor($numberPort->status) !!}</td>
-                                                <td>{!! calculateSubTaskProgress($project->projectNumberPorting,$numberPort->id) !!}</td>
-                                            </tr>
+                                                <tr>
+                                                    <td>Number Porting</td>
+                                                    <td>{{$numberPort->title}}</td>
+                                                    <td>{!! statusColor($numberPort->status) !!}</td>
+                                                    <td>{!! calculateSubTaskProgress($project->projectNumberPorting,$numberPort->id) !!}</td>
+                                                    <td>{!! timeSpent($numberPort->start_date,$numberPort->end_date) !!}</td>
+                                                </tr>
                                             @endforeach
                                         @endif
 
@@ -140,18 +146,20 @@
                                                     <td>{{$admin->title}}</td>
                                                     <td>{!! statusColor($admin->status) !!}</td>
                                                     <td>{!! calculateSubTaskProgress($project->projectAdminTraining,$admin->id) !!}</td>
+                                                    <td>{!! timeSpent($admin->start_date,$admin->end_date) !!}</td>
                                                 </tr>
                                             @endforeach
                                         @endif
 
                                         @if ($project->projectOnsiteDeliveryGoLive->isNotEmpty())
                                             @foreach($project->projectOnsiteDeliveryGoLive as $onSiteDelivery)
-                                            <tr>
-                                                <td>Go Live</td>
-                                                <td>{{$onSiteDelivery->title}}</td>
-                                                <td>{!! statusColor($onSiteDelivery->status) !!}</td>
-                                                <td>{!! calculateSubTaskProgress($project->projectOnsiteDeliveryGoLive,$onSiteDelivery->id) !!}</td>
-                                            </tr>
+                                                <tr>
+                                                    <td>Go Live</td>
+                                                    <td>{{$onSiteDelivery->title}}</td>
+                                                    <td>{!! statusColor($onSiteDelivery->status) !!}</td>
+                                                    <td>{!! calculateSubTaskProgress($project->projectOnsiteDeliveryGoLive,$onSiteDelivery->id) !!}</td>
+                                                    <td>{!! timeSpent($onSiteDelivery->start_date,$onSiteDelivery->end_date) !!}</td>
+                                                </tr>
                                             @endforeach
                                         @endif
 
@@ -160,7 +168,7 @@
                                     </table>
 
                                     <h5><strong>Export Snap Shot</strong></h5>
-                                        <div id="buttons"></div>
+                                    <div id="buttons"></div>
 
 
 
@@ -198,17 +206,17 @@
                                                href="{{route('projects.edit',$project->slug)}}"><i
                                                         class="fa fa-fw fa-2x fa-edit" aria-hidden="true"></i></a>
                                             {{--@if($project->star==0)--}}
-                                                {{--<a href="#" data-toggle="tooltip" data-placement="top"--}}
-                                                   {{--title="Add to Star" data-slug="{{$project->slug}}" data-value="1"--}}
-                                                   {{--data-source="{{route('star')}}" class="ajax btn btn-default btn-xs">--}}
-                                                    {{--<i--}}
-                                                            {{--class="fa fa-fw fa-2x fa-star-o"></i></a>--}}
+                                            {{--<a href="#" data-toggle="tooltip" data-placement="top"--}}
+                                            {{--title="Add to Star" data-slug="{{$project->slug}}" data-value="1"--}}
+                                            {{--data-source="{{route('star')}}" class="ajax btn btn-default btn-xs">--}}
+                                            {{--<i--}}
+                                            {{--class="fa fa-fw fa-2x fa-star-o"></i></a>--}}
                                             {{--@else--}}
-                                                {{--<a href="#" data-toggle="tooltip" data-placement="top"--}}
-                                                   {{--title="Remove from Star" data-slug="{{$project->slug}}"--}}
-                                                   {{--data-value="0" data-source="{{route('star')}}"--}}
-                                                   {{--class="ajax btn btn-default btn-xs"> <i--}}
-                                                            {{--class="fa fa-fw fa-2x fa-star"></i></a>--}}
+                                            {{--<a href="#" data-toggle="tooltip" data-placement="top"--}}
+                                            {{--title="Remove from Star" data-slug="{{$project->slug}}"--}}
+                                            {{--data-value="0" data-source="{{route('star')}}"--}}
+                                            {{--class="ajax btn btn-default btn-xs"> <i--}}
+                                            {{--class="fa fa-fw fa-2x fa-star"></i></a>--}}
                                             {{--@endif--}}
                                         </div>
                                     </div>
@@ -916,6 +924,142 @@
                     </div>
                     <!-- /.tab-pane -->
 
+                    <div class="tab-pane" id="expenses">
+
+                        <h3><span>Expenses</span>
+                            <a data-toggle="tooltip" data-placement="top" title="Add New"
+                               class="pull-right btn btn-xs btn-default"
+                               href="{{route('projects.expense.create',$project->slug)}}">
+                                <i class="fa fa-fw text-olive fa-2x fa-plus" aria-hidden="true"></i></a>
+                        </h3>
+                        <hr>
+
+                        @if ($project->projectExpenses->isNotEmpty())
+
+                            @php
+                                $grouped = $project->projectExpenses->groupBy('expense_type');
+
+                            @endphp
+
+                            <table id="expense" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Option</th>
+                                    <th>Description</th>
+                                    <th>Date</th>
+                                    <th>Total</th>
+
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach ($grouped as $title => $expenses)
+                                    <tr>
+                                        <td>{{$title}} - $ {{$expenses->sum('amount')}}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    @foreach($expenses as $expense)
+                                        <tr>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <form id="form-delete-expense{{$expense->id}}" method="post"
+                                                          action="{{url('pm/projects/'.$project->slug.'/expense/'.$expense->id)}}"
+                                                          style="display: none;">
+                                                        {{csrf_field()}}
+                                                        {{method_field('DELETE')}}
+
+                                                    </form>
+
+                                                    <a data-toggle="tooltip" data-placement="top" title="Delete"
+                                                       class="btn btn-xs btn-danger" href="#" onclick="
+
+                                                            if(confirm('Are you sure want to Delete?')) {
+                                                            event.preventDefault();
+                                                            document.getElementById('form-delete-expense{{$expense->id}}').submit();
+                                                            }else{
+                                                            event.preventDefault();
+                                                            }
+
+                                                            "><i class="fa fa-fw fa-trash"></i></a>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                {!! htmlspecialchars_decode(str_limit($expense->description,350)) !!}
+                                            </td>
+                                            <td>{{$expense->date->format(config('constants.time.format'))}}</td>
+                                            <td>${{$expense->amount}}</td>
+
+
+                                        </tr>
+
+
+                                    @endforeach
+                                @endforeach
+                                <tr class="group">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><strong>Total -
+                                            ${{$project->projectExpenses->sum('amount')}}</strong></td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <h5><strong>Export Expenses</strong></h5>
+                            <div id="expense_export"></div>
+                        @else
+
+                            <div class="callout callout-info">
+                                <h4>No Expenses for this Project !</h4>
+
+                                <p>Please Create One..!</p>
+                            </div>
+
+                        @endif
+
+
+                        @if ($project->projectExpenseAttachments->isNotEmpty())
+
+                            <h4>Expense Attachments</h4>
+
+                            <div class="row">
+
+                                @foreach($project->projectExpenseAttachments as $expenseAttachment)
+
+                                    <div class="col-sm-3">
+
+
+                                        <div class="thumbnail">
+                                            <div class="img-box">
+                                                <a href="{{asset(config('constants.upload_path.attachments').$expenseAttachment->attachment_url)}}"
+                                                   data-lightbox="{{$expenseAttachment->id}}"
+                                                   data-title="{{$expenseAttachment->title}}"><img
+                                                            class="img-responsive"
+                                                            src="{{asset(config('constants.upload_path.attachments').$expenseAttachment->attachment_url)}}"></a>
+
+                                            </div>
+                                            <h5 class="attachment-title">{{$expenseAttachment->title}}</h5>
+                                        </div>
+                                    </div>
+
+
+                                @endforeach
+
+
+                            </div>
+
+
+
+
+
+                        @endif
+
+
+                    </div>
+                    <!-- /.tab-pane -->
+
                 </div>
                 <!-- /.tab-content -->
             </div>
@@ -931,9 +1075,9 @@
 @endsection
 
 @section('footer')
-    <script src="{{asset('admin/bower_components/ckeditor/ckeditor.js')}}"></script>
-    <script src="{{asset('admin/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
-    <script src="{{asset('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+
+    <script src="{{asset('admin/dist/js/lightbox.min.js')}}"></script>
+
     <script src="https://cdn.datatables.net/buttons/1.4.2/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.4.2/js/buttons.flash.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.4.2/js/buttons.flash.min.js"></script>
@@ -942,5 +1086,62 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.4.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.4.2/js/buttons.print.min.js"></script>
+
+    <script>
+        // snap shot data table
+
+        $(function () {
+            var table = $('#snapshot').DataTable({
+                'paging': true,
+                'lengthChange': false,
+                'searching': false,
+                'info': true,
+                'autoWidth': false,
+
+                "order": [],
+                "columnDefs": [{
+                    "targets": 'no-sort',
+                    "orderable": false,
+                }]
+
+            });
+            var buttons = new $.fn.dataTable.Buttons(table, {
+                buttons: [
+
+                    {extend: 'pdf', className: 'btn btn-default '},
+                    {extend: 'copy', className: 'btn btn-default'}
+
+                ],
+            }).container().appendTo($('#buttons'));
+        });
+
+        $(function () {
+            var table = $('#expense').DataTable({
+                'paging': true,
+                'lengthChange': false,
+                'searching': false,
+                'info': true,
+                'autoWidth': false,
+
+                "order": [],
+                "columnDefs": [{
+                    "targets": 'no-sort',
+                    "orderable": false,
+                }]
+
+            });
+            var buttons = new $.fn.dataTable.Buttons(table, {
+                buttons: [
+
+                    {extend: 'pdf', className: 'btn btn-default '},
+                    {extend: 'copy', className: 'btn btn-default'}
+
+                ],
+            }).container().appendTo($('#expense_export'));
+        });
+
+
+    </script>
+
 
 @endsection

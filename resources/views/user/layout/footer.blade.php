@@ -29,6 +29,12 @@
 <!-- ck editor -->
 <script src="{{asset('admin/bower_components/ckeditor/ckeditor.js')}}"></script>
 
+<!-- DataTables -->
+<script src="{{asset('admin/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+
+
+<!-- custom js -->
 <script src="{{asset('admin/dist/js/custom.js')}}"></script>
 
 <!-- AdminLTE App -->

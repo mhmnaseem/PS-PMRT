@@ -75,6 +75,7 @@ Route::group(['namespace'=>'User'],function (){
     Route::resource('pm/projects.attachment', 'AttachmentController');
     Route::get('pm/projects/{project}/attachment/{attachment}', 'AttachmentController@download');
     Route::resource('pm/projects.note', 'NoteController');
+    Route::resource('pm/projects.expense', 'ExpenseController');
 
     Route::post('pm/projects/time-spent', 'ProjectController@timeSpent')->name('time.spent');
 

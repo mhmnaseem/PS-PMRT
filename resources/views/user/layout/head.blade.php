@@ -17,8 +17,16 @@
 <link rel="stylesheet" href="{{asset('admin/dist/css/skins/_all-skins.min.css')}}">
 <!-- Date time Picker -->
 <link rel="stylesheet" href="{{asset('admin/bower_components/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css')}}">
+
+<!-- Data Table -->
+<link rel="stylesheet" href="{{asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
+<link rel="stylesheet"
+      href="https://cdn.datatables.net/buttons/1.4.2/css/buttons.dataTables.min.css">
+<link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css" rel="stylesheet">
 <!-- pace -->
 <link rel="stylesheet" href="{{asset('admin/plugins/pace/pace.min.css')}}">
+
 <!-- custom css -->
 <link rel="stylesheet" href="{{asset('css/custom.css')}}">
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

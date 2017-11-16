@@ -65,7 +65,7 @@ function getProgress($slug)
     $backEndBuildOutCollects = $project->projectBackEndBuildOut()->get();
     if ($backEndBuildOut >= 1) {
 
-        $backEndBuildOutValue=getProgressByCollection($backEndBuildOutCollects);
+        $backEndBuildOutValue = getProgressByCollection($backEndBuildOutCollects);
 
     } else {
         $backEndBuildOutValue = 0;
@@ -109,22 +109,17 @@ function getProgressByCollection($collection)
     foreach ($progressCollects as $progressCollect) {
         if ($progressCollect->status == "Completed") {
             $progressArray[$progressCollect->id] = ((1 * 100 / 6) / $childCount);
-        }elseif ($progressCollect->status == "Onhold") {
+        } elseif ($progressCollect->status == "Onhold") {
             $progressArray[$progressCollect->id] = ((1 * 100 / 6) / $childCount / 4);
-        }
-        elseif ($progressCollect->status == "In Progress") {
+        } elseif ($progressCollect->status == "In Progress") {
             $progressArray[$progressCollect->id] = ((1 * 100 / 6) / $childCount / 4);
-        }
-        elseif ($progressCollect->status == "Scheduled") {
+        } elseif ($progressCollect->status == "Scheduled") {
             $progressArray[$progressCollect->id] = ((1 * 100 / 6) / $childCount / 4);
-        }
-        elseif ($progressCollect->status == "Submitted") {
+        } elseif ($progressCollect->status == "Submitted") {
             $progressArray[$progressCollect->id] = ((1 * 100 / 6) / $childCount / 4);
-        }
-        elseif ($progressCollect->status == "Approved") {
+        } elseif ($progressCollect->status == "Approved") {
             $progressArray[$progressCollect->id] = ((1 * 100 / 6) / $childCount / 4);
-        }
-        else {
+        } else {
             $progressArray[$progressCollect->id] = 0;
         }
 
@@ -180,7 +175,7 @@ function getProgressBySubTask($collection, $id)
                 $progress = (1 * 100 / 4);
             } elseif ($record->status == "Approved") {
                 $progress = (1 * 100 / 4);
-            } else  {
+            } else {
                 $progress = 0;
             }
         }
@@ -272,7 +267,19 @@ function dueDays($date)
     $now = Carbon::now();
     $result = $date->diffInDays($now);
 
-    return '<span class="label label-danger">Overdue by ' . $result . ' Days</span>';
+    if ($date->diffInDays($now)>0) {
+
+        $result = $date->diffInDays($now) . str_plural(' Day', $result);
+
+    } elseif ($date->diffInDays($now) == 0) {
+
+        $result = $date->diffInHours($now) . str_plural(' Hour', $result);
+
+    } elseif($date->diffInHours($now) == 0) {
+
+        $result = $date->diffInMinutes($now) . str_plural(' Minute', $result);
+    }
+    return ' <span class="label label-danger">Overdue by ' . $result . '</span>';
 
 
 }
@@ -316,22 +323,23 @@ function selectUpdate($name, $value)
 
 }
 
-function timeSpent($startDate,$endDate){
+function timeSpent($startDate, $endDate)
+{
 
-    if(!strlen($endDate)){
-        $endDate=Carbon::now();
+    if (!strlen($endDate)) {
+        $endDate = Carbon::now();
     }
 
     return sprintf('%s %s %s',
-        formatDateInterval('%d', 'day', $startDate,$endDate),
-        formatDateInterval('%h', 'hour', $startDate,$endDate),
-        formatDateInterval('%i', 'minute', $startDate,$endDate)
+        formatDateInterval('%d', 'day', $startDate, $endDate),
+        formatDateInterval('%h', 'hour', $startDate, $endDate),
+        formatDateInterval('%i', 'minute', $startDate, $endDate)
     );
 
 
 }
 
-function formatDateInterval($format, $interval, $startDate,$endDate)
+function formatDateInterval($format, $interval, $startDate, $endDate)
 {
     $count = $startDate->diff($endDate)->format($format);
 
