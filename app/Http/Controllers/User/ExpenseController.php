@@ -65,26 +65,19 @@ class ExpenseController extends Controller
         $expense->amount = $request->amount;
         $expense->date = $request->date;
         $expense->project_id = $project->id;
-        $expense->save();
-        $expenseId=$expense->id;
 
 
         $expense = new Expense();
-        if ($request->hasFile('images')) {
+        if ($request->hasFile('image')) {
 
-            foreach ($request->file('images') as $image) {
                 $filename = uniqid();
-                $expenseAttachment = new ExpenseAttachment();
-                $extension =$image->getClientOriginalExtension();
-                $file = $image->move(config('constants.upload_path.attachments'), $filename . "." . $extension);
-                $expenseAttachment->attachment_url = $filename . "." . $extension;
-                $expenseAttachment->title = $request->expense_type;
-                $expenseAttachment->expense_id = $expenseId;
-                $expenseAttachment->project_id = $project->id;
-                $expenseAttachment->save();
-            }
+                $extension =$request->file('image')->getClientOriginalExtension();
+                $file = $request->file('image')->move(config('constants.upload_path.attachments'), $filename . "." . $extension);
+                $expense->attachment_url = $filename . "." . $extension;
+
         }
 
+        $expense->save();
 
         flash('Expense Created Successfully..!')->success();
 

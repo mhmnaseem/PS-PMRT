@@ -955,7 +955,7 @@
                                 <tbody>
                                 @foreach ($grouped as $title => $expenses)
                                     <tr>
-                                        <td>{{$title}} - $ {{$expenses->sum('amount')}}</td>
+                                        <td>{{$title}} - ${{$expenses->sum('amount')}}</td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -1020,13 +1020,13 @@
                         @endif
 
 
-                        @if ($project->projectExpenseAttachments->isNotEmpty())
+                        @if ($project->projectExpenses->isNotEmpty())
 
                             <h4>Expense Attachments</h4>
 
                             <div class="row">
 
-                                @foreach($project->projectExpenseAttachments as $expenseAttachment)
+                                @foreach($project->projectExpenses as $expenseAttachment)
 
                                     <div class="col-sm-3">
 
@@ -1035,12 +1035,12 @@
                                             <div class="img-box">
                                                 <a href="{{asset(config('constants.upload_path.attachments').$expenseAttachment->attachment_url)}}"
                                                    data-lightbox="{{$expenseAttachment->id}}"
-                                                   data-title="{{$expenseAttachment->title}}"><img
+                                                   data-title="{{$expenseAttachment->expense_type}}"><img
                                                             class="img-responsive"
                                                             src="{{asset(config('constants.upload_path.attachments').$expenseAttachment->attachment_url)}}"></a>
 
                                             </div>
-                                            <h5 class="attachment-title">{{$expenseAttachment->title}}</h5>
+                                            <h5 class="attachment-title">{{$expenseAttachment->expense_type}}</h5>
                                         </div>
                                     </div>
 

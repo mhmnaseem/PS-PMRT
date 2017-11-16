@@ -79,10 +79,7 @@ class Project extends Model
     {
         return $this->hasMany('App\Model\User\Expense');
     }
-    public function projectExpenseAttachments()
-    {
-        return $this->hasMany('App\Model\User\ExpenseAttachment','project_id');
-    }
+
 
 
 
