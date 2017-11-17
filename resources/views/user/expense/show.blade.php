@@ -2,7 +2,8 @@
 
 @section ('header')
 
-
+    <link rel="stylesheet"
+          href="{{asset('admin/dist/css/lightbox.min.css')}}">
 
 @endsection
 
@@ -20,13 +21,13 @@
         <section class="content-header">
             <h1>
 
-                Planning and Design
+                Expenses
 
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                 <li><a href="#">Project Details</a></li>
-                <li><a href="#">Planning and Design</a></li>
+                <li><a href="#">Expenses</a></li>
 
             </ol>
         </section>
@@ -36,18 +37,18 @@
             <!-- general form elements -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">{{$pd->title}}</h3>
+                    <h3 class="box-title">{{$expense->expense_type}}</h3>
                 </div>
                 <div class="box-body">
                     <!-- /.box-body -->
                     <div class="row">
                         <div class="col-sm-8">
 
-                            <h5><strong>Planning and Design Comment</strong></h5>
+                            <h5><strong>Expenses Description</strong></h5>
                             <hr>
 
 
-                            {!! htmlspecialchars_decode($pd->comment) !!}
+                            {!! htmlspecialchars_decode($expense->description) !!}
 
 
                         </div>
@@ -59,45 +60,39 @@
 
                                         <a data-toggle="tooltip" data-placement="top" title="Edit"
                                            class="btn btn-xs btn-warning"
-                                           href="{{url('pm/projects/'.$slug.'/pd/'.$pd->id.'/edit')}}"><i
+                                           href="{{url('pm/projects/'.$slug.'/expense/'.$expense->id.'/edit')}}"><i
                                                     class="fa fa-fw fa-2x fa-edit" aria-hidden="true"></i></a>
                                         <a data-toggle="tooltip" data-placement="top" title="Go Back"
                                            class="btn btn-xs btn-info"
-                                           href="{{url('pm/projects/'.$slug.'#pd')}}"><i
+                                           href="{{url('pm/projects/'.$slug.'#expenses')}}"><i
                                                     class="fa fa-fw fa-2x fa-angle-double-left" aria-hidden="true"></i></a>
 
                                     </div>
                                 </div>
                                 <div class="box-body">
-
-                                    <strong><i class="fa fa-calendar text-maroon margin-r-5"></i> Start Date</strong>
-
-                                    <p class="text-muted">{{$pd->start_date->format(config('constants.time.format'))}}</p>
-
-                                    <hr>
-
-                                    <strong><i class="fa fa-calendar text-maroon margin-r-5"></i> End Date</strong>
+                                    <strong><i class="fa fa-money text-maroon margin-r-5"></i> Amount</strong>
 
                                     <p class="text-muted">
-                                        @if($pd->end_date != '')
-                                            {{$pd->end_date->format(config('constants.time.format'))}}
-                                        @endif
+                                        ${{number_format($expense->amount,2)}}
                                     </p>
+                                    <hr>
+
+                                    <strong><i class="fa fa-calendar text-maroon margin-r-5"></i> Date</strong>
+
+                                    <p class="text-muted">{{$expense->date->format(config('constants.time.format'))}}</p>
 
                                     <hr>
-                                    <strong><i class="fa fa-clock-o text-maroon margin-r-5"></i> Time Spent</strong>
+                                    <strong><i class="fa fa-picture-o text-maroon margin-r-5"></i>
+                                        Attachment</strong>
 
-                                    <p class="text-muted">
-                                        {!! timeSpent($pd->start_date,$pd->end_date) !!}
-                                    </p>
+                                    <div class="img-box">
+                                        <a href="{{asset(config('constants.upload_path.attachments').$expense->attachment_url)}}"
+                                           data-lightbox="{{$expense->id}}"
+                                           data-title="{{$expense->expense_type}}"><img
+                                                    class="img-responsive"
+                                                    src="{{asset(config('constants.upload_path.attachments').$expense->attachment_url)}}"></a>
 
-                                    <hr>
-                                    <strong><i class="fa fa-check-circle text-maroon margin-r-5"></i>
-                                        Status</strong>
-
-                                    <p>
-                                        {!! statusColor($pd->status) !!}
-                                    </p>
+                                    </div>
 
 
                                 </div>
@@ -122,6 +117,6 @@
 @endsection
 
 @section('footer')
-
+    <script src="{{asset('admin/dist/js/lightbox.min.js')}}"></script>
 
 @endsection

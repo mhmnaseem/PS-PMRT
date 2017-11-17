@@ -5,7 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Requests\UploadRequest;
 use App\Model\Common\Project;
 use App\Model\User\Expense;
-use App\Model\User\ExpenseAttachment;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -24,19 +24,6 @@ class ExpenseController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function imageUpload(Request $request)
-    {
-
-
-
-    }
-
-
 
     /**
      * Show the form for creating a new resource.
@@ -45,7 +32,7 @@ class ExpenseController extends Controller
      */
     public function create($slug)
     {
-       return view('user.expense.create', compact('slug'));
+        return view('user.expense.create', compact('slug'));
     }
 
     /**
@@ -57,8 +44,6 @@ class ExpenseController extends Controller
     public function store(UploadRequest $request, $slug)
     {
         $project = Project::findBySlug($slug)->firstOrFail();
-
-
         $expense = new Expense();
         $expense->expense_type = $request->expense_type;
         $expense->description = $request->description;
@@ -67,13 +52,12 @@ class ExpenseController extends Controller
         $expense->project_id = $project->id;
 
 
-        $expense = new Expense();
         if ($request->hasFile('image')) {
 
-                $filename = uniqid();
-                $extension =$request->file('image')->getClientOriginalExtension();
-                $file = $request->file('image')->move(config('constants.upload_path.attachments'), $filename . "." . $extension);
-                $expense->attachment_url = $filename . "." . $extension;
+            $filename = uniqid();
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $file = $request->file('image')->move(config('constants.upload_path.attachments'), $filename . "." . $extension);
+            $expense->attachment_url = $filename . "." . $extension;
 
         }
 
@@ -94,8 +78,20 @@ class ExpenseController extends Controller
     public function show($slug, $id)
     {
         $project = Project::findBySlug($slug)->firstOrFail();
-        $pd = $project->projectPd()->where('id', $id)->firstOrFail();
-        return view('user.pd.show', compact('pd', 'slug'));
+        $expense = $project->projectExpenses()->where('id', $id)->firstOrFail();
+        return view('user.expense.show', compact('expense', 'slug'));
+    }
+
+    public function pdfExport($slug)
+    {
+        $project = Project::findBySlug($slug)->firstOrFail();
+        $data = [
+            'reportTitle' => $project->title,
+            'project' => $project,
+
+        ];
+        $pdf = PDF::loadView('pdf.expensePdf', $data);
+        return $pdf->download('expensesExport.pdf');
     }
 
     /**
@@ -107,8 +103,8 @@ class ExpenseController extends Controller
     public function edit($slug, $id)
     {
         $project = Project::findBySlug($slug)->firstOrFail();
-        $pd = $project->projectPd()->where('id', $id)->firstOrFail();
-        return view('user.pd.edit', compact('pd', 'slug'));
+        $expense = $project->projectExpenses()->where('id', $id)->firstOrFail();
+        return view('user.expense.edit', compact('expense', 'slug'));
     }
 
     /**
@@ -118,31 +114,31 @@ class ExpenseController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $slug, $id)
+    public function update(UploadRequest $request, $slug, $id)
     {
         $project = Project::findBySlug($slug)->firstOrFail();
+        $expense = $project->projectExpenses()->where('id', $id)->firstOrFail();
 
-
-        $this->validate($request, [
-            'title' => 'required',
-            'status' => 'required',
-            'start_date' => 'required|date',
-            'end_date' => 'date|after:start_date|nullable',
-
-        ]);
-
-        $expense = $project->projectPd()->where('id', $id)->firstOrFail();
         $expense->expense_type = $request->expense_type;
         $expense->description = $request->description;
         $expense->amount = $request->amount;
         $expense->date = $request->date;
-        $expense->project_id = $project->id;
+
+        if ($request->hasFile('image')) {
+
+            $filename = uniqid();
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $file = $request->file('image')->move(config('constants.upload_path.attachments'), $filename . "." . $extension);
+            $expense->attachment_url = $filename . "." . $extension;
+
+        }
+
         $expense->save();
 
 
-        flash('P&D Updated Successfully..!')->success();
+        flash('Expense Updated Successfully..!')->success();
 
-        return redirect('pm/projects/' . $slug . '#pd');
+        return redirect('pm/projects/' . $slug . '#expenses');
     }
 
     /**

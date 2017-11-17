@@ -1,6 +1,6 @@
 $(function () {
     //Date time picker
-    $('#datepicker,#datepicker1').datetimepicker({
+    $('#datepicker,#datepicker1,#expensePicker').datetimepicker({
         icons: {
             time: "fa fa-clock-o",
             date: "fa fa-calendar",
@@ -18,6 +18,16 @@ $.ajaxSetup({
 });
 
 $(document).ready(function () {
+    var datepicker1=$('#datepicker1');
+
+    var expenseValue = $('#expense').attr("data-set-value");
+    var expenseSelect=$('#expensePicker');
+
+    if(expenseValue==1){
+        var expenseDate = expenseSelect.attr("data-start-date");
+        getExpenseDate = moment(expenseDate).format("MM-DD-YYYY HH:mm");
+        expenseSelect.data("DateTimePicker").date(getExpenseDate);
+    }
 
     if($('#editor1').length!==0){
         CKEDITOR.replace('editor1');
@@ -29,7 +39,7 @@ $(document).ready(function () {
 
 
         var startDate = $('#datepicker').attr("data-start-date");
-        var endDate = $('#datepicker1').attr("data-end-date");
+        var endDate = datepicker1.attr("data-end-date");
 
 
         setData(startDate, endDate);
@@ -39,7 +49,7 @@ $(document).ready(function () {
             getEndDate = moment(endDate).format("MM-DD-YYYY HH:mm");
 
             $('#datepicker').data("DateTimePicker").date(getStartDate);
-            $('#datepicker1').data("DateTimePicker").date(getEndDate);
+            datepicker1.data("DateTimePicker").date(getEndDate);
 
         }
 
@@ -47,7 +57,7 @@ $(document).ready(function () {
 
     }
     //date time change and calculate spent time.
-    $("#datepicker1").on("dp.change", function (e) {
+    datepicker1.on("dp.change", function (e) {
         ajax();
     });
 

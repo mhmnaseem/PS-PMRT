@@ -879,6 +879,7 @@
                                     <tr>
                                         <td>
                                             <div class="btn-group">
+
                                                 <form id="form-delete-attachment{{$attachment->id}}" method="post"
                                                       action="{{url('pm/projects/'.$project->slug.'/attachment/'.$attachment->id)}}"
                                                       style="display: none;">
@@ -955,7 +956,7 @@
                                 <tbody>
                                 @foreach ($grouped as $title => $expenses)
                                     <tr>
-                                        <td>{{$title}} - ${{$expenses->sum('amount')}}</td>
+                                        <td>{{$title}} - ${{number_format($expenses->sum('amount'),2)}}</td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -964,6 +965,15 @@
                                         <tr>
                                             <td>
                                                 <div class="btn-group">
+                                                    <a data-toggle="tooltip" data-placement="top" title="View"
+                                                       class="btn btn-xs btn-success"
+                                                       href="{{url('pm/projects/'.$project->slug.'/expense/'.$expense->id)}}"><i
+                                                                class="fa fa-fw fa-arrow-circle-o-right"
+                                                                aria-hidden="true"></i></a>
+                                                    <a data-toggle="tooltip" data-placement="top" title="Edit"
+                                                       class="btn btn-xs btn-warning"
+                                                       href="{{url('pm/projects/'.$project->slug.'/expense/'.$expense->id.'/edit')}}"><i
+                                                                class="fa fa-fw fa-edit" aria-hidden="true"></i></a>
                                                     <form id="form-delete-expense{{$expense->id}}" method="post"
                                                           action="{{url('pm/projects/'.$project->slug.'/expense/'.$expense->id)}}"
                                                           style="display: none;">
@@ -989,7 +999,7 @@
                                                 {!! htmlspecialchars_decode(str_limit($expense->description,350)) !!}
                                             </td>
                                             <td>{{$expense->date->format(config('constants.time.format'))}}</td>
-                                            <td>${{$expense->amount}}</td>
+                                            <td>${{number_format($expense->amount,"2")}}</td>
 
 
                                         </tr>
@@ -1002,13 +1012,17 @@
                                     <td></td>
                                     <td></td>
                                     <td><strong>Total -
-                                            ${{$project->projectExpenses->sum('amount')}}</strong></td>
+                                            ${{number_format($project->projectExpenses->sum('amount'),2)}}</strong></td>
                                 </tr>
                                 </tbody>
                             </table>
 
+
+
                             <h5><strong>Export Expenses</strong></h5>
-                            <div id="expense_export"></div>
+                            <div id="expense_export">
+                                <a class="btn btn-default" href="{{url('pm/projects'.$project->slug.'/pdf-export')}}">PDF</a>
+                            </div>
                         @else
 
                             <div class="callout callout-info">
@@ -1022,8 +1036,9 @@
 
                         @if ($project->projectExpenses->isNotEmpty())
 
-                            <h4>Expense Attachments</h4>
-
+                            <br>
+                            <h4>Expenses Attachments</h4>
+                            <br>
                             <div class="row">
 
                                 @foreach($project->projectExpenses as $expenseAttachment)
@@ -1031,7 +1046,7 @@
                                     <div class="col-sm-3">
 
 
-                                        <div class="thumbnail">
+
                                             <div class="img-box">
                                                 <a href="{{asset(config('constants.upload_path.attachments').$expenseAttachment->attachment_url)}}"
                                                    data-lightbox="{{$expenseAttachment->id}}"
@@ -1040,7 +1055,10 @@
                                                             src="{{asset(config('constants.upload_path.attachments').$expenseAttachment->attachment_url)}}"></a>
 
                                             </div>
-                                            <h5 class="attachment-title">{{$expenseAttachment->expense_type}}</h5>
+                                        <div class="attachment_text">
+                                            <p class="attachment-title">Type: {{$expenseAttachment->expense_type}}</p>
+                                            <p class="attachment-title">Date: {{$expenseAttachment->date->format(config('constants.time.format'))}}</p>
+                                            <p class="attachment-title">Amount: ${{number_format($expenseAttachment->amount,"2")}}</p>
                                         </div>
                                     </div>
 
@@ -1130,14 +1148,7 @@
                 }]
 
             });
-            var buttons = new $.fn.dataTable.Buttons(table, {
-                buttons: [
 
-                    {extend: 'pdf', className: 'btn btn-default '},
-                    {extend: 'copy', className: 'btn btn-default'}
-
-                ],
-            }).container().appendTo($('#expense_export'));
         });
 
 

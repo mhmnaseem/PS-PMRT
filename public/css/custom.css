@@ -37,8 +37,9 @@
 }
 
 .attachment-title{
-    height: 15px;
+    height: 20px;
     overflow: hidden;
+    margin-bottom: 1px !important;
 }
 
 div.dt-buttons{
@@ -56,6 +57,10 @@ tr.group:hover {
 }
 
 .img-box{
-    height:200px;
+    height:230px;
     overflow: hidden;
+}
+.attachment_text{
+    padding: 4px;
+    background-color: #ccc;
 }
