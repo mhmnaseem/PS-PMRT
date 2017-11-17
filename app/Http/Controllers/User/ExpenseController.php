@@ -6,6 +6,7 @@ use App\Http\Requests\UploadRequest;
 use App\Model\Common\Project;
 use App\Model\User\Expense;
 use Barryvdh\DomPDF\Facade as PDF;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -82,17 +83,7 @@ class ExpenseController extends Controller
         return view('user.expense.show', compact('expense', 'slug'));
     }
 
-    public function pdfExport($slug)
-    {
-        $project = Project::findBySlug($slug)->firstOrFail();
-        $data = [
-            'reportTitle' => $project->title,
-            'project' => $project,
 
-        ];
-        $pdf = PDF::loadView('pdf.expensePdf', $data);
-        return $pdf->download('expensesExport.pdf');
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -150,8 +141,8 @@ class ExpenseController extends Controller
     public function destroy($slug, $id)
     {
         $project = Project::findBySlug($slug)->firstOrFail();
-        $project->projectPd()->where('id', $id)->firstOrFail()->delete();
-        flash('P&D Deleted Successfully..!')->success();
-        return redirect('pm/projects/' . $slug . '#pd');
+        $project->projectExpenses()->where('id', $id)->firstOrFail()->delete();
+        flash('Expense Deleted Successfully..!')->success();
+        return redirect('pm/projects/' . $slug . '#expenses');
     }
 }

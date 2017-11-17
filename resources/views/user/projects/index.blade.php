@@ -2,11 +2,6 @@
 
 @section ('header')
 
-    <link rel="stylesheet"
-          href="{{asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
-    <link rel="stylesheet"
-          href="https://cdn.datatables.net/buttons/1.4.2/css/buttons.dataTables.min.css">
-
 @endsection
 
 @section('title', 'All Projects')
@@ -459,16 +454,7 @@
 
 @section('footer')
 
-    <script src="{{asset('admin/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
-    <script src="{{asset('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
-    <script src="https://cdn.datatables.net/buttons/1.4.2/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.4.2/js/buttons.flash.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.4.2/js/buttons.flash.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.4.2/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.4.2/js/buttons.print.min.js"></script>
+
     <script>
         $(function () {
             $('#example1,#example2,#example3,#example4,#example5').DataTable({
@@ -530,14 +516,7 @@
                                 }]
 
                             });
-                            var buttons = new $.fn.dataTable.Buttons(table, {
-                                buttons: [
 
-                                    {extend: 'pdf', className: 'btn btn-default', title: 'Data export'},
-                                    {extend: 'copy', className: 'btn btn-default', title: 'Data export'}
-
-                                ],
-                            }).container().appendTo($('#buttons'));
 
                         } else {
                             alert("Error Processing...!");

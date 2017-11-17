@@ -168,7 +168,7 @@
                                     </table>
 
                                     <h5><strong>Export Snap Shot</strong></h5>
-                                    <div id="buttons"></div>
+                                    <div id="buttons"> <a class="btn btn-default" href="{{route('overview.export',$project->slug)}}">PDF</a></div>
 
 
 
@@ -1021,7 +1021,7 @@
 
                             <h5><strong>Export Expenses</strong></h5>
                             <div id="expense_export">
-                                <a class="btn btn-default" href="{{url('pm/projects'.$project->slug.'/pdf-export')}}">PDF</a>
+                                <a class="btn btn-default" href="{{route('expense.export',$project->slug)}}">PDF</a>
                             </div>
                         @else
 
@@ -1096,20 +1096,11 @@
 
     <script src="{{asset('admin/dist/js/lightbox.min.js')}}"></script>
 
-    <script src="https://cdn.datatables.net/buttons/1.4.2/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.4.2/js/buttons.flash.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.4.2/js/buttons.flash.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.4.2/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.4.2/js/buttons.print.min.js"></script>
-
     <script>
         // snap shot data table
 
         $(function () {
-            var table = $('#snapshot').DataTable({
+            var table = $('#snapshot,#expense').DataTable({
                 'paging': true,
                 'lengthChange': false,
                 'searching': false,
@@ -1119,37 +1110,13 @@
                 "order": [],
                 "columnDefs": [{
                     "targets": 'no-sort',
-                    "orderable": false,
-                }]
-
-            });
-            var buttons = new $.fn.dataTable.Buttons(table, {
-                buttons: [
-
-                    {extend: 'pdf', className: 'btn btn-default '},
-                    {extend: 'copy', className: 'btn btn-default'}
-
-                ],
-            }).container().appendTo($('#buttons'));
-        });
-
-        $(function () {
-            var table = $('#expense').DataTable({
-                'paging': true,
-                'lengthChange': false,
-                'searching': false,
-                'info': true,
-                'autoWidth': false,
-
-                "order": [],
-                "columnDefs": [{
-                    "targets": 'no-sort',
-                    "orderable": false,
+                    "orderable": false
                 }]
 
             });
 
         });
+
 
 
     </script>

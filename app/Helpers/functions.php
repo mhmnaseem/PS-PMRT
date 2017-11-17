@@ -130,6 +130,15 @@ function getProgressByCollection($collection)
 }
 
 
+function calculateSubTaskProgressValue($collections, $id)
+{
+
+    $total = getProgressBySubTask($collections, $id);
+    return $total . '%';
+
+}
+
+
 function calculateSubTaskProgress($collections, $id)
 {
 

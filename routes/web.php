@@ -63,6 +63,8 @@ Route::group(['namespace'=>'User'],function (){
 
     //projects
     Route::resource('pm/projects', 'ProjectController');
+    Route::get('pm/projects{project}/pdf-overview', 'ProjectController@overviewExport')->name('overview.export');
+    Route::get('pm/projects{project}/pdf-export', 'ProjectController@expensePdfExport')->name('expense.export');
     Route::post('pm/projects/snap-shot', 'ProjectController@snapShot')->name('snap.shot');
 
     // project sub tasks
@@ -76,10 +78,8 @@ Route::group(['namespace'=>'User'],function (){
     Route::get('pm/projects/{project}/attachment/{attachment}', 'AttachmentController@download');
     Route::resource('pm/projects.note', 'NoteController');
     Route::resource('pm/projects.expense', 'ExpenseController');
-    Route::get('pm/projects{project}/pdf-export', 'ExpenseController@pdfExport');
 
     Route::post('pm/projects/time-spent', 'ProjectController@timeSpent')->name('time.spent');
-
 
     Route::get('cron-jobs/complete-project','CronJobsController@completeProject');
 

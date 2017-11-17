@@ -3,8 +3,9 @@
 @section ('main-content')
 
 <h3> {{$reportTitle}} Expenses </h3>
+<p>Project Manager: {{$name}} <br>
+<p>Report Created Date: {{$date}} </p>
 
-<hr>
 
 @if ($project->projectExpenses->isNotEmpty())
 
@@ -65,7 +66,7 @@
     <br>
     <h4>Expenses Attachments</h4>
     <br>
-    <table cellspacing="4" cellpadding="4" width = "100%">
+    <table cellspacing="4" cellpadding="4" width = "100%" border="0">
         <thead>
         <tr>
             <th></th>
@@ -77,13 +78,14 @@
         @php
 
             $i=0;
+            $n=3;
 
         @endphp
 
         @foreach($project->projectExpenses as $expenseAttachment)
 
 
-            @if ($i++ % 3 == 0)
+            @if ($i++ % $n == 0)
 
                 <tr>
                     @endif
@@ -99,14 +101,14 @@
                     </td>
 
 
-                    @if ($i % 3 == 0)
+                    @if ($i % $n == 0)
                 </tr>
                 @endif
 
 
                 @endforeach
 
-                @if ($i % 3 != 0)
+                @if ($i % $n != 0)
                 </tr>
             @endif
 

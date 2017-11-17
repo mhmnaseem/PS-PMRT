@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Model\Common\Project;
 use App\Model\User\User;
+use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -69,6 +70,34 @@ class ProjectController extends Controller
 
 
         return view('user.projects.index', compact('pendingProjects', 'overdueProjects', 'completedProjects', 'allProjects','assignedProjects', 'total'));
+    }
+
+    public function expensePdfExport($slug)
+    {
+        $project = Project::findBySlug($slug)->firstOrFail();
+        $data = [
+            'name' => auth()->user()->name,
+            'date' => Carbon::now(),
+            'reportTitle' => $project->title,
+            'project' => $project,
+
+        ];
+        $pdf = PDF::loadView('pdf.expensePdf', $data);
+        return $pdf->download('expensesExport.pdf');
+    }
+
+    public function overviewExport($slug)
+    {
+        $project = Project::findBySlug($slug)->firstOrFail();
+        $data = [
+            'name' => auth()->user()->name,
+            'date' => Carbon::now(),
+            'reportTitle' => $project->title,
+            'project' => $project,
+
+        ];
+        $pdf = PDF::loadView('pdf.projectOverviewPdf', $data);
+        return $pdf->download('projectOverviewExport.pdf');
     }
 
     public function timeSpent(Request $request)
@@ -231,7 +260,7 @@ class ProjectController extends Controller
         $html .='</tbody>';
         $html .='</table>';
         $html .='<h5><strong>Export Snap Shot</strong></h5>';
-        $html .='<div id="buttons"></div>';
+        $html .='<div id="buttons"> <a class="btn btn-default" href="'.route('overview.export',$project->slug).'">PDF</a></div>';
 
 
 
@@ -250,6 +279,8 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
     public function create()
     {
         //
