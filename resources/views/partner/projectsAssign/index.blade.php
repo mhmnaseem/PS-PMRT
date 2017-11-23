@@ -155,7 +155,15 @@
                                                        class="btn btn-xs btn-warning"
                                                        href="{{route('partner-project-assign.edit',$assignedProject->slug)}}"><i
                                                                 class="fa fa-fw fa-edit"></i></a>
+                                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Snap Shot"
+                                                       data-slug="{{$assignedProject->slug}}" data-title="{{$assignedProject->title}}"
+                                                       data-source="{{route('snap.shot')}}"
+                                                       class="open-snap btn btn-default btn-xs"> <i
+                                                                class="fa fa-fw fa-camera"></i></a>
 
+                                                    <a href="{{route('expense.export',$assignedProject->slug)}}" data-toggle="tooltip" data-placement="top" title="Expense Report"
+                                                       class="btn btn-default btn-xs"> <i
+                                                                class="fa fa-fw fa-file"></i></a>
                                                 </div>
                                             </td>
                                             <td>{{$assignedProject->title}}</td>
@@ -212,6 +220,14 @@
                                                        href="{{route('partner-project-assign.edit',$overdueProject->slug)}}"><i
                                                                 class="fa fa-fw fa-edit"></i></a>
 
+                                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Snap Shot"
+                                                       data-slug="{{$overdueProject->slug}}" data-title="{{$overdueProject->title}}"
+                                                       data-source="{{route('snap.shot')}}"
+                                                       class="open-snap btn btn-default btn-xs"> <i
+                                                                class="fa fa-fw fa-camera"></i></a>
+                                                    <a href="{{route('expense.export',$overdueProject->slug)}}" data-toggle="tooltip" data-placement="top" title="Expense Report"
+                                                       class="btn btn-default btn-xs"> <i
+                                                                class="fa fa-fw fa-file"></i></a>
                                                 </div>
                                             </td>
                                             <td>{{$overdueProject->title}}</td>
@@ -276,6 +292,14 @@
                                                        class="btn btn-xs btn-warning"
                                                        href="{{route('partner-project-assign.edit',$completedProject->slug)}}"><i
                                                                 class="fa fa-fw fa-edit"></i></a>
+                                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Snap Shot"
+                                                       data-slug="{{$completedProject->slug}}" data-title="{{$completedProject->title}}"
+                                                       data-source="{{route('snap.shot')}}"
+                                                       class="open-snap btn btn-default btn-xs"> <i
+                                                                class="fa fa-fw fa-camera"></i></a>
+                                                    <a href="{{route('expense.export',$completedProject->slug)}}" data-toggle="tooltip" data-placement="top" title="Expense Report"
+                                                       class="btn btn-default btn-xs"> <i
+                                                                class="fa fa-fw fa-file"></i></a>
 
                                                 </div>
                                             </td>
@@ -340,7 +364,14 @@
                                                        class="btn btn-xs btn-warning"
                                                        href="{{route('partner-project-assign.edit',$allProject->slug)}}"><i
                                                                 class="fa fa-fw fa-edit"></i></a>
-
+                                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Snap Shot"
+                                                       data-slug="{{$allProject->slug}}" data-title="{{$allProject->title}}"
+                                                       data-source="{{route('snap.shot')}}"
+                                                       class="open-snap btn btn-default btn-xs"> <i
+                                                                class="fa fa-fw fa-camera"></i></a>
+                                                    <a href="{{route('expense.export',$allProject->slug)}}" data-toggle="tooltip" data-placement="top" title="Expense Report"
+                                                       class="btn btn-default btn-xs"> <i
+                                                                class="fa fa-fw fa-file"></i></a>
                                                 </div>
                                             </td>
                                             <td>{{$allProject->title}}</td>
@@ -428,6 +459,35 @@
                 <!-- /.modal -->
 
 
+
+                <div class="modal fade" id="snapModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"
+                                        aria-label="Close">
+                                    <span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="title"></h4>
+                            </div>
+                            <div class="modal-body">
+                                <div id="snap-data"></div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default pull-left"
+                                        data-dismiss="modal">Close
+                                </button>
+
+                            </div>
+
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
+
+
                 <!-- /.box-body -->
                 <div class="box-footer">
 
@@ -465,6 +525,13 @@
 
         //Assign PM
         $(document).ready(function () {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
             $(document).on('click', '.open_modal', function () {
 
                 $('#myModal').modal('show');
@@ -475,11 +542,7 @@
 
             $("#btn-assign").click(function (e) {
 
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                })
+
                 e.preventDefault();
                 var formData = {
                     pm: $('#pm').val(),
@@ -509,7 +572,66 @@
             });
 
 
+            $(document).on('click', '.open-snap', function () {
+                var t = $(this);
+                $('#snapModal').modal('show');
+
+                var title= $(t).attr("data-title")+ " Snap Shot";
+
+                $('#title').text(title);
+
+                var data = {
+
+                    'slug': $(t).attr("data-slug")
+                };
+
+
+                $.ajax({
+                    url: $(t).attr("data-source"),
+                    data: data,
+                    dataType: 'json',
+                    type: "post",
+                    success: function (data) {
+
+                        if (data.success == true) {
+
+                            $('#snap-data').html(data.html);
+
+                            var table = $('#snapshot').DataTable({
+                                'paging': true,
+                                'lengthChange': false,
+                                'searching': false,
+                                'info': true,
+                                'autoWidth': false,
+
+                                "order": [],
+                                "columnDefs": [{
+                                    "targets": 'no-sort',
+                                    "orderable": false,
+                                }]
+
+                            });
+
+
+                        } else {
+                            alert("Error Processing...!");
+                        }
+
+
+                    }
+                })
+            });
+
         });
+
+
+
+
+
+
+
+
+
 
 
     </script>

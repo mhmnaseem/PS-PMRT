@@ -1106,7 +1106,7 @@
                 'searching': false,
                 'info': true,
                 'autoWidth': false,
-
+                "aoColumns": [{ "bSortable": false },{ "bSortable": false }],
                 "order": [],
                 "columnDefs": [{
                     "targets": 'no-sort',

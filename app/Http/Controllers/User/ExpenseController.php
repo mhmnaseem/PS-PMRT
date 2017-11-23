@@ -5,10 +5,8 @@ namespace App\Http\Controllers\User;
 use App\Http\Requests\UploadRequest;
 use App\Model\Common\Project;
 use App\Model\User\Expense;
-use Barryvdh\DomPDF\Facade as PDF;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 
 class ExpenseController extends Controller
 {
@@ -138,10 +136,13 @@ class ExpenseController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($slug, $id)
-    {
+    public function destroy($slug, $id)    {
+
         $project = Project::findBySlug($slug)->firstOrFail();
-        $project->projectExpenses()->where('id', $id)->firstOrFail()->delete();
+        $expense=$project->projectExpenses()->where('id', $id)->firstOrFail();
+        File::delete(public_path().'/'.config('constants.upload_path.attachments').$expense->attachment_url);
+        $expense->delete();
+
         flash('Expense Deleted Successfully..!')->success();
         return redirect('pm/projects/' . $slug . '#expenses');
     }

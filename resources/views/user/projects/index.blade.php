@@ -381,6 +381,8 @@
                                                    data-source="{{route('snap.shot')}}"
                                                    class="open-snap btn btn-default btn-xs"> <i
                                                             class="fa fa-fw fa-camera"></i></a>
+
+
                                             </div>
                                         </td>
                                         <td>{{$assignedProject->title}}</td>

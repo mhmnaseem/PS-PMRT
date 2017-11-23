@@ -63,9 +63,7 @@ Route::group(['namespace'=>'User'],function (){
 
     //projects
     Route::resource('pm/projects', 'ProjectController');
-    Route::get('pm/projects{project}/pdf-overview', 'ProjectController@overviewExport')->name('overview.export');
-    Route::get('pm/projects{project}/pdf-export', 'ProjectController@expensePdfExport')->name('expense.export');
-    Route::post('pm/projects/snap-shot', 'ProjectController@snapShot')->name('snap.shot');
+
 
     // project sub tasks
     Route::resource('pm/projects.pd', 'ProjectPdController');
@@ -84,5 +82,13 @@ Route::group(['namespace'=>'User'],function (){
     Route::get('cron-jobs/complete-project','CronJobsController@completeProject');
 
     Route::get('/home', 'HomeController@index')->name('home');
+
+});
+
+Route::group(['namespace'=>'Share'],function (){
+
+    Route::get('projects/{project}/pdf-overview', 'ShareController@overviewExport')->name('overview.export');
+    Route::get('projects/{project}/pdf-export', 'ShareController@expensePdfExport')->name('expense.export');
+    Route::post('projects/snap-shot', 'ShareController@snapShot')->name('snap.shot');
 
 });
